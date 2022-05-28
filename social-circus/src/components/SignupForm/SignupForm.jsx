@@ -40,7 +40,7 @@ export const SignupForm = () => {
             <h1 className="my-3 text-3xl font-bold">Create Account</h1>
             <p className="font-semibold text-gray-500">
               Already have an account?{" "}
-              <Link to="/signin" className="font-semibold text-blue-500">
+              <Link to="/login" className="font-semibold text-blue-500">
                 Sign in
               </Link>
             </p>
