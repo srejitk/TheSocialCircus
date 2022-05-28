@@ -40,7 +40,7 @@ export const LoginForm = () => {
             <h1 className="my-3 px-8 text-3xl font-bold">Welcome to Area 51</h1>
             <p className="px-8 font-semibold text-gray-500">
               Don't have an account?{" "}
-              <Link to="/signup" className="font-semibold text-blue-500">
+              <Link to="signup" className="font-semibold text-blue-500">
                 Sign up for free
               </Link>
             </p>
