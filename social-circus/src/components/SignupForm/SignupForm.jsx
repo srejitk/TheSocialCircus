@@ -1,9 +1,14 @@
-import { Form, Formik } from "formik";
-import React from "react";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import React, { useState } from "react";
 import * as Yup from "yup";
 import { FormikControl } from "../FormikControl/FormikControl";
 import { FaGoogle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { registerUser } from "../../redux/actions/authActions";
+import { login } from "../../redux/slice/authSlice";
+import { FiEye, FiEyeOff } from "react-icons/fi";
+import { TextError } from "../TextError/TextError";
 
 export const SignupForm = () => {
   const initialValues = {
@@ -12,6 +17,11 @@ export const SignupForm = () => {
     password: "",
     confirmPassword: "",
   };
+
+  const [showPassword, setShowPassword] = useState();
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const validationScheme = Yup.object({
     email: Yup.string()
@@ -27,6 +37,7 @@ export const SignupForm = () => {
 
   const onSubmit = (values) => {
     console.log(values);
+    registerUser(values, navigate, dispatch, login);
   };
   return (
     <Formik
@@ -73,20 +84,45 @@ export const SignupForm = () => {
               name="email"
               placeholder="Email"
             />
-            <FormikControl
-              control="input"
-              type="password"
-              label="Password"
-              name="password"
-              placeholder="Password"
-            />
-            <FormikControl
-              control="input"
-              type="password"
-              label="Confirm Password"
-              name="confirmPassword"
-              placeholder="Confirm Password"
-            />
+
+            <div className="relative my-2 mb-3 flex h-14  w-full flex-col items-start justify-start">
+              <Field
+                className="relative flex w-full rounded-lg border border-slate-300 bg-white px-2 py-2 placeholder-slate-400 shadow-sm required:border-pink-500 required:text-pink-600 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500
+              focus:required:border-pink-500 focus:required:ring-pink-500 
+            "
+                type={showPassword ? "text" : "password"}
+                label="Password"
+                name="password"
+                placeholder="Password"
+              />
+              <ErrorMessage name="password" component={TextError} />
+              <div className="absolute  top-3 right-5">
+                {showPassword ? (
+                  <FiEye onClick={(e) => setShowPassword((prev) => !prev)} />
+                ) : (
+                  <FiEyeOff onClick={(e) => setShowPassword((prev) => !prev)} />
+                )}
+              </div>
+            </div>
+            <div className="relative my-2 mb-3 flex h-14  w-full flex-col items-start justify-start">
+              <Field
+                className="relative flex w-full rounded-lg border border-slate-300 bg-white px-2 py-2 placeholder-slate-400 shadow-sm required:border-pink-500 required:text-pink-600 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500
+              focus:required:border-pink-500 focus:required:ring-pink-500 
+            "
+                type={showPassword ? "text" : "password"}
+                label="Confirm Password"
+                name="confirmPassword"
+                placeholder="Confirm Password"
+              />
+              <ErrorMessage name="confirmPassword" component={TextError} />
+              <div className="absolute  top-3 right-5">
+                {showPassword ? (
+                  <FiEye onClick={(e) => setShowPassword((prev) => !prev)} />
+                ) : (
+                  <FiEyeOff onClick={(e) => setShowPassword((prev) => !prev)} />
+                )}
+              </div>
+            </div>
 
             <button
               type="submit"
