@@ -1,7 +1,6 @@
-import {
-  createUserWithEmailAndPassword} from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import toast from "react-hot-toast";
-import { auth } from "../../firebase";
+import { auth, db } from "../../firebase";
 
 export const registerUser = async (userData, navigate, dispatch, login) => {
   try {
@@ -29,5 +28,25 @@ export const registerUser = async (userData, navigate, dispatch, login) => {
         console.log(error);
         return toast.error("Something went wrong. Try again later");
     }
+  }
+};
+
+const createProfile = async (user, uid) => {
+  try {
+    await setDoc(doc(db, "users", uid), {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      bio: "",
+      website: "",
+      followers: [],
+      following: [],
+      avatar: "",
+      cover: "",
+      timestamp: serverTimestamp(),
+    });
+  } catch (error) {
+    toast.error("Couldn't create user");
+    console.log(error);
   }
 };
