@@ -9,7 +9,7 @@ export const Header = () => {
           <h1 className="text-3xl font-semibold ">The Social Circus</h1>
         </div>
         <div className="flex justify-evenly gap-1 align-middle">
-          <Link to="/signin">
+          <Link to="/login">
             <button className="m-4 flex items-center justify-evenly gap-2 rounded-xl bg-transparent px-5 py-2 font-semibold  hover:bg-gray-100">
               Sign in
             </button>
