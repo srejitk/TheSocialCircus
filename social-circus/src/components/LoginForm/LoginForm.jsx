@@ -1,32 +1,34 @@
-import { Form, Formik } from "formik";
-import React from "react";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import React, { useState } from "react";
 import * as Yup from "yup";
 import { FormikControl } from "../FormikControl/FormikControl";
 import { FaGoogle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { loginUser } from "../../redux/actions/authActions";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/slice/authSlice";
+import { TextError } from "../TextError/TextError";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 export const LoginForm = () => {
   const initialValues = {
     email: "",
-    name: "",
     password: "",
-    confirmPassword: "",
   };
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [showPassword, setShowPassword] = useState();
 
   const validationScheme = Yup.object({
     email: Yup.string()
       .email("Please enter a valid email address")
       .required("Please enter a valid email address"),
     password: Yup.string().required("Can't be empty"),
-    confirmPassword: Yup.string()
-      .oneOf([Yup.ref("password"), ""], "Passwords must match")
-      .required("Can't be empty"),
-    firstName: Yup.string().required("Can't be empty"),
-    lastName: Yup.string().required("Can't be empty"),
   });
 
   const onSubmit = (values) => {
-    console.log(values);
+    loginUser(values, navigate, dispatch, login);
   };
   return (
     <Formik
@@ -56,13 +58,25 @@ export const LoginForm = () => {
               name="email"
               placeholder="Email"
             />
-            <FormikControl
-              control="input"
-              type="password"
-              label="Password"
-              name="password"
-              placeholder="Password"
-            />
+            <div className="relative my-2 mb-3 flex h-14  w-full flex-col items-start justify-start">
+              <Field
+                className="relative flex w-full rounded-lg border border-slate-300 bg-white px-2 py-2 placeholder-slate-400 shadow-sm required:border-pink-500 required:text-pink-600 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500
+              focus:required:border-pink-500 focus:required:ring-pink-500 
+            "
+                type={showPassword ? "text" : "password"}
+                label="Password"
+                name="password"
+                placeholder="Password"
+              />
+              <ErrorMessage name="password" component={TextError} />
+              <div className="absolute  top-3 right-5">
+                {showPassword ? (
+                  <FiEye onClick={(e) => setShowPassword((prev) => !prev)} />
+                ) : (
+                  <FiEyeOff onClick={(e) => setShowPassword((prev) => !prev)} />
+                )}
+              </div>
+            </div>
 
             <button
               type="submit"
