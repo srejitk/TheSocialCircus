@@ -7,7 +7,7 @@ export const Signup = () => {
     <div className="flex h-screen w-full">
       <Link to="/">
         <button className="absolute m-4 flex items-center justify-evenly gap-2 rounded-3xl bg-gray-100 px-5 py-2 font-semibold hover:bg-gray-300">
-          <FiChevronLeft /> Back to Area-51
+          <FiChevronLeft /> Back to the Circus
         </button>
       </Link>
       <div className="flex h-screen flex-col items-center justify-center outline sm:w-full md:w-full lg:w-1/2">
