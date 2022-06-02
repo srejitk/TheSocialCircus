@@ -5,12 +5,16 @@ import { TextArea } from "./TextArea/TextArea";
 import { Input } from "./Input/Input";
 import { LoginForm } from "./LoginForm/LoginForm";
 import { SignupForm } from "./SignupForm/SignupForm";
+import { PostModal } from "./PostModal/PostModal";
+import { CreatePost } from "./CreatePost/CreatePost";
 
 export {
+  CreatePost,
   FormikControl,
   Header,
   Input,
   LoginForm,
+  PostModal,
   SignupForm,
   TextError,
   TextArea,
