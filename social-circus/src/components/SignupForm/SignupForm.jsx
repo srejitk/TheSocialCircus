@@ -13,7 +13,8 @@ import { TextError } from "../TextError/TextError";
 export const SignupForm = () => {
   const initialValues = {
     email: "",
-    name: "",
+    firstName: "",
+    lastName: "",
     password: "",
     confirmPassword: "",
   };
@@ -35,9 +36,8 @@ export const SignupForm = () => {
     lastName: Yup.string().required("Can't be empty"),
   });
 
-  const onSubmit = (values) => {
-    console.log(values);
-    registerUser(values, navigate, dispatch, login);
+  const onSubmit = (values, actions) => {
+    registerUser(values, navigate, dispatch, actions);
   };
   return (
     <Formik
