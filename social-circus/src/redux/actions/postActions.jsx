@@ -2,6 +2,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   addDoc,
   collection,
+  deleteDoc,
+  doc,
   getDocs,
   orderBy,
   query,
@@ -51,5 +53,15 @@ export const EditPost = async (form, dispatch, id) => {
     toast.error(error.message);
   } finally {
     dispatch(postLoading(false));
+  }
+};
+
+export const DeletePost = async (id, dispatch) => {
+  try {
+    await deleteDoc(doc(db, "posts", id));
+    dispatch(getExplorePosts());
+  } catch (error) {
+    console.log(error);
+    toast.error("Error : Couldn't delete post");
   }
 };
