@@ -15,6 +15,9 @@ const PostSlice = createSlice({
     setPost: (state, action) => {
       state.post = action.payload;
     },
+    postLoading: (state, action) => {
+      state.loading = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -32,6 +35,6 @@ const PostSlice = createSlice({
   },
 });
 
-export const { setPost } = PostSlice.actions;
+export const { setPost, postLoading } = PostSlice.actions;
 
 export default PostSlice.reducer;
