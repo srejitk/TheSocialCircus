@@ -1,23 +1,11 @@
-import { FormikControl } from "./FormikControl/FormikControl";
-import { Header } from "./Header/Header";
-import { TextError } from "./TextError/TextError";
-import { TextArea } from "./TextArea/TextArea";
-import { Input } from "./Input/Input";
-import { LoginForm } from "./LoginForm/LoginForm";
-import { SignupForm } from "./SignupForm/SignupForm";
-import { PostModal } from "./PostModal/PostModal";
-import { CreatePost } from "./CreatePost/CreatePost";
-export { PostList } from "./PostList/PostList";
+export { FormikControl } from "./FormikControl/FormikControl";
+export { Header } from "./Header/Header";
+export { TextError } from "./TextError/TextError";
+export { TextArea } from "./TextArea/TextArea";
+export { Input } from "./Input/Input";
+export { LoginForm } from "./LoginForm/LoginForm";
+export { SignupForm } from "./SignupForm/SignupForm";
+export { PostModal } from "./PostModal/PostModal";
+export { CreatePost } from "./CreatePost/CreatePost";
 export { PostCard } from "./PostCard/PostCard";
-
-export {
-  CreatePost,
-  FormikControl,
-  Header,
-  Input,
-  LoginForm,
-  PostModal,
-  SignupForm,
-  TextError,
-  TextArea,
-};
+export { PostList } from "./PostList/PostList";
