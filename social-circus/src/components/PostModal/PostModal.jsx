@@ -2,14 +2,20 @@ import React, { useState, useEffect } from "react";
 import { FiImage, FiSmile, FiArrowRightCircle } from "react-icons/fi";
 import Picker from "emoji-picker-react";
 import { useDispatch, useSelector } from "react-redux";
-import { AddPost, getExplorePosts } from "../../redux/actions/postActions";
-import { auth } from "../../firebase";
+import {
+  AddPost,
+  EditPost,
+  getExplorePosts,
+} from "../../redux/actions/postActions";
+import { auth, storage } from "../../firebase";
+import { getMetadata, ref, uploadBytes } from "firebase/storage";
 
-export const PostModal = ({ openModal, setOpenModal }) => {
+export const PostModal = ({ openModal, setOpenModal, edit }) => {
   const initialValues = {
     date: "",
     content: "",
     displayName: "",
+    imageUrl: "",
     uid: "",
     likes: [],
     comments: [],
@@ -18,7 +24,9 @@ export const PostModal = ({ openModal, setOpenModal }) => {
   const dispatch = useDispatch();
 
   const { user, id } = useSelector((state) => state.auth);
+  const { post } = useSelector((state) => state.post);
   const [selectedEmoji, setSelectedEmoji] = useState(null);
+  const [imagePath, setImagePath] = useState("");
   const [form, setForm] = useState(initialValues);
   const [openEmoji, setOpenEmoji] = useState(false);
 
@@ -42,19 +50,32 @@ export const PostModal = ({ openModal, setOpenModal }) => {
       content: value,
       displayName: auth.currentUser.displayName,
       uid: id,
-      date: new Date().toLocaleString(),
+      imageUrl: imagePath,
+      date: edit ? post?.data?.date : new Date().toLocaleString(),
     });
     setSelectedEmoji(null);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setForm({ ...form, imageUrl: imagePath });
     if (form.content !== "") {
-      await AddPost(form, dispatch);
+      edit
+        ? await EditPost(form, dispatch, post?.id)
+        : await AddPost(form, dispatch);
     }
     setForm(initialValues);
     setOpenEmoji(false);
     dispatch(getExplorePosts());
+  };
+
+  const handleImage = async (image) => {
+    if (image === null) return;
+    const imageRef = ref(storage, `posts/${id.uid}/post-cover.jpg`);
+    const response = await uploadBytes(imageRef, image);
+    const picRef = ref(storage, `posts/${id.uid}/post-cover.jpg`);
+    const imageResponse = await getMetadata(picRef);
+    setImagePath(imageResponse);
   };
 
   const emojiClickHandler = (e) => {
@@ -86,17 +107,20 @@ export const PostModal = ({ openModal, setOpenModal }) => {
           />
         </div>
         <div className="relative flex w-full flex-row items-center gap-4 ">
-          <button className="group rounded-3xl border-2 border-gray-100 bg-white p-4 hover:border-2 hover:border-blue-300 hover:bg-blue-50 hover:outline-2">
+          <div className="group rounded-3xl border-2 border-gray-100 bg-white p-4 hover:border-2 hover:border-blue-300 hover:bg-blue-50 hover:outline-2">
             <label htmlFor="upload-picture">
               <input
                 type="file"
                 id="upload-picture"
                 accept="image/*"
                 className="hidden"
+                onChange={(e) => {
+                  handleImage(e.target.files[0]);
+                }}
               />
               <FiImage className="group-hover:font-bold group-hover:text-blue-500 " />
             </label>
-          </button>
+          </div>
           <button
             onClick={(e) => emojiClickHandler(e)}
             className={`group rounded-3xl border-2 border-gray-100 bg-white p-4 hover:border-2 hover:border-blue-300 hover:bg-blue-50 hover:outline-2 ${
