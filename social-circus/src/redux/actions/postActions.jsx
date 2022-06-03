@@ -5,10 +5,11 @@ import {
   getDocs,
   orderBy,
   query,
+  updateDoc,
 } from "firebase/firestore";
 import toast from "react-hot-toast";
 import { db } from "../../firebase";
-import { setPost } from "../slice/postSlice";
+import { postLoading, setPost } from "../slice/postSlice";
 
 export const AddPost = async (post, dispatch) => {
   const postRef = collection(db, "posts");
@@ -39,3 +40,16 @@ export const getExplorePosts = createAsyncThunk(
     }
   }
 );
+
+export const EditPost = async (form, dispatch, id) => {
+  dispatch(postLoading(true));
+  try {
+    await updateDoc(doc(db, "posts", id), form);
+    dispatch(getExplorePosts());
+  } catch (error) {
+    console.log(error);
+    toast.error(error.message);
+  } finally {
+    dispatch(postLoading(false));
+  }
+};
