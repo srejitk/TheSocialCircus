@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getExplorePosts } from "../actions/postActions";
 
 const initialState = {
   loading: false,
@@ -15,7 +16,20 @@ const PostSlice = createSlice({
       state.post = action.payload;
     },
   },
-  extraReducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(getExplorePosts.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getExplorePosts.fulfilled, (state, action) => {
+        state.loading = false;
+        state.posts = action.payload;
+        //TODO ADD SORTING HERE
+      })
+      .addCase(getExplorePosts.rejected, (state) => {
+        state.loading = false;
+      });
+  },
 });
 
 export const { setPost } = PostSlice.actions;

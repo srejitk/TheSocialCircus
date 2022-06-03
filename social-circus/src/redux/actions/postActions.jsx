@@ -2,19 +2,19 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   addDoc,
   collection,
-  getDoc,
-  onSnapshot,
+  getDocs,
   orderBy,
   query,
-  where,
 } from "firebase/firestore";
 import toast from "react-hot-toast";
 import { db } from "../../firebase";
+import { setPost } from "../slice/postSlice";
 
 export const AddPost = async (post, dispatch) => {
   const postRef = collection(db, "posts");
   try {
     await addDoc(postRef, post);
+    dispatch(setPost(post));
     toast.success("Post sent.");
   } catch (error) {
     console.log(error);
@@ -29,12 +29,9 @@ export const getExplorePosts = createAsyncThunk(
     const postRef = collection(db, "posts");
     try {
       const q = query(postRef, orderBy("date", "desc"));
-      const snapshot = await getDoc(q);
-      onSnapshot(q, (snapshot) => {
-        snapshot.docs.forEach((doc) => {
-          posts.push({ ...doc.data(), id: doc.id });
-        });
-        console.log(posts);
+      const postSnapshot = await getDocs(q);
+      postSnapshot.forEach((doc) => {
+        posts.push({ data: doc.data(), id: doc.id });
       });
       return posts;
     } catch (error) {
