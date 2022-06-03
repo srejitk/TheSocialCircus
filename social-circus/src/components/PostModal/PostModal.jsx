@@ -3,13 +3,13 @@ import { FiImage, FiSmile, FiArrowRightCircle } from "react-icons/fi";
 import Picker from "emoji-picker-react";
 import { useDispatch, useSelector } from "react-redux";
 import { AddPost, getExplorePosts } from "../../redux/actions/postActions";
+import { auth } from "../../firebase";
 
 export const PostModal = ({ openModal, setOpenModal }) => {
   const initialValues = {
     date: "",
     content: "",
-    firstName: "",
-    lastName: "",
+    displayName: "",
     uid: "",
     likes: [],
     comments: [],
@@ -40,8 +40,7 @@ export const PostModal = ({ openModal, setOpenModal }) => {
     setForm({
       ...form,
       content: value,
-      firstName: user.firstName,
-      lastName: user.lastName,
+      displayName: auth.currentUser.displayName,
       uid: id,
       date: new Date().toLocaleString(),
     });
