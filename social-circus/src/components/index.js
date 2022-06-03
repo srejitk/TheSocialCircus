@@ -7,6 +7,8 @@ import { LoginForm } from "./LoginForm/LoginForm";
 import { SignupForm } from "./SignupForm/SignupForm";
 import { PostModal } from "./PostModal/PostModal";
 import { CreatePost } from "./CreatePost/CreatePost";
+export { PostList } from "./PostList/PostList";
+export { PostCard } from "./PostCard/PostCard";
 
 export {
   CreatePost,
