@@ -85,3 +85,21 @@ export const LikePost = async (postID, token, user, dispatch) => {
     console.log(error.message);
   }
 };
+
+export const DislikePost = async (postID, token, user, dispatch) => {
+  try {
+    const postRef = doc(db, "posts", postID);
+    await updateDoc(postRef, {
+      likes: arrayRemove({
+        userID: token,
+        firstname: user?.firstname,
+        lastname: user?.lastname,
+        avatar: user?.avatar,
+      }),
+    });
+    dispatch(getExplorePosts());
+  } catch (error) {
+    toast.error("Couldn't dislike post");
+    console.log(error.message);
+  }
+};
