@@ -1,6 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   addDoc,
+  arrayRemove,
+  arrayUnion,
   collection,
   deleteDoc,
   doc,
@@ -63,5 +65,23 @@ export const DeletePost = async (id, dispatch) => {
   } catch (error) {
     console.log(error);
     toast.error("Error : Couldn't delete post");
+  }
+};
+
+export const LikePost = async (postID, token, user, dispatch) => {
+  try {
+    const postRef = doc(db, "posts", postID);
+    await updateDoc(postRef, {
+      likes: arrayUnion({
+        userID: token,
+        firstname: user?.firstname,
+        lastname: user?.lastname,
+        avatar: user?.avatar,
+      }),
+    });
+    dispatch(getExplorePosts());
+  } catch (error) {
+    toast.error("Couldn't like post");
+    console.log(error.message);
   }
 };
