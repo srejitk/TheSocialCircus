@@ -2,24 +2,39 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
-
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import toast from "react-hot-toast";
 import { auth, db } from "../../firebase";
+import { signup } from "../slice/authSlice";
 
-export const registerUser = async (userData, navigate, dispatch, login) => {
+export const registerUser = async (userData, navigate, dispatch, actions) => {
+  const { firstName, lastName, email, password } = userData;
   try {
     const userCreds = await createUserWithEmailAndPassword(
       auth,
-      userData.email,
-      userData.password
+      email,
+      password
     );
-    const user = userCreds.user;
+
+    const { user } = userCreds;
+    await updateProfile(user, {
+      displayName: firstName + " " + lastName,
+    });
     const { accessToken, uid } = user;
     localStorage.setItem("AccessToken", accessToken);
     localStorage.setItem("userID", uid);
-    dispatch(login(uid));
     createProfile(userData, uid);
+
+    dispatch(
+      signup({
+        email: user.email,
+        uid: user.uid,
+        displayName: firstName + " " + lastName,
+      })
+    );
+    actions.resetForm();
     toast.success("You are part of the circus!");
     navigate("/home");
   } catch (error) {
@@ -39,8 +54,9 @@ export const registerUser = async (userData, navigate, dispatch, login) => {
 const createProfile = async (user, uid) => {
   try {
     await setDoc(doc(db, "users", uid), {
-      firstName: user.firstName,
-      lastName: user.lastName,
+      firstname: user.firstName,
+      lastname: user.lastName,
+      displayName: user.firstName + " " + user.lastName,
       email: user.email,
       bio: "",
       website: "",
@@ -73,10 +89,10 @@ export const loginUser = async (userData, navigate, dispatch, login) => {
   try {
     const userCreds = await signInWithEmailAndPassword(auth, email, password);
     const user = userCreds.user;
+    console.log(user);
     const { accessToken, uid } = user;
     localStorage.setItem("AccessToken", accessToken);
     localStorage.setItem("userID", uid);
-    dispatch(login(uid));
     navigate("/home");
     toast.success("You're signed in!");
   } catch (error) {
