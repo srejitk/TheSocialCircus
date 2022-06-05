@@ -120,7 +120,6 @@ export const PostComment = async (postID, comment, dispatch) => {
 };
 
 export const DeleteComment = async (postID, comment, dispatch) => {
-  console.log(comment.commentID);
   dispatch(postLoading(true));
   try {
     const postRef = doc(db, "posts", postID);
