@@ -9,6 +9,7 @@ import {
   getDocs,
   orderBy,
   query,
+  setDoc,
   updateDoc,
 } from "firebase/firestore";
 import toast from "react-hot-toast";
@@ -74,9 +75,8 @@ export const LikePost = async (postID, token, user, dispatch) => {
     await updateDoc(postRef, {
       likes: arrayUnion({
         userID: token,
-        firstname: user?.firstname,
-        lastname: user?.lastname,
-        avatar: user?.avatar,
+        displayName: user?.displayName,
+        avatar: "",
       }),
     });
     dispatch(getExplorePosts());
@@ -92,14 +92,46 @@ export const DislikePost = async (postID, token, user, dispatch) => {
     await updateDoc(postRef, {
       likes: arrayRemove({
         userID: token,
-        firstname: user?.firstname,
-        lastname: user?.lastname,
-        avatar: user?.avatar,
+        displayName: user?.displayName,
+        avatar: "",
       }),
     });
     dispatch(getExplorePosts());
   } catch (error) {
     toast.error("Couldn't dislike post");
     console.log(error.message);
+  }
+};
+
+export const PostComment = async (postID, comment, dispatch) => {
+  dispatch(postLoading(true));
+  try {
+    const postRef = doc(db, "posts", postID);
+    await updateDoc(postRef, {
+      comments: arrayUnion(comment),
+    });
+    dispatch(getExplorePosts());
+  } catch (error) {
+    toast.error("Error : Couldn't post your comment.");
+    console.log(error);
+  } finally {
+    dispatch(postLoading(false));
+  }
+};
+
+export const DeleteComment = async (postID, comment, dispatch) => {
+  console.log(comment.commentID);
+  dispatch(postLoading(true));
+  try {
+    const postRef = doc(db, "posts", postID);
+    await updateDoc(postRef, {
+      comments: arrayRemove(comment),
+    });
+    dispatch(getExplorePosts());
+  } catch (error) {
+    toast.error("Error : Couldn't post your comment.");
+    console.log(error);
+  } finally {
+    dispatch(postLoading(false));
   }
 };
