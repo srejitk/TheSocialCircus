@@ -9,7 +9,7 @@ export const Explore = () => {
     <div>
       {posts?.length}
       {posts.map((post) => {
-        return <PostCard post={post} />;
+        return <PostCard key={post.id} post={post} />;
       })}
     </div>
   );
