@@ -144,7 +144,7 @@ export const UpdateForm = () => {
               Upload a cover image
             </p>
             <div className="cover group mb-2 flex h-32 w-2/3 items-center justify-center rounded-3xl border-2 border-gray-100 bg-white p-4 hover:border-2 hover:border-blue-300 hover:bg-blue-50 hover:outline-2">
-              <label htmlFor="avatar">
+              <label htmlFor="cover">
                 <input
                   type="file"
                   id="cover"
