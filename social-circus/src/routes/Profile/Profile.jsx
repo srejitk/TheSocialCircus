@@ -1,8 +1,10 @@
 import React from "react";
+import { FiEdit } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
 export const Profile = () => {
   return (
-    <div className="h-screen w-full outline">
+    <div className="content h-screen w-full">
       <div className="relative h-60 w-full outline-red-500">
         <img
           src="https://i.pinimg.com/736x/02/01/bd/0201bddb9707cf682149db1dc8e959ad.jpg"
@@ -15,7 +17,16 @@ export const Profile = () => {
           alt="dp"
           className="absolute left-1/2 -bottom-8 z-10 h-28 w-28 -translate-x-1/2 translate-y-1/2 rounded-lg"
         />
+
         <div className="absolute -bottom-48 left-1/2 h-80 w-11/12 -translate-x-1/2 translate-y-1/2 flex-col items-center justify-center  rounded-lg bg-gray-50 p-20 shadow-xl">
+          <Link
+            to="/update"
+            className={`group absolute top-8 right-8 rounded-3xl border-2 border-gray-100 bg-white p-4 hover:border-2 hover:border-blue-300 hover:bg-blue-50 hover:outline-2 
+                
+              `}
+          >
+            <FiEdit className="group-hover:font-bold group-hover:text-blue-500 " />
+          </Link>
           <h1 className="text-black-300 text-2xl font-medium ">
             Zenitsu Agatsume
           </h1>
