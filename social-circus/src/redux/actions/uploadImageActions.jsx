@@ -25,6 +25,20 @@ export const UploadAvatar = async (path, file) => {
     return url;
   } catch (error) {
     console.log(error);
-    toast.error("Could'nt upload Avatar");
+    toast.error("Couldn't upload Avatar");
+  }
+};
+
+export const UploadCover = async (path, file) => {
+  try {
+    const imageRef = ref(storage, path);
+    const response = await uploadBytesResumable(imageRef, file);
+    const pathName = response?.ref?.toString();
+    const gsReference = ref(storage, pathName);
+    const url = await getDownloadURL(gsReference);
+    return url;
+  } catch (error) {
+    console.log(error);
+    toast.error("Couldn't upload Cover");
   }
 };
