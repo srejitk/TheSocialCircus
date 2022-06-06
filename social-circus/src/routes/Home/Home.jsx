@@ -1,5 +1,10 @@
 import React from "react";
+import { CreatePost } from "../../components";
 
 export const Home = () => {
-  return <div>Home</div>;
+  return (
+    <div>
+      <CreatePost />
+    </div>
+  );
 };

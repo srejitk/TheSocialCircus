@@ -3,34 +3,24 @@ import { CreatePost, Header } from "./components";
 import { RouteConfig } from "./config/RouteConfig";
 import { Toaster } from "react-hot-toast";
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./firebase";
-import { login, logout } from "./redux/slice/authSlice";
+import { useEffect, useState } from "react";
+import { getExplorePosts } from "./redux/actions/postActions";
+import { getUserData } from "./redux/actions/authActions";
 
 function App() {
   const dispatch = useDispatch();
+  const token = localStorage.getItem("userID");
 
   useEffect(() => {
-    onAuthStateChanged(auth, (userCreds) => {
-      if (userCreds) {
-        dispatch(
-          login({
-            email: userCreds.email,
-            uid: userCreds.uid,
-          })
-        );
-      } else {
-        dispatch(logout());
-      }
-    });
-  });
+    dispatch(getExplorePosts());
+    dispatch(getUserData(token));
+  }, [token]);
   return (
     <div className="App">
       <Header />
-      <CreatePost />
       <RouteConfig />
       <Toaster />
+      {/* <CreatePost /> */}
     </div>
   );
 }

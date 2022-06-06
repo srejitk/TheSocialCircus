@@ -3,28 +3,26 @@ import { getUserData } from "../actions/authActions";
 
 const initialState = {
   user: {},
-  isLoggedIn: localStorage.getItem("userID") === "" ? false : true,
-  id: localStorage.getItem("userID"),
+  isLoggedIn: false,
   isLoading: false,
+  token: localStorage.getItem("userID"),
 };
 
 export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    signup: (state, action) => {
-      state.user = action.payload;
-    },
-    login: (state, action) => {
+    login: (state) => {
       state.isLoggedIn = true;
-      state.id = action.payload;
     },
     logout: (state) => {
       state.isLoggedIn = false;
-      state.id = null;
       state.user = {};
       localStorage.removeItem("userID");
       return initialState;
+    },
+    setLoading: (state, action) => {
+      state.isLoading = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -32,8 +30,9 @@ export const authSlice = createSlice({
       .addCase(getUserData.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getUserData.fulfilled, (state) => {
+      .addCase(getUserData.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.user = action.payload;
       })
       .addCase(getUserData.rejected, (state) => {
         state.isLoading = false;
@@ -42,4 +41,4 @@ export const authSlice = createSlice({
 });
 
 export default authSlice.reducer;
-export const { signup, login, logout } = authSlice.actions;
+export const { login, logout, setLoading } = authSlice.actions;

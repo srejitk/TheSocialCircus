@@ -53,3 +53,13 @@
     min-height: calc(100vh - 6rem);
   }
 }
+
+::-webkit-scrollbar {
+  width: 5px;
+  background: #f1f5f9;
+}
+
+textarea::-webkit-scrollbar-thumb {
+  background-color: #60a5fa;
+  border-radius: 4px;
+}

@@ -1,3 +1,4 @@
+export { Modal } from "./Modal/Modal";
 export { FormikControl } from "./FormikControl/FormikControl";
 export { Header } from "./Header/Header";
 export { TextError } from "./TextError/TextError";
