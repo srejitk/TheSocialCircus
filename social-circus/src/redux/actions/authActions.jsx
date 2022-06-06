@@ -54,6 +54,7 @@ const createProfile = async (user, uid) => {
       following: [],
       avatar: "",
       cover: "",
+      username: "",
       timestamp: serverTimestamp(),
     });
   } catch (error) {
@@ -98,5 +99,28 @@ export const loginUser = async (userData, navigate, dispatch, login) => {
         console.log(error);
         return toast.error("Something went wrong. Try again later");
     }
+  }
+};
+
+export const updateDetails = async (profile, uid, dispatch, navigate) => {
+  try {
+    await setDoc(
+      doc(db, "users", uid),
+      {
+        bio: profile?.bio,
+        website: profile?.portfolio,
+        avatar: profile?.avatar,
+        cover: profile?.cover,
+        username: profile?.username,
+        timestamp: serverTimestamp(),
+      },
+      { merge: true }
+    );
+    dispatch(getUserData(uid));
+    toast.success("Your profile is updated!");
+    navigate("/profile");
+  } catch (error) {
+    toast.error("Couldn't create user");
+    console.log(error);
   }
 };
