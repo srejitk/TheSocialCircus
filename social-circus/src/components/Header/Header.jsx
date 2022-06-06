@@ -8,8 +8,8 @@ export const Header = () => {
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth);
   return (
-    <header>
-      <div className="header flex h-24 flex-row items-center justify-between border-2 p-5 shadow-sm">
+    <header className="col-span-3">
+      <div className="header  flex h-24 w-full flex-row items-center justify-between border-2 p-5 shadow-sm outline">
         <div className="flex justify-center text-center align-middle">
           <h1 className="text-3xl font-semibold ">The Social Circus</h1>
         </div>
