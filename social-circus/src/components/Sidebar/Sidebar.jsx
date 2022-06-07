@@ -9,20 +9,20 @@ export const Sidebar = () => {
         Area-51
       </div>
       <div className="flex h-20 flex-row md:my-10 md:flex-col lg:my-10 lg:flex-col ">
-        <NavLink to="/home">
+        <NavLink to="/">
           <div className="flex h-20 w-20 flex-col items-center justify-center gap-4 px-3 py-2 hover:bg-slate-200 hover:brightness-95 md:w-full md:flex-row-reverse  md:justify-end md:px-7 lg:w-full">
             Home
             <FiHome />
           </div>
         </NavLink>
 
-        <NavLink to="/explore">
+        <NavLink to="explore">
           <div className="flex h-20 w-20 flex-col items-center justify-center gap-4 px-3 py-2 hover:bg-slate-200 hover:brightness-95 md:w-full md:flex-row-reverse  md:justify-end md:px-7 lg:w-full">
-            Explore
+            Boomark Probably
             <FiCoffee />
           </div>
         </NavLink>
-        <NavLink to="/profile">
+        <NavLink to="profile">
           <div className="flex h-20 w-20 flex-col items-center justify-center gap-4 px-3 py-2 hover:bg-slate-200 hover:brightness-95 md:w-full md:flex-row-reverse  md:justify-end md:px-7 lg:w-full">
             Profile
             <FiUser />

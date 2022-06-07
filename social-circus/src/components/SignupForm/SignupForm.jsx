@@ -6,7 +6,6 @@ import { FaGoogle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../../redux/actions/authActions";
-import { login } from "../../redux/slice/authSlice";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { TextError } from "../TextError/TextError";
 

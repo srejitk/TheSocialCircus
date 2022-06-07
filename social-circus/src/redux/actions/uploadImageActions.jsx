@@ -12,6 +12,7 @@ export const UploadImage = async (path, file) => {
     return url;
   } catch (error) {
     console.log(error);
+    toast.error("Couldn't upload image");
   }
 };
 
