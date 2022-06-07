@@ -18,20 +18,14 @@ export const followUser = async (
     const response = await setDoc(
       userRef,
       {
-        following: arrayUnion({
-          id: othersID,
-          data: othersData,
-        }),
+        following: arrayUnion(othersID),
       },
       { merge: true }
     );
     const otherResponse = await setDoc(
       otheruserRef,
       {
-        followers: arrayUnion({
-          id: token,
-          data: user,
-        }),
+        followers: arrayUnion(token),
       },
       { merge: true }
     );
@@ -58,20 +52,14 @@ export const unfollowUser = async (
     const response = await setDoc(
       userRef,
       {
-        following: arrayRemove({
-          id: othersID,
-          data: othersData,
-        }),
+        following: arrayRemove(othersID),
       },
       { merge: true }
     );
     const otherResponse = await setDoc(
       otheruserRef,
       {
-        followers: arrayRemove({
-          id: token,
-          data: user,
-        }),
+        followers: arrayRemove(token),
       },
       { merge: true }
     );
