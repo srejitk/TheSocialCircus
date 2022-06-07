@@ -1,6 +1,15 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import { Error, Feed, Home, Login, Profile, Signup, Update } from "../routes";
+import {
+  Error,
+  Feed,
+  Home,
+  Login,
+  Profile,
+  Signup,
+  Update,
+  User,
+} from "../routes";
 
 export const RouteConfig = () => {
   return (
@@ -11,6 +20,7 @@ export const RouteConfig = () => {
       <Route path="feed" element={<Feed />} />
       <Route path="/" element={<Home />} />
       <Route path="profile" element={<Profile />} />
+      <Route path="profile/:userName" element={<User />} />
       <Route path="*" element={<Error />} />
     </Routes>
   );
