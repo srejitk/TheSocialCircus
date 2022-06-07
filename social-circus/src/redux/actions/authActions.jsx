@@ -4,7 +4,15 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  serverTimestamp,
+  setDoc,
+} from "firebase/firestore";
 import toast from "react-hot-toast";
 import { auth, db } from "../../firebase";
 
@@ -124,3 +132,18 @@ export const updateDetails = async (profile, uid, dispatch, navigate) => {
     console.log(error);
   }
 };
+
+export const getAllUsers = createAsyncThunk("auth/getAllUsers", async () => {
+  const allUsers = [];
+  const usersRef = collection(db, "users");
+  try {
+    const q = query(usersRef);
+    const usersSnapshot = await getDocs(q);
+    usersSnapshot.forEach((doc) => {
+      allUsers.push({ data: doc.data(), id: doc.id });
+    });
+    return allUsers;
+  } catch (error) {
+    console.log(error);
+  }
+});

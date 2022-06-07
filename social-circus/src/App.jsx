@@ -5,7 +5,7 @@ import { Toaster } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getExplorePosts } from "./redux/actions/postActions";
-import { getUserData } from "./redux/actions/authActions";
+import { getAllUsers, getUserData } from "./redux/actions/authActions";
 import { useLocation } from "react-router-dom";
 
 function App() {
@@ -15,11 +15,12 @@ function App() {
   useEffect(() => {
     dispatch(getExplorePosts());
     dispatch(getUserData(token));
+    dispatch(getAllUsers());
   }, [token]);
   const { pathname } = useLocation();
 
   return (
-    <div className="App grid grid-cols-3 gap-4">
+    <div className="App grid grid-cols-3 gap-x-4">
       {pathname === "/signup" ||
       pathname === "/login" ||
       pathname === "/update" ? null : (
