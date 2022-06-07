@@ -25,7 +25,7 @@ export const User = () => {
 
   const userPosts = posts.filter((post) => post?.data?.id === findUserID);
 
-  const isFollowing = user?.following?.some((user) => user?.id === findUserID);
+  const isFollowing = user?.following?.some((ID) => ID === findUserID);
   return (
     <div className="content h-screen w-full outline">
       <div className="relative h-60 w-full">
