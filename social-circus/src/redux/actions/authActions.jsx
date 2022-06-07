@@ -4,7 +4,15 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  serverTimestamp,
+  setDoc,
+} from "firebase/firestore";
 import toast from "react-hot-toast";
 import { auth, db } from "../../firebase";
 
@@ -54,6 +62,7 @@ const createProfile = async (user, uid) => {
       following: [],
       avatar: "",
       cover: "",
+      username: "",
       timestamp: serverTimestamp(),
     });
   } catch (error) {
@@ -100,3 +109,41 @@ export const loginUser = async (userData, navigate, dispatch, login) => {
     }
   }
 };
+
+export const updateDetails = async (profile, uid, dispatch, navigate) => {
+  try {
+    await setDoc(
+      doc(db, "users", uid),
+      {
+        bio: profile?.bio,
+        website: profile?.portfolio,
+        avatar: profile?.avatar,
+        cover: profile?.cover,
+        username: profile?.username,
+        timestamp: serverTimestamp(),
+      },
+      { merge: true }
+    );
+    dispatch(getUserData(uid));
+    toast.success("Your profile is updated!");
+    navigate("/profile");
+  } catch (error) {
+    toast.error("Couldn't create user");
+    console.log(error);
+  }
+};
+
+export const getAllUsers = createAsyncThunk("auth/getAllUsers", async () => {
+  const allUsers = [];
+  const usersRef = collection(db, "users");
+  try {
+    const q = query(usersRef);
+    const usersSnapshot = await getDocs(q);
+    usersSnapshot.forEach((doc) => {
+      allUsers.push({ data: doc.data(), id: doc.id });
+    });
+    return allUsers;
+  } catch (error) {
+    console.log(error);
+  }
+});

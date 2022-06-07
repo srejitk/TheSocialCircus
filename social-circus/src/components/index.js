@@ -10,3 +10,7 @@ export { PostModal } from "./PostModal/PostModal";
 export { CreatePost } from "./CreatePost/CreatePost";
 export { PostCard } from "./PostCard/PostCard";
 export { PostList } from "./PostList/PostList";
+export { Tabs } from "./Tabs/Tabs";
+export { Sidebar } from "./Sidebar/Sidebar";
+export { UpdateForm } from "./UpdateForm/UpdateForm";
+export { EditPostModal } from "./EditPostModal/EditPostModal";

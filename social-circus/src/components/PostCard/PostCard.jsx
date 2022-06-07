@@ -8,6 +8,7 @@ import {
   FiTrash,
 } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   DeleteComment,
   DeletePost,
@@ -31,8 +32,16 @@ export const PostCard = ({ post }) => {
   const [showComments, setShowComments] = useState(false);
   const { user, token } = useSelector((state) => state.auth);
   const { data, id } = post;
-  const { likes, comments } = data;
-  const { imageUrl, content, displayName, date } = data;
+  const {
+    avatar,
+    username,
+    imageUrl,
+    content,
+    displayName,
+    date,
+    likes,
+    comments,
+  } = data;
   const handleComment = async (e) => {
     e.preventDefault();
     await PostComment(id, comment, dispatch);
@@ -42,26 +51,33 @@ export const PostCard = ({ post }) => {
   const deleteCommentHandler = async (e, comment) => {
     await DeleteComment(id, comment, dispatch);
   };
+  //TODO - GET POSTED TIME
+  const diff = new Date(date).getHours() - new Date().getHours();
 
   return (
     <div className="m-3 flex h-fit w-full flex-col justify-around rounded-lg shadow-md">
       <div className="flex items-center justify-start">
-        <img
-          src="https://bestprofilepictures.com/wp-content/uploads/2021/06/Zenitsu-Profile-Image-1005x1024.jpg"
-          alt="dp"
-          className="m-3 h-16 w-16 rounded-full"
-        />
+        <img src={avatar} alt="dp" className="m-3 h-16 w-16 rounded-full" />
 
         <div className="flex flex-col items-start px-3">
           {" "}
           <h1 className="text-xl">{displayName}</h1>
+          <h1>{username}</h1>
           <h1>{date}</h1>
         </div>
       </div>
       <div className="flex flex-col">
         <h1 className="px-3 text-left text-2xl">{content}</h1>
 
-        {imageUrl !== "" && <img src={imageUrl} alt="post-cover" />}
+        {imageUrl !== "" && (
+          <div className="rounded-md  p-4">
+            <img
+              src={imageUrl}
+              alt="post-cover"
+              className="h-full w-full rounded-lg"
+            />
+          </div>
+        )}
       </div>
       <div className="flex justify-start">
         <button
@@ -74,9 +90,9 @@ export const PostCard = ({ post }) => {
           }}
         >
           {likes?.find((user) => user?.userID === token) ? (
-            <FiHeart />
-          ) : (
             <FaHeart className="text-red-500" />
+          ) : (
+            <FiHeart />
           )}
         </button>
         <button
@@ -110,7 +126,7 @@ export const PostCard = ({ post }) => {
       >
         <div>
           <img
-            src="https://bestprofilepictures.com/wp-content/uploads/2021/06/Zenitsu-Profile-Image-1005x1024.jpg"
+            src={user?.avatar}
             alt=""
             className="m-3 h-10  w-10 rounded-full"
           />
@@ -126,6 +142,8 @@ export const PostCard = ({ post }) => {
               content: e.target.value,
               userID: token,
               displayName: user?.displayName,
+              avatar: user?.avatar,
+              username: user?.username,
               date: new Date().toLocaleString(),
             })
           }
@@ -142,20 +160,23 @@ export const PostCard = ({ post }) => {
       {comments?.map((comment) => (
         <div className="flex w-full flex-col items-start" key={comment.date}>
           <div className="flex h-fit min-h-[7rem] w-full items-center justify-start border-b-2 border-t-2 border-slate-200 pb-3">
-            <div>
+            <Link to={`profile/${comment.username}`}>
               <img
-                src="https://bestprofilepictures.com/wp-content/uploads/2021/06/Zenitsu-Profile-Image-1005x1024.jpg"
-                alt=""
+                src={comment?.avatar}
+                alt="Commenter Avatar"
                 className="m-3 h-10 w-10 flex-grow rounded-full"
               />
-            </div>
+            </Link>
             <div className="mx-6 flex flex-grow flex-col items-start justify-center">
-              <p
-                className=" mx-1 flex h-8 w-full  flex-wrap items-center rounded-sm  px-3
+              <Link to={`profile/${comment.username}`}>
+                {" "}
+                <p
+                  className=" mx-1 flex h-8 w-full  flex-wrap items-center rounded-sm  px-3
         text-left font-medium text-gray-500  "
-              >
-                {comment?.displayName}
-              </p>
+                >
+                  {comment?.displayName}
+                </p>
+              </Link>
               <p
                 className=" min-h-8 mx-1 flex h-fit w-[70%] flex-wrap items-center text-ellipsis 
         break-all rounded-sm px-3 text-left font-semibold "
@@ -167,13 +188,15 @@ export const PostCard = ({ post }) => {
               {comment.date}
             </p>
           </div>
-          <div className="">
-            <button
-              onClick={(e) => deleteCommentHandler(e, comment)}
-              className="m-3 flex h-10 w-32 items-center justify-center rounded-sm outline outline-transparent hover:bg-red-50 hover:text-red-500 hover:outline-red-200"
-            >
-              <FiTrash />
-            </button>
+          <div>
+            {token === comment.userID ? (
+              <button
+                onClick={(e) => deleteCommentHandler(e, comment)}
+                className="m-3 flex h-10 w-32 items-center justify-center rounded-sm outline outline-transparent hover:bg-red-50 hover:text-red-500 hover:outline-red-200"
+              >
+                <FiTrash />
+              </button>
+            ) : null}
           </div>
         </div>
       ))}
