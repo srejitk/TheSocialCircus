@@ -52,13 +52,23 @@ export const UpdateForm = () => {
   };
 
   const handleImage = async (file) => {
-    const link = await UploadAvatar(`users/${token}/user-avatar.jpg`, file);
-    setAvatarPreview(link);
+    if (initialValues.avatar) {
+      const link = await UploadAvatar(`users/${token}/user-avatar.jpg`, file);
+      setAvatarPreview(link);
+    } else {
+      //TODO SET DEFAULT AVATAR HERE
+      return;
+    }
   };
 
   const handleCover = async (file) => {
-    const link = await UploadCover(`users/${token}/user-cover.jpg`, file);
-    setCoverPreview(link);
+    if (initialValues.cover) {
+      const link = await UploadCover(`users/${token}/user-cover.jpg`, file);
+      setCoverPreview(link);
+    } else {
+      //TODO SET DEFAULT COVER HERE
+      return;
+    }
   };
 
   return (
@@ -228,7 +238,7 @@ export const UpdateForm = () => {
               disabled={!formik.isValid}
               className="my-3 flex w-full items-center justify-center gap-3 rounded-lg bg-blue-500 py-2 font-semibold text-white hover:bg-blue-600 disabled:bg-slate-400"
             >
-              Sign in
+              Update Profile
             </button>
           </Form>
         );
