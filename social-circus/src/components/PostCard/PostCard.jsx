@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import {
+  MdBookmarkBorder,
+  MdBookmark,
+  MdArchive,
+  MdOutlineArchive,
+} from "react-icons/md";
+import {
   FiCornerDownLeft,
   FiEdit,
   FiHeart,
@@ -10,11 +16,15 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
+  ArchivePost,
+  BookmarkPost,
   DeleteComment,
   DeletePost,
   DislikePost,
   LikePost,
   PostComment,
+  RestorePost,
+  UndoBookmarkPost,
 } from "../../redux/actions/postActions";
 import { setPost } from "../../redux/slice/postSlice";
 import { PostModal } from "../PostModal/PostModal";
@@ -54,6 +64,9 @@ export const PostCard = ({ post }) => {
   //TODO - GET POSTED TIME
   const diff = new Date(date).getHours() - new Date().getHours();
 
+  // const isBookmarked = user?.bookmarks?.some((bookmark) => bookmark?.id === id);
+  // const isArchived = user?.archive?.some((archive) => archive?.id === id);
+  // console.log(isBookmarked);
   return (
     <div className="m-3 flex h-fit w-full flex-col justify-around rounded-lg shadow-md">
       <div className="flex items-center justify-start">
@@ -118,6 +131,31 @@ export const PostCard = ({ post }) => {
           }}
         >
           <FiMessageSquare />
+        </button>
+        <button
+          className="m-3 h-10 w-10 rounded-full px-3 hover:bg-blue-50"
+          onClick={(e) => UndoBookmarkPost(post, token, dispatch)}
+        >
+          <MdBookmark />
+        </button>
+        ) (
+        <button
+          className="m-3 h-10 w-10 rounded-full px-3 hover:bg-blue-50"
+          onClick={(e) => BookmarkPost(post, token, dispatch)}
+        >
+          <MdBookmarkBorder />
+        </button>
+        <button
+          className="m-3 h-10 w-10 rounded-full px-3 hover:bg-blue-50"
+          onClick={(e) => RestorePost(post, token, dispatch)}
+        >
+          <MdArchive />
+        </button>
+        <button
+          className="m-3 h-10 w-10 rounded-full px-3 hover:bg-blue-50"
+          onClick={(e) => ArchivePost(post, token, dispatch)}
+        >
+          <MdOutlineArchive />
         </button>
       </div>
       <form
