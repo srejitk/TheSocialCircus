@@ -160,3 +160,20 @@ export const BookmarkPost = async (post, token, dispatch) => {
     toast.error("Couldn't bookmark post");
   }
 };
+export const UndoBookmarkPost = async (post, token, dispatch) => {
+  try {
+    const userRef = doc(db, "users", token);
+    await setDoc(
+      userRef,
+      {
+        bookmarks: arrayRemove(post),
+      },
+      { merge: true }
+    );
+    dispatch(getUserData(token));
+    dispatch(getExplorePosts());
+  } catch (error) {
+    console.log(error);
+    toast.error("Couldn't remove bookmark");
+  }
+};
