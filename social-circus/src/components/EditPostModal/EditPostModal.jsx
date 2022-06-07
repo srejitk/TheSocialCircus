@@ -73,13 +73,8 @@ export const EditPostModal = ({ openModal, setOpenModal, edit }) => {
 
   const handleImage = async (image) => {
     if (image === null) return;
-    UploadImage(`posts/${token}`, image);
-    //Please ignore the below code || WIP
-    // const imageRef = ref(storage, `posts/${id.uid}/post-cover.jpg`);
-    // const response = await uploadBytes(imageRef, image);
-    // const picRef = ref(storage, `posts/${id.uid}/post-cover.jpg`);
-    // const imageResponse = await getMetadata(picRef);
-    // setImagePath(imageResponse);
+    const imageResponse = UploadImage(`posts/${token}`, image);
+    setImagePath(imageResponse);
   };
 
   const emojiClickHandler = (e) => {
