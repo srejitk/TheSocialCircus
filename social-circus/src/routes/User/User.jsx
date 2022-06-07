@@ -4,15 +4,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { setOtherUser } from "../../redux/slice/authSlice";
 import { Tab } from "@headlessui/react";
 import { PostCard } from "../../components";
+import { followUser, unfollowUser } from "../../redux/actions/followActions";
 
 export const User = () => {
-  const { allUsers, otherUser } = useSelector((state) => state.auth);
+  const { allUsers, otherUser, user, token } = useSelector(
+    (state) => state.auth
+  );
   const { userName } = useParams();
   const { posts } = useSelector((state) => state.post);
-
   const dispatch = useDispatch();
   const location = useLocation();
-  const [anotherUser, setAnotherUser] = useState({});
   const data = otherUser?.data;
   const findUserID = allUsers?.find(
     (user) => user?.data?.username === userName
@@ -24,6 +25,7 @@ export const User = () => {
 
   const userPosts = posts.filter((post) => post?.data?.id === findUserID);
 
+  const isFollowing = user?.following?.some((ID) => ID === findUserID);
   return (
     <div className="content h-screen w-full outline">
       <div className="relative h-60 w-full">
@@ -55,9 +57,38 @@ export const User = () => {
             <div>{data?.following?.length} Following</div>
             <div>{data?.followers?.length} Followers</div>
           </div>
-          <button className="my-3 rounded-3xl bg-blue-500 px-20  py-3 font-semibold text-white">
-            Follow
-          </button>
+          {isFollowing ? (
+            <button
+              onClick={(e) =>
+                unfollowUser(
+                  user,
+                  otherUser?.data,
+                  otherUser?.id,
+                  token,
+                  dispatch
+                )
+              }
+              className="group my-3 mx-auto flex w-5/12 items-center justify-center rounded-3xl bg-blue-500 px-20  py-3 font-semibold text-white"
+            >
+              <p className=" group-hover:hidden">Following</p>
+              <p className="hidden group-hover:block">Unfollow</p>
+            </button>
+          ) : (
+            <button
+              onClick={(e) =>
+                followUser(
+                  user,
+                  otherUser?.data,
+                  otherUser?.id,
+                  token,
+                  dispatch
+                )
+              }
+              className="my-3 rounded-3xl bg-blue-500 px-20  py-3 font-semibold text-white"
+            >
+              Follow
+            </button>
+          )}
         </div>
       </div>
       <div className="w-fullpx-2 relative mx-auto mt-80 py-16 outline sm:px-0">

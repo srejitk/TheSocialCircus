@@ -41,8 +41,8 @@ export const Profile = () => {
             {user?.website}
           </p>
           <div className="flex items-center justify-between">
-            <div>99 Following</div>
-            <div>99 Followers</div>
+            <div>{user?.following?.length} Following</div>
+            <div>{user?.followers?.length} Followers</div>
             <div>Fuji CLAN</div>
           </div>
           <button className="my-3 rounded-3xl bg-blue-500 px-20  py-3 font-semibold text-white">

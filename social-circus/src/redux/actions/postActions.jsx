@@ -49,7 +49,13 @@ export const getExplorePosts = createAsyncThunk(
 export const EditPost = async (form, dispatch, id) => {
   dispatch(postLoading(true));
   try {
-    await updateDoc(doc(db, "posts", id), form);
+    await setDoc(
+      doc(db, "posts", id),
+      {
+        content: form?.content,
+      },
+      { merge: true }
+    );
     dispatch(getExplorePosts());
   } catch (error) {
     console.log(error);
