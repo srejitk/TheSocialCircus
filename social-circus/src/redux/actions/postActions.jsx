@@ -15,6 +15,7 @@ import {
 import toast from "react-hot-toast";
 import { db } from "../../firebase";
 import { postLoading, setPost } from "../slice/postSlice";
+import { getUserData } from "./authActions";
 
 export const AddPost = async (post, dispatch) => {
   const postRef = collection(db, "posts");
@@ -138,5 +139,24 @@ export const DeleteComment = async (postID, comment, dispatch) => {
     console.log(error);
   } finally {
     dispatch(postLoading(false));
+  }
+};
+
+export const BookmarkPost = async (post, token, dispatch) => {
+  try {
+    const userRef = doc(db, "users", token);
+    await setDoc(
+      userRef,
+      {
+        bookmarks: arrayUnion(post),
+      },
+      { merge: true }
+    );
+    dispatch(getUserData(token));
+    dispatch(getExplorePosts());
+    toast.success("HOGAYA");
+  } catch (error) {
+    console.log(error);
+    toast.error("Couldn't bookmark post");
   }
 };
