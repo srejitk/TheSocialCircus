@@ -21,6 +21,7 @@ import {
   DeleteComment,
   DeletePost,
   DislikePost,
+  getExplorePosts,
   LikePost,
   PostComment,
   RestorePost,
@@ -41,9 +42,9 @@ export const PostCard = ({ post }) => {
   const [comment, setComment] = useState(defaultComment);
   const [showComments, setShowComments] = useState(false);
   const { user, token } = useSelector((state) => state.auth);
-  const { data, id } = post;
   const {
     avatar,
+    id,
     username,
     imageUrl,
     content,
@@ -51,7 +52,7 @@ export const PostCard = ({ post }) => {
     date,
     likes,
     comments,
-  } = data;
+  } = post;
   const handleComment = async (e) => {
     e.preventDefault();
     await PostComment(id, comment, dispatch);
@@ -64,9 +65,10 @@ export const PostCard = ({ post }) => {
   //TODO - GET POSTED TIME
   const diff = new Date(date).getHours() - new Date().getHours();
 
-  // const isBookmarked = user?.bookmarks?.some((bookmark) => bookmark?.id === id);
-  // const isArchived = user?.archive?.some((archive) => archive?.id === id);
-  // console.log(isBookmarked);
+  const isBookmarked = user?.bookmarks?.some((bookmark) => bookmark?.id === id);
+
+  const isArchived = user?.archive?.some((archive) => archive?.id === id);
+
   return (
     <div className="m-3 flex h-fit w-full flex-col justify-around rounded-lg shadow-md">
       <div className="flex items-center justify-start">
@@ -132,19 +134,21 @@ export const PostCard = ({ post }) => {
         >
           <FiMessageSquare />
         </button>
-        <button
-          className="m-3 h-10 w-10 rounded-full px-3 hover:bg-blue-50"
-          onClick={(e) => UndoBookmarkPost(post, token, dispatch)}
-        >
-          <MdBookmark />
-        </button>
-        ) (
-        <button
-          className="m-3 h-10 w-10 rounded-full px-3 hover:bg-blue-50"
-          onClick={(e) => BookmarkPost(post, token, dispatch)}
-        >
-          <MdBookmarkBorder />
-        </button>
+        {isBookmarked ? (
+          <button
+            className="m-3 h-10 w-10 rounded-full px-3 hover:bg-blue-50"
+            onClick={(e) => UndoBookmarkPost(post, token, dispatch)}
+          >
+            <MdBookmark />
+          </button>
+        ) : (
+          <button
+            className="m-3 h-10 w-10 rounded-full px-3 hover:bg-blue-50"
+            onClick={(e) => BookmarkPost(post, token, dispatch)}
+          >
+            <MdBookmarkBorder />
+          </button>
+        )}
         <button
           className="m-3 h-10 w-10 rounded-full px-3 hover:bg-blue-50"
           onClick={(e) => RestorePost(post, token, dispatch)}
@@ -153,7 +157,10 @@ export const PostCard = ({ post }) => {
         </button>
         <button
           className="m-3 h-10 w-10 rounded-full px-3 hover:bg-blue-50"
-          onClick={(e) => ArchivePost(post, token, dispatch)}
+          onClick={(e) => {
+            ArchivePost(post, token, dispatch);
+            dispatch(getExplorePosts());
+          }}
         >
           <MdOutlineArchive />
         </button>
