@@ -20,7 +20,8 @@ import { getUserData } from "./authActions";
 export const AddPost = async (post, dispatch) => {
   const postRef = collection(db, "posts");
   try {
-    await addDoc(postRef, post);
+    const newPost = await addDoc(postRef, post);
+    setDoc(doc(postRef, newPost?.id), { id: newPost?.id }, { merge: true });
     dispatch(setPost(post));
     toast.success("Post sent.");
   } catch (error) {
@@ -38,7 +39,7 @@ export const getExplorePosts = createAsyncThunk(
       const q = query(postRef, orderBy("date", "desc"));
       const postSnapshot = await getDocs(q);
       postSnapshot.forEach((doc) => {
-        posts.push({ data: doc.data(), id: doc.id });
+        posts.push(doc.data());
       });
       return posts;
     } catch (error) {
@@ -83,6 +84,7 @@ export const LikePost = async (postID, token, user, dispatch) => {
       likes: arrayUnion({
         userID: token,
         displayName: user?.displayName,
+        //TODO ADD AVATAR HERE
         avatar: "",
       }),
     });
@@ -175,5 +177,48 @@ export const UndoBookmarkPost = async (post, token, dispatch) => {
   } catch (error) {
     console.log(error);
     toast.error("Couldn't remove bookmark");
+  }
+};
+
+export const ArchivePost = async (post, token, dispatch) => {
+  try {
+    const userRef = doc(db, "users", token);
+    const postRef = collection(db, "posts");
+    console.log(post?.id);
+    await setDoc(
+      userRef,
+      {
+        archive: arrayUnion(post),
+      },
+      { merge: true }
+    );
+    await deleteDoc(doc(postRef, post?.id));
+    dispatch(getUserData(token));
+    dispatch(getExplorePosts());
+  } catch (error) {
+    console.log(error);
+    toast.error("Couldn't archive post");
+  }
+};
+
+export const RestorePost = async (post, token, dispatch) => {
+  try {
+    const userRef = doc(db, "users", token);
+    const postRef = collection(db, "posts");
+    await setDoc(
+      userRef,
+      {
+        archive: arrayRemove(post),
+      },
+      { merge: true }
+    );
+    console.log(post);
+    await setDoc(doc(postRef, post?.id), post, { merge: true });
+    dispatch(setPost(post));
+    dispatch(getExplorePosts());
+    dispatch(getUserData(token));
+  } catch (error) {
+    console.log(error);
+    toast.error("Couldn't restore post");
   }
 };
