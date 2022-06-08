@@ -3,7 +3,7 @@ import { CreatePost, PostCard } from "../../components";
 import { Tab } from "@headlessui/react";
 import { useSelector } from "react-redux";
 
-export const Home = () => {
+export const Saved = () => {
   const { posts } = useSelector((state) => state.post);
   const { user, token } = useSelector((state) => state.auth);
   let homeposts = [];
@@ -11,6 +11,7 @@ export const Home = () => {
   useEffect(() => {
     homeposts = posts?.filter((post) => post.id === token);
   }, [posts]);
+
   return (
     <div className=" col-span-2">
       <div className="w-full max-w-md px-2 py-16 sm:px-0">
@@ -25,7 +26,7 @@ export const Home = () => {
                       : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
                   }`}
                 >
-                  Feed
+                  Bookmarks
                 </button>
               )}
             </Tab>
@@ -38,20 +39,7 @@ export const Home = () => {
                       : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
                   }`}
                 >
-                  Trending
-                </button>
-              )}
-            </Tab>{" "}
-            <Tab as={Fragment}>
-              {({ selected }) => (
-                <button
-                  className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 ${
-                    selected
-                      ? "bg-white shadow"
-                      : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
-                  }`}
-                >
-                  Latest
+                  Archive
                 </button>
               )}
             </Tab>
@@ -63,13 +51,22 @@ export const Home = () => {
             >
               <div>
                 <CreatePost />
-                {posts?.map((post) => {
+                {user?.bookmarks?.map((post) => {
                   return <PostCard key={post.id} post={post} />;
                 })}
               </div>
             </Tab.Panel>
-            <Tab.Panel>Content 2</Tab.Panel>
-            <Tab.Panel>Content 3</Tab.Panel>
+            <Tab.Panel
+              as="div"
+              className="rounded-xl bg-white p-3 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
+            >
+              <div>
+                <CreatePost />
+                {user?.archive?.map((post) => {
+                  return <PostCard key={post.id} post={post} />;
+                })}
+              </div>
+            </Tab.Panel>
           </Tab.Panels>
         </Tab.Group>
       </div>

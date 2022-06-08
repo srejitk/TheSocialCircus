@@ -1,10 +1,13 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { FiEdit } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { Tab } from "@headlessui/react";
+import { ContactCard, PostCard } from "../../components";
 
 export const Profile = () => {
   const { user } = useSelector((state) => state.auth);
+  const { posts } = useSelector((state) => state.post);
   return (
     <div className="content h-screen w-full">
       <div className="relative h-60 w-full outline-red-500">
@@ -49,6 +52,95 @@ export const Profile = () => {
             Follow
           </button>
         </div>
+      </div>
+      <div className="w-fullpx-2 relative mx-auto mt-80 py-16 outline sm:px-0">
+        <Tab.Group>
+          <Tab.List className="flex space-x-1 rounded-xl bg-blue-600 px-4 py-2">
+            <Tab as={Fragment}>
+              {({ selected }) => (
+                <button
+                  className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 ${
+                    selected
+                      ? "bg-white shadow"
+                      : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
+                  }`}
+                >
+                  Feed
+                </button>
+              )}
+            </Tab>
+            <Tab as={Fragment}>
+              {({ selected }) => (
+                <button
+                  className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 ${
+                    selected
+                      ? "bg-white shadow"
+                      : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
+                  }`}
+                >
+                  Followers
+                </button>
+              )}
+            </Tab>{" "}
+            <Tab as={Fragment}>
+              {({ selected }) => (
+                <button
+                  className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 ${
+                    selected
+                      ? "bg-white shadow"
+                      : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
+                  }`}
+                >
+                  Following
+                </button>
+              )}
+            </Tab>
+          </Tab.List>
+          <Tab.Panels className="mt-2">
+            <Tab.Panel
+              as="div"
+              className="rounded-xl bg-white p-3 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
+            >
+              {posts?.length === 0 ? (
+                "No Posts here"
+              ) : (
+                <div>
+                  {posts?.map((post) => {
+                    return <PostCard key={post.id} post={post} />;
+                  })}
+                </div>
+              )}
+            </Tab.Panel>
+            <Tab.Panel
+              as="div"
+              className="rounded-xl bg-white p-3 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
+            >
+              {user?.followers?.length === 0 ? (
+                "No Followers yet"
+              ) : (
+                <div>
+                  {user?.followers?.map((post) => {
+                    return <PostCard key={post.id} post={post} />;
+                  })}
+                </div>
+              )}
+            </Tab.Panel>
+            <Tab.Panel
+              as="div"
+              className="rounded-xl bg-white p-3 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
+            >
+              {user?.following?.length === 0 ? (
+                "Not Following anyone yet"
+              ) : (
+                <div>
+                  {user?.following?.map((post) => {
+                    return <PostCard key={post.id} post={post} />;
+                  })}
+                </div>
+              )}
+            </Tab.Panel>
+          </Tab.Panels>
+        </Tab.Group>
       </div>
     </div>
   );

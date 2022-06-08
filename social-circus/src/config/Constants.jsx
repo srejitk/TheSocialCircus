@@ -20,3 +20,9 @@ export const avatarOptions = [
       "https://res.cloudinary.com/dkqrmlxlg/image/upload/v1654526356/The%20Social%20Circus/Avatars/otsaiilart-06062022-0004_fwb03u.jpg",
   },
 ];
+
+export const defaultCover =
+  "https://res.cloudinary.com/dkqrmlxlg/image/upload/v1654681236/The%20Social%20Circus/Avatars/Circus-Flat-Mark-Bird-Illustration_zjuqte.jpg";
+
+export const defaultAvatar =
+  "https://res.cloudinary.com/dkqrmlxlg/image/upload/v1654684870/The%20Social%20Circus/Avatars/Untitled_1_byawaj.png";

@@ -11,7 +11,11 @@ import {
 } from "../../redux/actions/uploadImageActions";
 import toast from "react-hot-toast";
 import { updateDetails } from "../../redux/actions/authActions";
-import { avatarOptions } from "../../config/Constants";
+import {
+  avatarOptions,
+  defaultAvatar,
+  defaultCover,
+} from "../../config/Constants";
 
 export const UpdateForm = () => {
   const navigate = useNavigate();
@@ -56,17 +60,19 @@ export const UpdateForm = () => {
       const link = await UploadAvatar(`users/${token}/user-avatar.jpg`, file);
       setAvatarPreview(link);
     } else {
-      //TODO SET DEFAULT AVATAR HERE
+      setAvatarPreview(defaultAvatar);
       return;
     }
   };
 
   const handleCover = async (file) => {
-    if (initialValues.cover) {
-      const link = await UploadCover(`users/${token}/user-cover.jpg`, file);
-      setCoverPreview(link);
+    if (file) {
+      if (initialValues.cover !== defaultCover) {
+        const link = await UploadCover(`users/${token}/user-cover.jpg`, file);
+        setCoverPreview(link);
+      }
     } else {
-      //TODO SET DEFAULT COVER HERE
+      setCoverPreview(defaultCover);
       return;
     }
   };
@@ -153,28 +159,24 @@ export const UpdateForm = () => {
             <p className="mb-4 text-lg font-semibold text-zinc-700">
               Upload a cover image
             </p>
-            <div className="cover group mb-2 flex h-32 w-2/3 items-center justify-center rounded-3xl border-2 border-gray-100 bg-white p-4 hover:border-2 hover:border-blue-300 hover:bg-blue-50 hover:outline-2">
+            <div className="cover group relative mb-2 flex h-fit w-2/3 flex-col items-center justify-center overflow-hidden rounded-3xl border-2 border-gray-100 bg-white outline hover:border-2 hover:border-blue-300 hover:bg-blue-50 hover:outline-2">
+              <FiImage className="absolute top-0 left-0 h-10 w-10 translate-x-1/2 translate-y-1/2 p-2" />
               <label htmlFor="cover">
                 <input
                   type="file"
                   id="cover"
                   accept="image/*"
-                  className="hidden"
+                  className="relative hidden"
                   name="cover"
                   onChange={(e) => {
                     handleCover(e.target.files[0]);
                   }}
                 />
-
-                {initialValues.cover ? (
-                  <img
-                    src={initialValues.cover}
-                    alt="user-avatar-preview"
-                    className="w-30 h-10 group-hover:text-blue-500"
-                  />
-                ) : (
-                  <FiImage className="h-10 w-10 p-2 group-hover:font-bold group-hover:text-blue-500 " />
-                )}
+                <img
+                  src={initialValues.cover}
+                  alt="user-avatar-preview"
+                  className=" relative w-full object-cover blur-sm group-hover:text-blue-500 group-hover:blur-md"
+                />
               </label>
             </div>
             <p className="mb-2 text-lg font-semibold text-zinc-700">
