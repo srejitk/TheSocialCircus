@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import {
   Error,
-  Feed,
+  Saved,
   Home,
   Login,
   Profile,
@@ -17,7 +17,7 @@ export const RouteConfig = () => {
       <Route path="login" element={<Login />} />
       <Route path="signup" element={<Signup />} />
       <Route path="update" element={<Update />} />
-      <Route path="feed" element={<Feed />} />
+      <Route path="saved" element={<Saved />} />
       <Route path="/" element={<Home />} />
       <Route path="profile" element={<Profile />} />
       <Route path="profile/:userName" element={<User />} />
