@@ -56,13 +56,17 @@ const createProfile = async (user, uid) => {
       lastname: user.lastName,
       displayName: user.firstName + " " + user.lastName,
       email: user.email,
-      bio: "",
-      website: "",
+      bio: "Your Bio. Make it yours. ",
+      website: "Update you website here",
       followers: [],
       following: [],
-      avatar: "",
-      cover: "",
-      username: "",
+      avatar:
+        "https://res.cloudinary.com/dkqrmlxlg/image/upload/v1654681094/The%20Social%20Circus/Avatars/1_W35QUSvGpcLuxPo3SRTH4w_k7jues.png",
+      cover:
+        "https://res.cloudinary.com/dkqrmlxlg/image/upload/v1654681236/The%20Social%20Circus/Avatars/Circus-Flat-Mark-Bird-Illustration_zjuqte.jpg",
+      username: "username",
+      bookmarks: [],
+      archive: [],
       timestamp: serverTimestamp(),
     });
   } catch (error) {
