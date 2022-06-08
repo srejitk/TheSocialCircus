@@ -16,9 +16,9 @@ export const Sidebar = () => {
           </div>
         </NavLink>
 
-        <NavLink to="explore">
+        <NavLink to="saved">
           <div className="flex h-20 w-20 flex-col items-center justify-center gap-4 px-3 py-2 hover:bg-slate-200 hover:brightness-95 md:w-full md:flex-row-reverse  md:justify-end md:px-7 lg:w-full">
-            Boomark Probably
+            Saved
             <FiCoffee />
           </div>
         </NavLink>
