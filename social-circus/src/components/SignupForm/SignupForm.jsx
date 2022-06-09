@@ -36,7 +36,9 @@ export const SignupForm = () => {
   });
 
   const onSubmit = (values, actions) => {
-    registerUser(values, navigate, dispatch, actions);
+    const loading = toast.loading("Signing you up...");
+    const link = await registerUser(values, navigate, dispatch, actions);
+    toast.success("Welcome to the circus!", { id: loading });
   };
   return (
     <Formik
@@ -54,9 +56,7 @@ export const SignupForm = () => {
                 Sign in
               </Link>
             </p>
-            <button className="my-3 flex w-full items-center justify-center gap-3 rounded-lg bg-blue-500 py-2 font-semibold text-white hover:bg-blue-600">
-              <FaGoogle /> Sign up with Google
-            </button>
+
             <p className="text-gray-500">or</p>
             <div className="flex gap-3 ">
               <FormikControl
