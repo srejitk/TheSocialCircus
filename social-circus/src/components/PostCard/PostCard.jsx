@@ -29,6 +29,7 @@ import {
 } from "../../redux/actions/postActions";
 import { setPost } from "../../redux/slice/postSlice";
 import { PostModal } from "../PostModal/PostModal";
+import { EditPostModal } from "../EditPostModal/EditPostModal";
 
 const defaultComment = {
   content: "",
@@ -69,6 +70,8 @@ export const PostCard = ({ post }) => {
 
   const isArchived = user?.archive?.some((archive) => archive?.id === id);
 
+  const isAuthor = post?.uid === token;
+
   return (
     <div className="m-3 flex h-fit w-full flex-col justify-around rounded-lg shadow-md">
       <div className="flex items-center justify-start">
@@ -94,7 +97,7 @@ export const PostCard = ({ post }) => {
           </div>
         )}
       </div>
-      <div className="flex justify-start">
+      <div className="flex justify-around">
         <button
           className={`} m-3 flex h-10 w-10 items-center justify-center rounded-full border-2  border-transparent hover:bg-red-50 
           hover:text-red-500`}
@@ -110,21 +113,25 @@ export const PostCard = ({ post }) => {
             <FiHeart />
           )}
         </button>
-        <button
-          className="m-3 flex h-10 w-10 items-center justify-center rounded-full border-2 border-transparent  hover:bg-red-50 hover:text-red-500"
-          onClick={(e) => dispatch(DeletePost(post?.id, dispatch))}
-        >
-          <FiTrash />
-        </button>
-        <button
-          className="m-3 h-10 w-10 rounded-full px-3 hover:bg-blue-50"
-          onClick={(e) => {
-            dispatch(setPost(post));
-            setOpenModal((prev) => !prev);
-          }}
-        >
-          <FiEdit />
-        </button>
+        {isAuthor && (
+          <button
+            className="m-3 flex h-10 w-10 items-center justify-center rounded-full border-2 border-transparent  hover:bg-red-50 hover:text-red-500"
+            onClick={(e) => dispatch(DeletePost(post?.id, dispatch))}
+          >
+            <FiTrash />
+          </button>
+        )}
+        {isAuthor && (
+          <button
+            className="m-3 h-10 w-10 rounded-full px-3 hover:bg-blue-50"
+            onClick={(e) => {
+              dispatch(setPost(post));
+              setOpenModal((prev) => !prev);
+            }}
+          >
+            <FiEdit />
+          </button>
+        )}
         <button
           className="m-3 h-10 w-10 rounded-full px-3 hover:bg-blue-50"
           onClick={(e) => {
@@ -149,110 +156,118 @@ export const PostCard = ({ post }) => {
             <MdBookmarkBorder />
           </button>
         )}
-        <button
-          className="m-3 h-10 w-10 rounded-full px-3 hover:bg-blue-50"
-          onClick={(e) => RestorePost(post, token, dispatch)}
-        >
-          <MdArchive />
-        </button>
-        <button
-          className="m-3 h-10 w-10 rounded-full px-3 hover:bg-blue-50"
-          onClick={(e) => {
-            ArchivePost(post, token, dispatch);
-            dispatch(getExplorePosts());
-          }}
-        >
-          <MdOutlineArchive />
-        </button>
-      </div>
-      <form
-        onSubmit={(e) => handleComment(e)}
-        className="flex h-36 items-center justify-between border-t-2 border-gray-200 "
-      >
-        <div>
-          <img
-            src={user?.avatar}
-            alt=""
-            className="m-3 h-10  w-10 rounded-full"
-          />
-        </div>
-        <textarea
-          type="text"
-          name="newPost"
-          rows="5"
-          value={comment.content}
-          onChange={(e) =>
-            setComment({
-              ...comment,
-              content: e.target.value,
-              userID: token,
-              displayName: user?.displayName,
-              avatar: user?.avatar,
-              username: user?.username,
-              date: new Date().toLocaleString(),
-            })
-          }
-          placeholder="Have any thoughts on this?"
-          className=" mx-6 w-full resize-none whitespace-normal break-words  rounded-sm border-2 border-gray-50 bg-gray-50 px-3 focus:bg-gray-50 focus:outline-none"
-        />
-        <button
-          type="submit"
-          className="mx-6 rounded-full bg-blue-500 p-3 font-semibold text-white "
-        >
-          <FiCornerDownLeft />
-        </button>
-      </form>
-      {comments?.map((comment) => (
-        <div className="flex w-full flex-col items-start" key={comment.date}>
-          <div className="flex h-fit min-h-[7rem] w-full items-center justify-start border-b-2 border-t-2 border-slate-200 pb-3">
-            <Link to={`profile/${comment.username}`}>
-              <img
-                src={comment?.avatar}
-                alt="Commenter Avatar"
-                className="m-3 h-10 w-10 flex-grow rounded-full"
-              />
-            </Link>
-            <div className="mx-6 flex flex-grow flex-col items-start justify-center">
-              <Link to={`profile/${comment.username}`}>
-                {" "}
-                <p
-                  className=" mx-1 flex h-8 w-full  flex-wrap items-center rounded-sm  px-3
-        text-left font-medium text-gray-500  "
-                >
-                  {comment?.displayName}
-                </p>
-              </Link>
-              <p
-                className=" min-h-8 mx-1 flex h-fit w-[70%] flex-wrap items-center text-ellipsis 
-        break-all rounded-sm px-3 text-left font-semibold "
-              >
-                {comment?.content}
-              </p>
-            </div>
-            <p className="item-start flex h-full py-6 px-6 font-semibold text-gray-400">
-              {comment.date}
-            </p>
-          </div>
-          <div>
-            {token === comment.userID ? (
+        {post?.uid === token && isArchived
+          ? isAuthor && (
               <button
-                onClick={(e) => deleteCommentHandler(e, comment)}
-                className="m-3 flex h-10 w-32 items-center justify-center rounded-sm outline outline-transparent hover:bg-red-50 hover:text-red-500 hover:outline-red-200"
+                className="m-3 h-10 w-10 rounded-full px-3 hover:bg-blue-50"
+                onClick={(e) => RestorePost(post, token, dispatch)}
               >
-                <FiTrash />
+                <MdArchive />
               </button>
-            ) : null}
-          </div>
-        </div>
-      ))}
-
+            )
+          : isAuthor && (
+              <button
+                className="m-3 h-10 w-10 rounded-full px-3 hover:bg-blue-50"
+                onClick={(e) => {
+                  ArchivePost(post, token, dispatch);
+                  dispatch(getExplorePosts());
+                }}
+              >
+                <MdOutlineArchive />
+              </button>
+            )}
+      </div>
       {openModal && (
-        <PostModal
+        <EditPostModal
           openModal={openModal}
           setOpenModal={setOpenModal}
           edit={true}
         />
       )}
+      {showComments && (
+        <form
+          onSubmit={(e) => handleComment(e)}
+          className="flex h-36 items-center justify-between border-t-2 border-gray-200 "
+        >
+          <div>
+            <img
+              src={user?.avatar}
+              alt=""
+              className="m-3 h-10  w-10 rounded-full"
+            />
+          </div>
+          <textarea
+            type="text"
+            name="newPost"
+            rows="5"
+            value={comment.content}
+            onChange={(e) =>
+              setComment({
+                ...comment,
+                content: e.target.value,
+                userID: token,
+                displayName: user?.displayName,
+                avatar: user?.avatar,
+                username: user?.username,
+                date: new Date().toLocaleString(),
+              })
+            }
+            placeholder="Have any thoughts on this?"
+            className=" mx-6 w-full resize-none whitespace-normal break-words  rounded-sm border-2 border-gray-50 bg-gray-50 px-3 focus:bg-gray-50 focus:outline-none"
+          />
+          <button
+            type="submit"
+            className="mx-6 rounded-full bg-blue-500 p-3 font-semibold text-white "
+          >
+            <FiCornerDownLeft />
+          </button>
+        </form>
+      )}
+
+      {showComments &&
+        comments?.map((comment) => (
+          <div className="flex w-full flex-col items-start" key={comment.date}>
+            <div className="flex h-fit min-h-[7rem] w-full items-center justify-start border-b-2 border-t-2 border-slate-200 pb-3">
+              <Link to={`profile/${comment.username}`}>
+                <img
+                  src={comment?.avatar}
+                  alt="Commenter Avatar"
+                  className="m-3 h-10 w-10 flex-grow rounded-full"
+                />
+              </Link>
+              <div className="mx-6 flex flex-grow flex-col items-start justify-center">
+                <Link to={`profile/${comment.username}`}>
+                  {" "}
+                  <p
+                    className=" mx-1 flex h-8 w-full  flex-wrap items-center rounded-sm  px-3
+        text-left font-medium text-gray-500  "
+                  >
+                    {comment?.displayName}
+                  </p>
+                </Link>
+                <p
+                  className=" min-h-8 mx-1 flex h-fit w-[70%] flex-wrap items-center 
+        text-ellipsis break-all rounded-sm px-3 text-left font-semibold "
+                >
+                  {comment?.content}
+                </p>
+              </div>
+              <p className="item-start flex h-full py-6 px-6 font-semibold text-gray-400">
+                {comment.date}
+              </p>
+            </div>
+            <div>
+              {token === comment.userID ? (
+                <button
+                  onClick={(e) => deleteCommentHandler(e, comment)}
+                  className="m-3 flex h-10 w-32 items-center justify-center rounded-sm outline outline-transparent hover:bg-red-50 hover:text-red-500 hover:outline-red-200"
+                >
+                  <FiTrash />
+                </button>
+              ) : null}
+            </div>
+          </div>
+        ))}
     </div>
   );
 };
