@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { defaultAvatar } from "../../config/Constants";
 
 export const ContactCard = ({ id }) => {
   const { user, token, allUsers } = useSelector((state) => state.auth);
@@ -7,21 +8,28 @@ export const ContactCard = ({ id }) => {
 
   const otherUser = allUsers?.find((user) => user?.id === id);
 
-  const isFollowing = user?.following?.some((ID) => ID === findUserID);
+  const { data } = otherUser;
+  const isFollowing = user?.following?.some((ID) => ID === id);
   return (
-    <div className="flex justify-start outline">
+    <div className="mb-4 flex justify-between border-b-2">
       <div className="h-16 w-16">
         <img
-          src="https://res.cloudinary.com/dkqrmlxlg/image/upload/v1654684870/The%20Social%20Circus/Avatars/Untitled_1_byawaj.png"
+          src={data?.avatar || defaultAvatar}
           alt="contact dp"
           className="rounded-full"
         />
       </div>
-      <div className="flex flex-col items-start justify-center px-4">
-        <p className="text-base font-semibold">Sreejith</p>
-        <p className=" text-sm font-semibold">username</p>
+      <div className="flex flex-grow flex-col items-center justify-start pl-4">
+        <p className="flex w-full flex-grow items-center text-left text-base font-semibold">
+          {data?.displayName}
+        </p>
+        <p className="my-auto flex w-full flex-grow items-start text-left text-base font-semibold text-gray-500">
+          {data?.username === "username"
+            ? " @" + data?.firstname.toLowerCase()
+            : data?.username}
+        </p>
       </div>
-      <div>
+      <div className="w-fit pr-4">
         {isFollowing ? (
           <button
             onClick={(e) =>
@@ -43,7 +51,7 @@ export const ContactCard = ({ id }) => {
             onClick={(e) =>
               followUser(user, otherUser?.data, otherUser?.id, token, dispatch)
             }
-            className="my-3 ml-auto rounded-3xl bg-blue-500 py-3  px-10 font-semibold text-white"
+            className="my-3 ml-auto rounded-3xl bg-blue-500 py-3 px-10  font-semibold text-white hover:bg-blue-600"
           >
             Follow
           </button>
