@@ -20,10 +20,11 @@ import { getUserData } from "./authActions";
 export const AddPost = async (post, dispatch) => {
   const postRef = collection(db, "posts");
   try {
+    const loading = toast.loading("Uploading Post...");
     const newPost = await addDoc(postRef, post);
     setDoc(doc(postRef, newPost?.id), { id: newPost?.id }, { merge: true });
     dispatch(setPost(post));
-    toast.success("Post sent.");
+    toast.success("Post Uploaded", { id: loading });
   } catch (error) {
     console.log(error);
     toast.error(error.message);
@@ -51,6 +52,7 @@ export const getExplorePosts = createAsyncThunk(
 export const EditPost = async (form, dispatch, id) => {
   dispatch(postLoading(true));
   try {
+    const loading = toast.loading("Updating Post...");
     await setDoc(
       doc(db, "posts", id),
       {
@@ -58,6 +60,7 @@ export const EditPost = async (form, dispatch, id) => {
       },
       { merge: true }
     );
+    toast.success("Post Updated", { id: loading });
     dispatch(getExplorePosts());
   } catch (error) {
     console.log(error);
@@ -69,8 +72,10 @@ export const EditPost = async (form, dispatch, id) => {
 
 export const DeletePost = async (id, dispatch) => {
   try {
+    const loading = toast.loading("Deleting Post...");
     await deleteDoc(doc(db, "posts", id));
     dispatch(getExplorePosts());
+    toast.success("Post Deleted", { id: loading });
   } catch (error) {
     console.log(error);
     toast.error("Error : Couldn't delete post");
