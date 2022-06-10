@@ -19,6 +19,7 @@ export const LoginForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState();
+  const [form, setForm] = useState(initialValues);
 
   const validationScheme = Yup.object({
     email: Yup.string()
@@ -30,6 +31,17 @@ export const LoginForm = () => {
   const onSubmit = async (values) => {
     const loading = toast.loading("Logging you in...");
     const link = await loginUser(values, navigate, dispatch, login);
+    toast.success("Welcome back to the circus!", { id: loading });
+  };
+
+  const testdetails = {
+    email: "srejitk@gmail.com",
+    password: "sreejithk",
+  };
+
+  const handleTestLogin = async (e) => {
+    const loading = toast.loading("Logging you in...");
+    const link = await loginUser(testdetails, navigate, dispatch, login);
     toast.success("Welcome back to the circus!", { id: loading });
   };
   return (
@@ -77,6 +89,13 @@ export const LoginForm = () => {
                 )}
               </div>
             </div>
+            <button
+              type="button"
+              onClick={(e) => handleTestLogin(e)}
+              className="my-3 flex w-full items-center justify-center gap-3 rounded-lg border-2 border-blue-500 bg-white py-2 font-semibold text-blue-500 hover:bg-blue-50"
+            >
+              Login with test creds
+            </button>
             <button
               type="submit"
               disabled={!formik.isValid}
