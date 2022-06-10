@@ -26,3 +26,9 @@ export const defaultCover =
 
 export const defaultAvatar =
   "https://res.cloudinary.com/dkqrmlxlg/image/upload/v1654684870/The%20Social%20Circus/Avatars/Untitled_1_byawaj.png";
+
+export const brand =
+  "https://res.cloudinary.com/dkqrmlxlg/image/upload/v1654808385/The%20Social%20Circus/Juggler_k3zlov.png";
+
+export const errorCover =
+  "https://res.cloudinary.com/dkqrmlxlg/image/upload/v1654830680/The%20Social%20Circus/Astronaut_helmet-cuate_1_dto1ov.png";
