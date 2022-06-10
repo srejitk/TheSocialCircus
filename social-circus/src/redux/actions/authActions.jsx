@@ -94,7 +94,7 @@ export const loginUser = async (userData, navigate, dispatch, login) => {
     const user = userCreds.user;
     const { uid } = user;
     localStorage.setItem("userID", uid);
-    dispatch(login());
+    dispatch(login(user));
     dispatch(getUserData(uid));
     navigate("/feed", { replace: true });
   } catch (error) {
