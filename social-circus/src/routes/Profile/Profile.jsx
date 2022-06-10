@@ -4,58 +4,81 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Tab } from "@headlessui/react";
 import { ContactCard, PostCard } from "../../components";
+import { defaultAvatar, defaultCover } from "../../config/Constants";
 
 export const Profile = () => {
-  const { user } = useSelector((state) => state.auth);
+  const { user, isLoading } = useSelector((state) => state.auth);
   const { posts } = useSelector((state) => state.post);
   return (
-    <div className="content h-screen w-full">
-      <div className="relative h-60 w-full outline-red-500">
+    <div className="content h-screen w-full lg:w-[calc(100vw-18rem)] ">
+      <div className="relative h-60 w-full bg-gray-50">
         <img
-          src={user?.cover}
+          src={user?.cover || defaultCover}
           alt="cover"
-          className="absolute top-0 h-fit max-h-80 w-full object-cover"
+          className={` ${
+            isLoading ? "animate-pulse" : ""
+          } absolute top-0 h-fit max-h-80 w-full object-cover`}
         />
 
         <img
-          src={user?.avatar}
+          src={user?.avatar || defaultAvatar}
           alt="dp"
-          className="absolute left-1/2 -bottom-8 z-10 h-28 w-28 -translate-x-1/2 translate-y-1/2 rounded-lg"
+          className={`${
+            isLoading ? "animate-pulse" : ""
+          }absolute left-16 -bottom-4 z-10 h-28 w-28 translate-y-1/2 rounded-lg`}
         />
-
-        <div className="absolute -bottom-48 left-1/2 h-80 w-11/12 -translate-x-1/2 translate-y-1/2 flex-col items-center justify-center  rounded-lg bg-gray-50 p-20 shadow-xl">
+        <div className="absolute -bottom-40 left-1/2 h-80 w-full -translate-x-1/2 translate-y-1/2 flex-col items-center justify-center  rounded-lg bg-gray-50 p-20 shadow-xl">
           <Link
             to="/update"
-            className={`group absolute top-8 right-8 rounded-3xl border-2 border-gray-100 bg-white p-4 hover:border-2 hover:border-blue-300 hover:bg-blue-50 hover:outline-2 
-                
-              `}
+            className="align-center group absolute top-8 right-8 my-3 flex justify-between  rounded-3xl border-2 border-transparent bg-blue-700 p-4 px-10 py-3 font-bold text-white hover:border-blue-700/90 hover:bg-blue-700/90 hover:outline-2"
           >
-            <FiEdit className="group-hover:font-bold group-hover:text-blue-500 " />
+            <FiEdit className="relative mx-3 mt-1 h-full " />
+            <p>Edit Profile</p>
           </Link>
-          <h1 className="text-black-300 text-2xl font-medium ">
-            {user?.displayName}
-          </h1>
-          <h1 className="mx-auto text-lg font-medium text-gray-400 ">
-            {`@${user?.username}`}
-          </h1>
-          <p className="mx-auto w-full px-8 pt-4">{user?.bio}</p>
 
-          <p className="mx-auto w-full px-8 py-1 font-semibold text-blue-500">
-            {user?.website}
+          <h1 className="text-black-300 text-left text-2xl font-medium ">
+            {user?.displayName || "Joker"}
+          </h1>
+          <h1 className="w-full pt-2 text-left text-lg font-medium text-gray-400 ">
+            {`@${user?.username || "joker"}`}
+          </h1>
+          <p className="mx-auto w-full pt-2 text-left text-xl font-semibold">
+            {user?.bio || "We're Hiring!"}
           </p>
-          <div className="flex items-center justify-between">
-            <div>{user?.following?.length} Following</div>
-            <div>{user?.followers?.length} Followers</div>
-            <div>Fuji CLAN</div>
+          <div className="flex w-full">
+            {" "}
+            <a
+              href={user?.website || "https://www.jointhecircus.com"}
+              target="_blank"
+              className="w-full py-1 text-left font-semibold text-blue-500"
+            >
+              {user?.website || "https://www.jointhecircus.com"}
+            </a>
           </div>
-          <button className="my-3 rounded-3xl bg-blue-500 px-20  py-3 font-semibold text-white">
-            Follow
-          </button>
+
+          <div className="flex items-center justify-between">
+            <div>
+              <p className=" text-4xl font-black">
+                {user?.following?.length || 0}
+              </p>
+              <p className="font-semibold text-gray-500">Following</p>
+            </div>
+            <div>
+              <p className=" text-4xl font-black">
+                {user?.followers?.length || 0}
+              </p>
+              <p className="font-semibold text-gray-500">Followers</p>
+            </div>
+            <div>
+              <p className=" text-4xl font-black">{posts?.length}</p>
+              <p className="font-semibold text-gray-500">Posts</p>
+            </div>
+          </div>
         </div>
       </div>
-      <div className="w-fullpx-2 relative mx-auto mt-80 py-16 outline sm:px-0">
+      <div className="relative mx-auto mt-80 w-full bg-gray-100 px-2 pb-16 sm:px-0">
         <Tab.Group>
-          <Tab.List className="flex space-x-1 rounded-xl bg-blue-600 px-4 py-2">
+          <Tab.List className="flex space-x-1 rounded-xl bg-blue-600 px-4  py-2">
             <Tab as={Fragment}>
               {({ selected }) => (
                 <button
@@ -96,10 +119,10 @@ export const Profile = () => {
               )}
             </Tab>
           </Tab.List>
-          <Tab.Panels className="mt-2">
+          <Tab.Panels className="mt-2 bg-gray-100">
             <Tab.Panel
               as="div"
-              className="rounded-xl bg-white p-3 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
+              className="rounded-xl bg-gray-50 p-3 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
             >
               {posts?.length === 0 ? (
                 "No Posts here"

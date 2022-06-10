@@ -28,8 +28,8 @@ import {
   UndoBookmarkPost,
 } from "../../redux/actions/postActions";
 import { setPost } from "../../redux/slice/postSlice";
-import { PostModal } from "../PostModal/PostModal";
 import { EditPostModal } from "../EditPostModal/EditPostModal";
+import { defaultAvatar } from "../../config/Constants";
 
 const defaultComment = {
   content: "",
@@ -64,28 +64,31 @@ export const PostCard = ({ post }) => {
     await DeleteComment(id, comment, dispatch);
   };
   //TODO - GET POSTED TIME
-  const diff = new Date(date).getHours() - new Date().getHours();
+  const diff = new Date(date).getMinutes() - new Date().getMinutes();
 
   const isBookmarked = user?.bookmarks?.some((bookmark) => bookmark?.id === id);
 
   const isArchived = user?.archive?.some((archive) => archive?.id === id);
 
   const isAuthor = post?.uid === token;
-
+  const isLiked = likes?.find((user) => user?.userID === token);
   return (
-    <div className="m-3 flex h-fit w-full flex-col justify-around rounded-lg shadow-md">
-      <div className="flex items-center justify-start">
+    <div className="my-3 mx-auto flex h-fit w-full flex-col justify-around rounded-lg bg-white shadow-md">
+      <Link
+        to={`/profile/${post?.uid}`}
+        className="flex items-center justify-start"
+      >
         <img src={avatar} alt="dp" className="m-3 h-16 w-16 rounded-full" />
 
-        <div className="flex flex-col items-start px-3">
+        <div className="flex flex-col items-start px-3 ">
           {" "}
-          <h1 className="text-xl">{displayName}</h1>
-          <h1>{username}</h1>
-          <h1>{date}</h1>
+          <h1 className="text-xl font-semibold">{displayName}</h1>
+          <h1>{username === "username" ? "@" + displayName : username}</h1>
         </div>
-      </div>
+        <h1 className="ml-auto pr-4 font-semibold">{date}</h1>
+      </Link>
       <div className="flex flex-col">
-        <h1 className="px-3 text-left text-2xl">{content}</h1>
+        <h1 className="break-all px-3 text-left text-2xl">{content}</h1>
 
         {imageUrl !== "" && (
           <div className="rounded-md  p-4">
@@ -96,6 +99,69 @@ export const PostCard = ({ post }) => {
             />
           </div>
         )}
+        <div class="mx-2 mt-4 flex items-center -space-x-1 overflow-hidden">
+          {isLiked ? (
+            likes?.length > 1 ? (
+              <div className="flex -space-x-1 overflow-hidden">
+                <img
+                  className="inline-block h-8 w-8 rounded-full ring-2 ring-white"
+                  src={likes[0]?.avatar || defaultAvatar}
+                />
+                <img
+                  className="inline-block h-8 w-8 rounded-full ring-2 ring-white"
+                  src={user?.avatar || defaultAvatar}
+                />
+              </div>
+            ) : (
+              <div className="flex -space-x-1 overflow-hidden">
+                <img
+                  className="inline-block h-8 w-8 rounded-full ring-2 ring-white"
+                  src={user?.avatar || defaultAvatar}
+                />
+              </div>
+            )
+          ) : likes?.length > 1 && likes?.length < 3 ? (
+            <div className="flex -space-x-1 overflow-hidden">
+              <img
+                className="inline-block h-8 w-8 rounded-full ring-2 ring-white"
+                src={likes[0]?.avatar || defaultAvatar}
+              />
+              <img
+                className="inline-block h-8 w-8 rounded-full ring-2 ring-white"
+                src={likes[1]?.avatar || defaultAvatar}
+              />
+            </div>
+          ) : (
+            <div className="flex -space-x-1 overflow-hidden">
+              <img
+                className="inline-block h-8 w-8 rounded-full ring-2 ring-white"
+                src={likes[0]?.avatar || defaultAvatar}
+              />
+              <img
+                className="inline-block h-8 w-8 rounded-full ring-2 ring-white"
+                src={likes[1]?.avatar || defaultAvatar}
+              />
+              <img
+                className="inline-block h-8 w-8 rounded-full ring-2 ring-white"
+                src={likes[2]?.avatar || defaultAvatar}
+              />
+            </div>
+          )}
+
+          <p className="px-3 font-semibold text-gray-500">
+            {isLiked
+              ? likes?.length > 1
+                ? `You and ${likes?.length - 1} others liked this`
+                : "You liked this"
+              : likes?.length > 1
+              ? `${likes[0]?.displayName} & ${
+                  likes?.length - 1
+                } other liked this`
+              : likes?.length
+              ? `${likes[0]?.displayName} liked this`
+              : "Be the first one to like this"}
+          </p>
+        </div>
       </div>
       <div className="flex justify-around">
         <button
@@ -228,7 +294,7 @@ export const PostCard = ({ post }) => {
         comments?.map((comment) => (
           <div className="flex w-full flex-col items-start" key={comment.date}>
             <div className="flex h-fit min-h-[7rem] w-full items-center justify-start border-b-2 border-t-2 border-slate-200 pb-3">
-              <Link to={`profile/${comment.username}`}>
+              <Link to={`/profile/${comment.userID}`}>
                 <img
                   src={comment?.avatar}
                   alt="Commenter Avatar"
