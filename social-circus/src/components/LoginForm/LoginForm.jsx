@@ -31,7 +31,6 @@ export const LoginForm = () => {
     const loading = toast.loading("Logging you in...");
     const link = await loginUser(values, navigate, dispatch, login);
     toast.success("Welcome back to the circus!", { id: loading });
-    setImagePath(link);
   };
   return (
     <Formik

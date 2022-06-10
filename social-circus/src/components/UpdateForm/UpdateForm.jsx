@@ -56,25 +56,15 @@ export const UpdateForm = () => {
   };
 
   const handleImage = async (file) => {
-    if (initialValues.avatar) {
-      const link = await UploadAvatar(`users/${token}/user-avatar.jpg`, file);
-      setAvatarPreview(link);
-    } else {
-      setAvatarPreview(defaultAvatar);
-      return;
-    }
+    const link =
+      file && (await UploadAvatar(`users/${token}/user-avatar.jpg`, file));
+    setAvatarPreview(link);
   };
 
   const handleCover = async (file) => {
-    if (file) {
-      if (initialValues.cover !== defaultCover) {
-        const link = await UploadCover(`users/${token}/user-cover.jpg`, file);
-        setCoverPreview(link);
-      }
-    } else {
-      setCoverPreview(defaultCover);
-      return;
-    }
+    const link =
+      file && (await UploadCover(`users/${token}/user-cover.jpg`, file));
+    setCoverPreview(link);
   };
 
   return (
@@ -132,7 +122,6 @@ export const UpdateForm = () => {
                       value={option.avatar}
                       onClick={(e) => {
                         setAvatarPreview(option.avatar);
-                        console.log(e.target.value);
                       }}
                       className="group relative h-20 w-20 overflow-hidden rounded-3xl border-4 border-transparent bg-white hover:border-black  hover:brightness-95"
                     >
@@ -238,7 +227,7 @@ export const UpdateForm = () => {
             <button
               type="submit"
               disabled={!formik.isValid}
-              className="my-3 flex w-full items-center justify-center gap-3 rounded-lg bg-blue-500 py-2 font-semibold text-white hover:bg-blue-600 disabled:bg-slate-400"
+              className="my-3 flex w-2/3 items-center justify-center gap-3 rounded-lg bg-blue-500 py-2 font-semibold text-white hover:bg-blue-600 disabled:bg-slate-400"
             >
               Update Profile
             </button>

@@ -23,7 +23,7 @@ export const PostModal = ({ openModal, setOpenModal, edit }) => {
   const dispatch = useDispatch();
 
   const { user, token } = useSelector((state) => state.auth);
-  const { posts, post } = useSelector((state) => state.post);
+  const { post } = useSelector((state) => state.post);
   const [selectedEmoji, setSelectedEmoji] = useState(null);
   const [imagePath, setImagePath] = useState("");
   const [form, setForm] = useState(initialValues);
@@ -72,10 +72,12 @@ export const PostModal = ({ openModal, setOpenModal, edit }) => {
     }
     setForm(initialValues);
     setOpenEmoji(false);
+    setImagePath("");
     dispatch(getExplorePosts());
   };
 
   const handleImage = async (file) => {
+    e.preventDefault();
     const loading = toast.loading("Uploading image...");
     const link = await UploadImage(`posts/${token}/post-cover.jpg`, file);
     toast.success("Uploaded image", { id: loading });

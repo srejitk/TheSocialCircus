@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from "react";
-import { CreatePost, PostCard } from "../../components";
+import { CreatePost, PostCard, SuggestionBar } from "../../components";
 import { Tab } from "@headlessui/react";
 import { useSelector } from "react-redux";
 
@@ -13,10 +13,10 @@ export const Saved = () => {
   }, [posts]);
 
   return (
-    <div className=" col-span-2">
-      <div className="w-full max-w-md px-2 py-16 sm:px-0">
+    <div className="flex md:col-span-3 md:ml-44 lg:ml-64">
+      <div className="w-full px-1 pb-16 pt-8 sm:px-0 md:px-2 md:pt-2 lg:px-16">
         <Tab.Group>
-          <Tab.List className="flex space-x-1 rounded-xl bg-blue-600 px-4 py-2">
+          <Tab.List className="flex space-x-1 rounded-t-lg bg-blue-600 px-4 py-2">
             <Tab as={Fragment}>
               {({ selected }) => (
                 <button
@@ -70,6 +70,7 @@ export const Saved = () => {
           </Tab.Panels>
         </Tab.Group>
       </div>
+      <SuggestionBar />
     </div>
   );
 };

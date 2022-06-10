@@ -16,7 +16,7 @@ export const Update = () => {
         <UpdateForm />
       </div>
 
-      <div className="h-full sm:hidden sm:w-0 md:hidden md:w-0 lg:block lg:w-1/2">
+      <div className="hidden h-full w-0 md:hidden md:w-0 lg:block lg:w-1/2">
         <img
           src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"
           alt="Banner Picture of Area-51"

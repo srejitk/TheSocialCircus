@@ -131,7 +131,7 @@ export const PostCard = ({ post }) => {
                 src={likes[1]?.avatar || defaultAvatar}
               />
             </div>
-          ) : (
+          ) : likes?.length > 3 ? (
             <div className="flex -space-x-1 overflow-hidden">
               <img
                 className="inline-block h-8 w-8 rounded-full ring-2 ring-white"
@@ -146,7 +146,7 @@ export const PostCard = ({ post }) => {
                 src={likes[2]?.avatar || defaultAvatar}
               />
             </div>
-          )}
+          ) : null}
 
           <p className="px-3 font-semibold text-gray-500">
             {isLiked

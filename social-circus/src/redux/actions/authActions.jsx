@@ -13,7 +13,6 @@ import {
   serverTimestamp,
   setDoc,
 } from "firebase/firestore";
-import { replace } from "formik";
 import toast from "react-hot-toast";
 import { auth, db } from "../../firebase";
 import { setLoading } from "../slice/authSlice";
