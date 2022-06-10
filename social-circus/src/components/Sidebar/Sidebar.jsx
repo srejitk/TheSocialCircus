@@ -4,7 +4,7 @@ import { FiHome, FiCoffee, FiUser, FiUsers } from "react-icons/fi";
 
 export const Sidebar = () => {
   return (
-    <nav className="sidebar bottom-0 flex h-fit w-full flex-row justify-center gap-2 bg-white dark:bg-gray-900 md:h-screen md:flex-col md:justify-start lg:h-screen lg:w-72 lg:flex-col ">
+    <nav className="sidebar bottom-0 flex h-fit w-full flex-row justify-center gap-2 bg-white md:h-screen md:flex-col md:justify-start lg:h-screen lg:w-72 lg:flex-col ">
       <div className="hidden text-3xl font-semibold md:block md:pt-7 lg:pt-7">
         Area-51
       </div>
