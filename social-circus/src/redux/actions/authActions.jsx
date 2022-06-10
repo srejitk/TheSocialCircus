@@ -34,7 +34,7 @@ export const registerUser = async (userData, navigate, dispatch, actions) => {
     dispatch(getUserData(uid));
     actions.resetForm();
     toast.success("You are part of the circus!");
-    navigate("/");
+    navigate("/feed");
   } catch (error) {
     const errorCode = error.code;
     switch (errorCode) {
@@ -96,7 +96,7 @@ export const loginUser = async (userData, navigate, dispatch, login) => {
     localStorage.setItem("userID", uid);
     dispatch(login());
     dispatch(getUserData(uid));
-    navigate("/");
+    navigate("/feed");
     toast.success("You're signed in!");
   } catch (error) {
     const errorCode = error.code;

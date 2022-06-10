@@ -205,7 +205,7 @@ export const PostCard = ({ post }) => {
       {comments?.map((comment) => (
         <div className="flex w-full flex-col items-start" key={comment.date}>
           <div className="flex h-fit min-h-[7rem] w-full items-center justify-start border-b-2 border-t-2 border-slate-200 pb-3">
-            <Link to={`profile/${comment.username}`}>
+            <Link to={`/profile/${comment.username}`}>
               <img
                 src={comment?.avatar}
                 alt="Commenter Avatar"
@@ -213,7 +213,7 @@ export const PostCard = ({ post }) => {
               />
             </Link>
             <div className="mx-6 flex flex-grow flex-col items-start justify-center">
-              <Link to={`profile/${comment.username}`}>
+              <Link to={`/profile/${comment.username}`}>
                 {" "}
                 <p
                   className=" mx-1 flex h-8 w-full  flex-wrap items-center rounded-sm  px-3
