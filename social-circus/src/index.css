@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.active {
+  border-radius: 20px;
+  background-color: #2563eb;
+  color: white;
+}
+
+.active p {
+  color: white;
+}
+
+.active h2 {
+  color: rgb(29 78 216 / 0.4);
+}
