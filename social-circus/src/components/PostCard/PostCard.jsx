@@ -63,7 +63,6 @@ export const PostCard = ({ post }) => {
   const deleteCommentHandler = async (e, comment) => {
     await DeleteComment(id, comment, dispatch);
   };
-  //TODO - GET POSTED TIME
   const diff = new Date(date).getMinutes() - new Date().getMinutes();
 
   const isBookmarked = user?.bookmarks?.some((bookmark) => bookmark?.id === id);
@@ -99,7 +98,7 @@ export const PostCard = ({ post }) => {
             />
           </div>
         )}
-        <div class="mx-2 mt-4 flex items-center -space-x-1 overflow-hidden">
+        <div className="mx-2 mt-4 flex items-center -space-x-1 overflow-hidden">
           {isLiked ? (
             likes?.length > 1 ? (
               <div className="flex -space-x-1 overflow-hidden">
