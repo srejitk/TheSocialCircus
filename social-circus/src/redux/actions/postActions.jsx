@@ -89,8 +89,7 @@ export const LikePost = async (postID, token, user, dispatch) => {
       likes: arrayUnion({
         userID: token,
         displayName: user?.displayName,
-        //TODO ADD AVATAR HERE
-        avatar: "",
+        avatar: user?.avatar,
       }),
     });
     dispatch(getExplorePosts());
@@ -107,7 +106,7 @@ export const DislikePost = async (postID, token, user, dispatch) => {
       likes: arrayRemove({
         userID: token,
         displayName: user?.displayName,
-        avatar: "",
+        avatar: user?.avatar,
       }),
     });
     dispatch(getExplorePosts());
@@ -161,7 +160,7 @@ export const BookmarkPost = async (post, token, dispatch) => {
     );
     dispatch(getUserData(token));
     dispatch(getExplorePosts());
-    toast.success("HOGAYA");
+    toast.success("Bookmarked Post");
   } catch (error) {
     console.log(error);
     toast.error("Couldn't bookmark post");

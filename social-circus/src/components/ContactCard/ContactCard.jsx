@@ -9,7 +9,6 @@ export const ContactCard = ({ id }) => {
   const dispatch = useDispatch();
 
   const otherUser = allUsers?.find((user) => user?.id === id);
-  console.log(otherUser);
   const isFollowing = user?.following?.some((ID) => ID === id);
   return (
     <div className=" mb-4 flex justify-between border-b-2">

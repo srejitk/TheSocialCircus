@@ -35,7 +35,7 @@ export const registerUser = async (userData, navigate, dispatch, actions) => {
     dispatch(getUserData(uid));
     actions.resetForm();
     toast.success("You are part of the circus!");
-    navigate("/feed", { replace: true });
+    navigate("/profile", { replace: true });
   } catch (error) {
     const errorCode = error.code;
     switch (errorCode) {

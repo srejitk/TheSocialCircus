@@ -6,6 +6,7 @@ import { AddPost, getExplorePosts } from "../../redux/actions/postActions";
 import { auth } from "../../firebase";
 import { UploadImage } from "../../redux/actions/uploadImageActions";
 import toast from "react-hot-toast";
+import { defaultAvatar } from "../../config/Constants";
 
 export const PostModal = ({ openModal, setOpenModal, edit }) => {
   const initialValues = {
@@ -110,7 +111,7 @@ export const PostModal = ({ openModal, setOpenModal, edit }) => {
         <div className="align-center flex w-full justify-between">
           <div className="w-14 pt-3">
             <img
-              src={user?.avatar}
+              src={user?.avatar || defaultAvatar}
               alt="profile of user"
               className="w-full rounded-full"
             />
