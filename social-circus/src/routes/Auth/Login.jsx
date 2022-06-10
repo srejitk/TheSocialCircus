@@ -15,7 +15,7 @@ export const Login = () => {
   }, [pathname]);
   return (
     <div className="content relative flex h-screen w-full">
-      <Link to="/">
+      <Link to="/feed">
         <button className="absolute m-4 flex items-center justify-evenly gap-2 rounded-3xl bg-gray-100 px-5 py-2 font-semibold hover:bg-gray-300">
           <FiChevronLeft /> Back to the Circus
         </button>

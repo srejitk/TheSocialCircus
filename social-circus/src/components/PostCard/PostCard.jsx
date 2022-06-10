@@ -305,7 +305,7 @@ export const PostCard = ({ post }) => {
                 />
               </Link>
               <div className="mx-6 flex flex-grow flex-col items-start justify-center">
-                <Link to={`profile/${comment.username}`}>
+                <Link to={`/profile/${comment.username}`}>
                   {" "}
                   <p
                     className=" mx-1 flex h-8 w-full  flex-wrap items-center rounded-sm  px-3
