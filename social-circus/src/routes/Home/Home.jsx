@@ -13,8 +13,6 @@ export const Home = () => {
 
   const mediaposts = [...homeposts].filter((post) => post?.imageUrl !== "");
 
-  console.log(posts);
-
   const textposts = [...homeposts].filter((post) => post?.imageUrl === "");
 
   return (
