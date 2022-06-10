@@ -1,16 +1,23 @@
-import React, { Fragment, useEffect } from "react";
-import { CreatePost, PostCard, SuggestionBar } from "../../components";
+import React, { Fragment } from "react";
+import { PostCard, SuggestionBar } from "../../components";
 import { Tab } from "@headlessui/react";
 import { useSelector } from "react-redux";
 
-export const Saved = () => {
+export const Explore = () => {
   const { posts } = useSelector((state) => state.post);
   const { user, token } = useSelector((state) => state.auth);
-  let homeposts = [];
+  const followingUsers = user?.following;
+  const homeposts = posts?.filter(
+    (post) => followingUsers?.includes(post?.uid) || post?.uid === token
+  );
 
-  useEffect(() => {
-    homeposts = posts?.filter((post) => post.id === token);
-  }, [posts]);
+  const trendingposts = [...posts].sort(
+    (a, b) => b.likes?.length - a.likes?.length
+  );
+
+  const Oldestposts = [...posts].sort(
+    (a, b) => new Date(a.date) - new Date(b.date)
+  );
 
   return (
     <div className="flex md:col-span-3 md:ml-44 lg:ml-64">
@@ -26,7 +33,7 @@ export const Saved = () => {
                       : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
                   }`}
                 >
-                  Bookmarks
+                  Explore
                 </button>
               )}
             </Tab>
@@ -39,7 +46,20 @@ export const Saved = () => {
                       : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
                   }`}
                 >
-                  Archive
+                  Trending
+                </button>
+              )}
+            </Tab>{" "}
+            <Tab as={Fragment}>
+              {({ selected }) => (
+                <button
+                  className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 ${
+                    selected
+                      ? "bg-white shadow"
+                      : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
+                  }`}
+                >
+                  Oldest
                 </button>
               )}
             </Tab>
@@ -50,8 +70,7 @@ export const Saved = () => {
               className="rounded-xl bg-white p-3 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
             >
               <div>
-                <CreatePost />
-                {user?.bookmarks?.map((post) => {
+                {posts?.map((post) => {
                   return <PostCard key={post.id} post={post} />;
                 })}
               </div>
@@ -61,8 +80,17 @@ export const Saved = () => {
               className="rounded-xl bg-white p-3 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
             >
               <div>
-                <CreatePost />
-                {user?.archive?.map((post) => {
+                {trendingposts?.map((post) => {
+                  return <PostCard key={post.id} post={post} />;
+                })}
+              </div>
+            </Tab.Panel>
+            <Tab.Panel
+              as="div"
+              className="rounded-xl bg-white p-3 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
+            >
+              <div>
+                {Oldestposts?.map((post) => {
                   return <PostCard key={post.id} post={post} />;
                 })}
               </div>

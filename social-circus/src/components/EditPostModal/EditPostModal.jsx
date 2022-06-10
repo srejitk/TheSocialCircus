@@ -7,10 +7,11 @@ import {
   EditPost,
   getExplorePosts,
 } from "../../redux/actions/postActions";
-import { auth, storage } from "../../firebase";
-import { getMetadata, ref, uploadBytes } from "firebase/storage";
+import { auth } from "../../firebase";
 import { Modal } from "../Modal/Modal";
 import { UploadImage } from "../../redux/actions/uploadImageActions";
+import { defaultAvatar } from "../../config/Constants";
+import toast from "react-hot-toast";
 
 export const EditPostModal = ({ openModal, setOpenModal, edit }) => {
   const initialValues = {
@@ -21,11 +22,13 @@ export const EditPostModal = ({ openModal, setOpenModal, edit }) => {
     uid: "",
     likes: [],
     comments: [],
+    avatar: "",
+    username: "",
   };
 
   const dispatch = useDispatch();
 
-  const { token } = useSelector((state) => state.auth);
+  const { user, token } = useSelector((state) => state.auth);
   const { post } = useSelector((state) => state.post);
   const [selectedEmoji, setSelectedEmoji] = useState(null);
   const [imagePath, setImagePath] = useState("");
@@ -60,7 +63,12 @@ export const EditPostModal = ({ openModal, setOpenModal, edit }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setForm({ ...form, imageUrl: imagePath });
+    setForm({
+      ...form,
+      imageUrl: imagePath,
+      username: user?.username,
+      avatar: user?.avatar,
+    });
     if (form.content !== "") {
       edit
         ? await EditPost(form, dispatch, post?.id)
@@ -68,13 +76,16 @@ export const EditPostModal = ({ openModal, setOpenModal, edit }) => {
     }
     setForm(initialValues);
     setOpenEmoji(false);
+    setImagePath("");
     dispatch(getExplorePosts());
+    closeModal();
   };
 
-  const handleImage = async (image) => {
-    if (image === null) return;
-    const imageResponse = UploadImage(`posts/${token}`, image);
-    setImagePath(imageResponse);
+  const handleImage = async (file) => {
+    const loading = toast.loading("Uploading image...");
+    const link = await UploadImage(`posts/${token}/post-cover.jpg`, file);
+    toast.success("Uploaded image", { id: loading });
+    setImagePath(link);
   };
 
   const emojiClickHandler = (e) => {
@@ -105,21 +116,30 @@ export const EditPostModal = ({ openModal, setOpenModal, edit }) => {
           <div className="align-center flex w-full justify-between">
             <div className="w-14 pt-3">
               <img
-                src="https://64.media.tumblr.com/75320ca1fcab8631c111abca8bf055a4/fdcf9f0f117edd2e-7b/s250x250_c1/2a81402340070baae8e3eae599d3916facc19fe1.png"
+                src={user?.avatar || defaultAvatar}
                 alt="profile of user"
                 className="w-full rounded-full"
               />
             </div>
-            <input
-              type="textarea"
+            <textarea
+              rows="4"
               name="newPost"
               value={form.content}
               onChange={(e) => handleChange(e)}
-              placeholder="What's on your mind?"
-              className=" h-24 w-full flex-wrap rounded-xl border-2 border-transparent px-3 focus:bg-gray-50 focus:outline-none"
+              placeholder={`What's on your mind ${user?.firstname}?`}
+              className=" h-24 w-full resize-none flex-wrap whitespace-normal break-words rounded-xl border-2 border-transparent px-3 focus:bg-gray-50 focus:outline-none"
             />
           </div>
-          <div className="relative flex w-full flex-row items-center gap-4 ">
+          {imagePath && (
+            <div className=" my-3 mx-3 flex w-1/2 justify-start ">
+              <img
+                src={imagePath}
+                alt="profile of user"
+                className="mr-auto h-20 w-full rounded-md bg-white object-cover opacity-40"
+              />
+            </div>
+          )}
+          <div className="relative mt-auto flex w-full flex-row items-center gap-4 ">
             <div className="group rounded-3xl border-2 border-gray-100 bg-white p-4 hover:border-2 hover:border-blue-300 hover:bg-blue-50 hover:outline-2">
               <label htmlFor="upload-picture">
                 <input

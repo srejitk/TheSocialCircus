@@ -6,3 +6,4 @@ export { Saved } from "./Saved/Saved";
 export { Home } from "./Home/Home";
 export { Profile } from "./Profile/Profile";
 export { User } from "./User/User";
+export { Explore } from "./Explore/Explore";

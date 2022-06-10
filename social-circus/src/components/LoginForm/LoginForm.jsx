@@ -2,13 +2,13 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import React, { useState } from "react";
 import * as Yup from "yup";
 import { FormikControl } from "../FormikControl/FormikControl";
-import { FaGoogle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../../redux/actions/authActions";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/slice/authSlice";
 import { TextError } from "../TextError/TextError";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import toast from "react-hot-toast";
 
 export const LoginForm = () => {
   const initialValues = {
@@ -19,6 +19,7 @@ export const LoginForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState();
+  const [form, setForm] = useState(initialValues);
 
   const validationScheme = Yup.object({
     email: Yup.string()
@@ -27,8 +28,21 @@ export const LoginForm = () => {
     password: Yup.string().required("Can't be empty"),
   });
 
-  const onSubmit = (values) => {
-    loginUser(values, navigate, dispatch, login);
+  const onSubmit = async (values) => {
+    const loading = toast.loading("Logging you in...");
+    const link = await loginUser(values, navigate, dispatch, login);
+    toast.success("Welcome back to the circus!", { id: loading });
+  };
+
+  const testdetails = {
+    email: "srejitk@gmail.com",
+    password: "sreejithk",
+  };
+
+  const handleTestLogin = async (e) => {
+    const loading = toast.loading("Logging you in...");
+    const link = await loginUser(testdetails, navigate, dispatch, login);
+    toast.success("Welcome back to the circus!", { id: loading });
   };
   return (
     <Formik
@@ -39,18 +53,16 @@ export const LoginForm = () => {
       {(formik) => {
         return (
           <Form className="mx-auto flex h-fit w-fit flex-col items-center rounded-md px-5 pb-6">
-            <h1 className="my-3 px-8 text-3xl font-bold">Welcome to Area 51</h1>
+            <h1 className="my-3 px-8 text-3xl font-bold">
+              Welcome to the Circus
+            </h1>
             <p className="px-8 font-semibold text-gray-500">
               Don't have an account?{" "}
               <Link to="/signup" className="font-semibold text-blue-500">
                 Sign up for free
               </Link>
             </p>
-            <button className="my-3 flex w-full items-center justify-center gap-3 rounded-lg bg-blue-500 py-2 font-semibold text-white hover:bg-blue-600">
-              <FaGoogle /> Continue with Google
-            </button>
             <p className="text-gray-500">or</p>
-
             <FormikControl
               control="input"
               type="email"
@@ -77,7 +89,13 @@ export const LoginForm = () => {
                 )}
               </div>
             </div>
-
+            <button
+              type="button"
+              onClick={(e) => handleTestLogin(e)}
+              className="my-3 flex w-full items-center justify-center gap-3 rounded-lg border-2 border-blue-500 bg-white py-2 font-semibold text-blue-500 hover:bg-blue-50"
+            >
+              Login with test creds
+            </button>
             <button
               type="submit"
               disabled={!formik.isValid}
