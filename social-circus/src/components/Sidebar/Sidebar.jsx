@@ -1,31 +1,75 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { FiHome, FiCoffee, FiUser, FiUsers } from "react-icons/fi";
+import { FiHome, FiUser, FiInbox } from "react-icons/fi";
+import { MdExplore } from "react-icons/md";
+import { defaultAvatar } from "../../config/Constants";
+import { useSelector } from "react-redux";
 
 export const Sidebar = () => {
+  const { user } = useSelector((state) => state.auth);
   return (
-    <nav className="sidebar bottom-0 flex h-fit w-full flex-row justify-center gap-2 bg-white dark:bg-gray-900 md:h-screen md:flex-col md:justify-start lg:h-screen lg:w-72 lg:flex-col ">
-      <div className="hidden text-3xl font-semibold md:block md:pt-7 lg:pt-7">
-        Area-51
-      </div>
-      <div className="flex h-20 flex-row md:my-10 md:flex-col lg:my-10 lg:flex-col ">
-        <NavLink to="/">
-          <div className="flex h-20 w-20 flex-col items-center justify-center gap-4 px-3 py-2 hover:bg-slate-200 hover:brightness-95 md:w-full md:flex-row-reverse  md:justify-end md:px-7 lg:w-full">
-            Home
-            <FiHome />
+    <nav className="sidebar fixed bottom-0 z-30 flex h-fit w-full  flex-row justify-center gap-2 border-t-2 bg-white dark:bg-gray-900 md:fixed md:h-screen md:w-44 md:flex-col md:justify-start md:border-r-2 md:pt-28 lg:h-screen lg:w-72 lg:flex-col  ">
+      <div className="flex h-20 w-full justify-evenly md:w-full md:flex-col md:px-4 md:pt-36">
+        <div className="h-18 relative hidden flex-col rounded-3xl bg-blue-600 shadow-sm md:flex md:h-fit md:w-36 lg:w-full">
+          <img
+            src={user?.avatar || defaultAvatar}
+            alt="user dp"
+            className="z-10 mx-auto mt-3 h-16 w-16 rounded-full"
+          />
+          <h2 className="absolute px-1 pt-2 text-center text-8xl font-black text-blue-700/90 lg:hidden">
+            Hii
+          </h2>
+          <h2 className="absolute hidden px-1 pt-2 text-center text-8xl font-black text-blue-700/90 lg:block">
+            Hello
+          </h2>
+          <h2 className="z-10 px-2 py-2 text-center text-xl font-semibold text-white">
+            {user?.firstname}
+          </h2>
+        </div>
+
+        <NavLink to="feed" className="my-2 ">
+          <div className="relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-lg hover:bg-slate-500/10 md:w-full md:justify-evenly  ">
+            <FiHome className="z-10 flex h-6 w-6" />
+            <p className="z-10 hidden font-semibold md:block md:text-transparent lg:block">
+              Home
+            </p>
+            <h2 className="absolute -top-1 hidden px-1 pt-0 text-center text-6xl font-black text-transparent lg:block">
+              Home
+            </h2>
           </div>
         </NavLink>
 
-        <NavLink to="saved">
-          <div className="flex h-20 w-20 flex-col items-center justify-center gap-4 px-3 py-2 hover:bg-slate-200 hover:brightness-95 md:w-full md:flex-row-reverse  md:justify-end md:px-7 lg:w-full">
-            Saved
-            <FiCoffee />
+        <NavLink to="explore" className="my-2">
+          <div className="relative flex h-16 w-16 items-center justify-center rounded-lg hover:bg-slate-500/10 md:w-full md:justify-evenly  ">
+            <MdExplore className="flex h-6 w-6" />
+            <p className="hidden font-semibold md:block md:text-transparent lg:block">
+              Explore
+            </p>
+            <h2 className="absolute -top-1 hidden px-1 pt-0 text-center text-6xl font-black text-transparent lg:block">
+              Explore
+            </h2>
           </div>
         </NavLink>
-        <NavLink to="profile">
-          <div className="flex h-20 w-20 flex-col items-center justify-center gap-4 px-3 py-2 hover:bg-slate-200 hover:brightness-95 md:w-full md:flex-row-reverse  md:justify-end md:px-7 lg:w-full">
-            Profile
-            <FiUser />
+        <NavLink to="saved" className="my-2">
+          <div className="relative flex h-16 w-16 items-center justify-center rounded-lg hover:bg-slate-500/10 md:w-full md:justify-evenly  ">
+            <FiInbox className="flex h-6 w-6" />
+            <p className="hidden font-semibold md:block md:text-transparent lg:block">
+              Saved
+            </p>
+            <h2 className="absolute -top-1 hidden px-1 pt-0 text-center text-6xl font-black text-transparent lg:block">
+              Saved
+            </h2>
+          </div>
+        </NavLink>
+        <NavLink to="profile" className="my-2">
+          <div className="relative flex h-16 w-16 items-center justify-center rounded-lg hover:bg-slate-500/10 md:w-full md:justify-evenly  ">
+            <FiUser className="flex h-6 w-6" />
+            <p className="hidden font-semibold md:block md:text-transparent lg:block">
+              Profile
+            </p>
+            <h2 className="absolute -top-1 hidden px-1 pt-0 text-center text-6xl font-black text-transparent lg:block">
+              Profile
+            </h2>
           </div>
         </NavLink>
       </div>
