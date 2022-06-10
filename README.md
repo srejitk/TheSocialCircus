@@ -1,12 +1,12 @@
-# TheSocialCircus
+![Social Circus Logo](https://res.cloudinary.com/dkqrmlxlg/image/upload/v1654856309/The%20Social%20Circus/Juggler_1_mi03k5.png)
 
-<h1 align="center">
+<h1 align="left">
   <a href="https://thesocialcircus.vercel.app/">
    The Social Circus.
   </a>
 </h1>
 
-<p align="center">
+<p align="left">
      The Social CIrcus is a choice based social media app which focuses more on you and your preferences. Likes tweets? Switch on the old school mode. Or Maybe you fancy images? Go Media Savvy Mode. Our short attention span has reduced our reading time, but that's a choice we all make for ourselves.Thw Social Circus allows to to spend more time reading the thoughts of your friendsm, both crazy and gooofy ones and provide you a home to expresss the same. 
   <br>
   <a href="https://thesocialcircus.vercel.app/"><strong>Explore The Social Circus</strong></a>
