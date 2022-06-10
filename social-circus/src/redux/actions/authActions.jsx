@@ -15,6 +15,7 @@ import {
 } from "firebase/firestore";
 import toast from "react-hot-toast";
 import { auth, db } from "../../firebase";
+import { setLoading } from "../slice/authSlice";
 
 export const registerUser = async (userData, navigate, dispatch, actions) => {
   const { firstName, lastName, email, password } = userData;
@@ -34,7 +35,7 @@ export const registerUser = async (userData, navigate, dispatch, actions) => {
     dispatch(getUserData(uid));
     actions.resetForm();
     toast.success("You are part of the circus!");
-    navigate("/");
+    navigate("/feed", { replace: true });
   } catch (error) {
     const errorCode = error.code;
     switch (errorCode) {
@@ -56,15 +57,13 @@ const createProfile = async (user, uid) => {
       lastname: user.lastName,
       displayName: user.firstName + " " + user.lastName,
       email: user.email,
-      bio: "Your Bio. Make it yours. ",
-      website: "Update you website here",
+      bio: "",
+      website: "",
       followers: [],
       following: [],
-      avatar:
-        "https://res.cloudinary.com/dkqrmlxlg/image/upload/v1654681094/The%20Social%20Circus/Avatars/1_W35QUSvGpcLuxPo3SRTH4w_k7jues.png",
-      cover:
-        "https://res.cloudinary.com/dkqrmlxlg/image/upload/v1654681236/The%20Social%20Circus/Avatars/Circus-Flat-Mark-Bird-Illustration_zjuqte.jpg",
-      username: "username",
+      avatar: "",
+      cover: "",
+      username: "",
       bookmarks: [],
       archive: [],
       timestamp: serverTimestamp(),
@@ -90,15 +89,16 @@ export const getUserData = createAsyncThunk("auth/getUserData", async (uid) => {
 export const loginUser = async (userData, navigate, dispatch, login) => {
   const { email, password } = userData;
   try {
+    dispatch(setLoading(true));
     const userCreds = await signInWithEmailAndPassword(auth, email, password);
     const user = userCreds.user;
     const { uid } = user;
     localStorage.setItem("userID", uid);
-    dispatch(login());
+    dispatch(login(user));
     dispatch(getUserData(uid));
-    navigate("/");
-    toast.success("You're signed in!");
+    navigate("/feed", { replace: true });
   } catch (error) {
+    dispatch(setLoading(false));
     const errorCode = error.code;
     switch (errorCode) {
       case "auth/wrong-password":
@@ -111,11 +111,14 @@ export const loginUser = async (userData, navigate, dispatch, login) => {
         console.log(error);
         return toast.error("Something went wrong. Try again later");
     }
+  } finally {
+    dispatch(setLoading(false));
   }
 };
 
 export const updateDetails = async (profile, uid, dispatch, navigate) => {
   try {
+    dispatch(setLoading(true));
     await setDoc(
       doc(db, "users", uid),
       {
@@ -132,8 +135,11 @@ export const updateDetails = async (profile, uid, dispatch, navigate) => {
     toast.success("Your profile is updated!");
     navigate("/profile");
   } catch (error) {
+    dispatch(setLoading(false));
     toast.error("Couldn't create user");
     console.log(error);
+  } finally {
+    dispatch(setLoading(false));
   }
 };
 

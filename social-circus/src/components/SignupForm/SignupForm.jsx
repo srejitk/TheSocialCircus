@@ -2,12 +2,12 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import React, { useState } from "react";
 import * as Yup from "yup";
 import { FormikControl } from "../FormikControl/FormikControl";
-import { FaGoogle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../../redux/actions/authActions";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { TextError } from "../TextError/TextError";
+import toast from "react-hot-toast";
 
 export const SignupForm = () => {
   const initialValues = {
@@ -35,8 +35,10 @@ export const SignupForm = () => {
     lastName: Yup.string().required("Can't be empty"),
   });
 
-  const onSubmit = (values, actions) => {
-    registerUser(values, navigate, dispatch, actions);
+  const onSubmit = async (values, actions) => {
+    const loading = toast.loading("Signing you up...");
+    const link = await registerUser(values, navigate, dispatch, actions);
+    toast.success("Welcome to the circus!", { id: loading });
   };
   return (
     <Formik
@@ -54,9 +56,7 @@ export const SignupForm = () => {
                 Sign in
               </Link>
             </p>
-            <button className="my-3 flex w-full items-center justify-center gap-3 rounded-lg bg-blue-500 py-2 font-semibold text-white hover:bg-blue-600">
-              <FaGoogle /> Sign up with Google
-            </button>
+
             <p className="text-gray-500">or</p>
             <div className="flex gap-3 ">
               <FormikControl

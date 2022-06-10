@@ -30,7 +30,6 @@ const PostSlice = createSlice({
       .addCase(getExplorePosts.fulfilled, (state, action) => {
         state.loading = false;
         state.posts = action.payload;
-        //TODO ADD SORTING HERE
       })
       .addCase(getExplorePosts.rejected, (state) => {
         state.loading = false;

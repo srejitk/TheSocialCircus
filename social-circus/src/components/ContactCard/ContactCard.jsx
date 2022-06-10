@@ -1,5 +1,8 @@
 import React from "react";
+import { FiUserCheck, FiUserPlus, FiUserX } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
+import { defaultAvatar } from "../../config/Constants";
+import { followUser, unfollowUser } from "../../redux/actions/followActions";
 
 export const ContactCard = ({ id }) => {
   const { user, token, allUsers } = useSelector((state) => state.auth);
@@ -7,21 +10,28 @@ export const ContactCard = ({ id }) => {
 
   const otherUser = allUsers?.find((user) => user?.id === id);
 
-  const isFollowing = user?.following?.some((ID) => ID === findUserID);
+  const { data } = otherUser;
+  const isFollowing = user?.following?.some((ID) => ID === id);
   return (
-    <div className="flex justify-start outline">
-      <div className="h-16 w-16">
+    <div className=" mb-4 flex justify-between border-b-2">
+      <div className="m-3 h-16 w-16">
         <img
-          src="https://res.cloudinary.com/dkqrmlxlg/image/upload/v1654684870/The%20Social%20Circus/Avatars/Untitled_1_byawaj.png"
+          src={data?.avatar || defaultAvatar}
           alt="contact dp"
           className="rounded-full"
         />
       </div>
-      <div className="flex flex-col items-start justify-center px-4">
-        <p className="text-base font-semibold">Sreejith</p>
-        <p className=" text-sm font-semibold">username</p>
+      <div className="flex flex-grow flex-col items-center justify-start pl-4">
+        <p className="flex w-full flex-grow items-center text-left text-base font-semibold">
+          {data?.displayName}
+        </p>
+        <p className="my-auto flex w-full flex-grow items-start text-left text-base font-semibold text-gray-500">
+          {data?.username === "username"
+            ? " @" + data?.firstname.toLowerCase()
+            : data?.username}
+        </p>
       </div>
-      <div>
+      <div className="w-fit pr-4">
         {isFollowing ? (
           <button
             onClick={(e) =>
@@ -33,19 +43,18 @@ export const ContactCard = ({ id }) => {
                 dispatch
               )
             }
-            className="outline-red group my-3 mx-auto flex w-10 items-center justify-center rounded-3xl bg-blue-500 px-10  py-3 font-semibold text-white"
+            className="my-3 ml-auto rounded-full border-2 border-blue-600 bg-blue-50 py-3 px-10  font-semibold text-blue-600 hover:bg-blue-600/50"
           >
-            <p className=" group-hover:hidden">Following</p>
-            <p className="hidden group-hover:block">Unfollow</p>
+            <FiUserCheck className="text-blue-600" />
           </button>
         ) : (
           <button
             onClick={(e) =>
               followUser(user, otherUser?.data, otherUser?.id, token, dispatch)
             }
-            className="my-3 ml-auto rounded-3xl bg-blue-500 py-3  px-10 font-semibold text-white"
+            className="my-3 ml-auto rounded-3xl bg-blue-500 py-3 px-10  font-semibold text-white hover:bg-blue-600"
           >
-            Follow
+            <FiUserPlus className="text-white" />
           </button>
         )}
       </div>

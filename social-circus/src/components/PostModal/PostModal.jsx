@@ -2,15 +2,10 @@ import React, { useState, useEffect } from "react";
 import { FiImage, FiSmile, FiX, FiXCircle } from "react-icons/fi";
 import Picker from "emoji-picker-react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  AddPost,
-  EditPost,
-  getExplorePosts,
-} from "../../redux/actions/postActions";
-import { auth, storage } from "../../firebase";
-import { getMetadata, ref, uploadBytes } from "firebase/storage";
-import { Modal } from "../Modal/Modal";
+import { AddPost, getExplorePosts } from "../../redux/actions/postActions";
+import { auth } from "../../firebase";
 import { UploadImage } from "../../redux/actions/uploadImageActions";
+import toast from "react-hot-toast";
 
 export const PostModal = ({ openModal, setOpenModal, edit }) => {
   const initialValues = {
@@ -28,7 +23,7 @@ export const PostModal = ({ openModal, setOpenModal, edit }) => {
   const dispatch = useDispatch();
 
   const { user, token } = useSelector((state) => state.auth);
-  const { posts, post } = useSelector((state) => state.post);
+  const { post } = useSelector((state) => state.post);
   const [selectedEmoji, setSelectedEmoji] = useState(null);
   const [imagePath, setImagePath] = useState("");
   const [form, setForm] = useState(initialValues);
@@ -77,11 +72,15 @@ export const PostModal = ({ openModal, setOpenModal, edit }) => {
     }
     setForm(initialValues);
     setOpenEmoji(false);
+    setImagePath("");
     dispatch(getExplorePosts());
   };
 
   const handleImage = async (file) => {
-    const link = await UploadImage(`users/${token}/user-avatar.jpg`, file);
+    e.preventDefault();
+    const loading = toast.loading("Uploading image...");
+    const link = await UploadImage(`posts/${token}/post-cover.jpg`, file);
+    toast.success("Uploaded image", { id: loading });
     setImagePath(link);
   };
 
@@ -95,7 +94,7 @@ export const PostModal = ({ openModal, setOpenModal, edit }) => {
   };
 
   return (
-    <div className="relative mx-3 my-3 flex  h-72 w-full flex-col items-start justify-between gap-4 rounded-lg border-2 border-gray-100 bg-white px-3 py-6 shadow-md">
+    <div className="relative mx-3 my-3 flex  h-fit min-h-[13rem] w-full flex-col items-start justify-between gap-4 rounded-lg border-2 border-gray-100 bg-white px-3 pt-6 shadow-md">
       <form
         onSubmit={(e) => handleSubmit(e)}
         className="relative flex h-full w-full flex-col items-start justify-between"
@@ -108,7 +107,6 @@ export const PostModal = ({ openModal, setOpenModal, edit }) => {
             <FiX />
           </button>
         ) : null}
-
         <div className="align-center flex w-full justify-between">
           <div className="w-14 pt-3">
             <img
@@ -117,16 +115,26 @@ export const PostModal = ({ openModal, setOpenModal, edit }) => {
               className="w-full rounded-full"
             />
           </div>
-          <input
-            type="textarea"
+
+          <textarea
+            rows="4"
             name="newPost"
             value={form.content}
             onChange={(e) => handleChange(e)}
             placeholder={`What's on your mind ${user?.firstname}?`}
-            className=" h-24 w-full flex-wrap rounded-xl border-2 border-transparent px-3 focus:bg-gray-50 focus:outline-none"
+            className=" h-24 w-full resize-none flex-wrap whitespace-normal break-words rounded-xl border-2 border-transparent px-3 focus:bg-gray-50 focus:outline-none"
           />
         </div>
-        <div className="relative flex w-full flex-row items-center gap-4 ">
+        {imagePath && (
+          <div className=" my-3 mx-3 flex w-1/2 justify-start ">
+            <img
+              src={imagePath}
+              alt="profile of user"
+              className="mr-auto h-20 w-full rounded-md bg-white object-cover opacity-40"
+            />
+          </div>
+        )}
+        <div className="relative mt-auto flex w-full flex-row items-center gap-4 ">
           <div className="group rounded-3xl border-2 border-gray-100 bg-white p-4 hover:border-2 hover:border-blue-300 hover:bg-blue-50 hover:outline-2">
             <label htmlFor="upload-picture">
               <input
