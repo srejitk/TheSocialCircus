@@ -77,7 +77,11 @@ export const PostCard = ({ post }) => {
         to={`/profile/${post?.uid}`}
         className="flex items-center justify-start"
       >
-        <img src={avatar} alt="dp" className="m-3 h-16 w-16 rounded-full" />
+        <img
+          src={avatar || defaultAvatar}
+          alt="dp"
+          className="m-3 h-16 w-16 rounded-full"
+        />
 
         <div className="flex flex-col items-start px-3 ">
           {" "}
