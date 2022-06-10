@@ -41,8 +41,8 @@ export const Sidebar = () => {
 
         <NavLink to="explore" className="my-2">
           <div className="relative flex h-16 w-16 items-center justify-center rounded-lg hover:bg-slate-500/10 md:w-full md:justify-evenly  ">
-            <MdExplore className="flex h-6 w-6" />
-            <p className="hidden font-semibold md:block md:text-transparent lg:block">
+            <MdExplore className="z-10 flex h-6 w-6" />
+            <p className="z-10 hidden font-semibold md:block md:text-transparent lg:block">
               Explore
             </p>
             <h2 className="absolute -top-1 hidden px-1 pt-0 text-center text-6xl font-black text-transparent lg:block">
@@ -52,8 +52,8 @@ export const Sidebar = () => {
         </NavLink>
         <NavLink to="saved" className="my-2">
           <div className="relative flex h-16 w-16 items-center justify-center rounded-lg hover:bg-slate-500/10 md:w-full md:justify-evenly  ">
-            <FiInbox className="flex h-6 w-6" />
-            <p className="hidden font-semibold md:block md:text-transparent lg:block">
+            <FiInbox className="z-10 flex h-6 w-6" />
+            <p className="z-10 hidden font-semibold md:block md:text-transparent lg:block">
               Saved
             </p>
             <h2 className="absolute -top-1 hidden px-1 pt-0 text-center text-6xl font-black text-transparent lg:block">
@@ -63,8 +63,8 @@ export const Sidebar = () => {
         </NavLink>
         <NavLink to="profile" className="my-2">
           <div className="relative flex h-16 w-16 items-center justify-center rounded-lg hover:bg-slate-500/10 md:w-full md:justify-evenly  ">
-            <FiUser className="flex h-6 w-6" />
-            <p className="hidden font-semibold md:block md:text-transparent lg:block">
+            <FiUser className="z-10 flex h-6 w-6" />
+            <p className="z-10 hidden font-semibold md:block md:text-transparent lg:block">
               Profile
             </p>
             <h2 className="absolute -top-1 hidden px-1 pt-0 text-center text-6xl font-black text-transparent lg:block">
