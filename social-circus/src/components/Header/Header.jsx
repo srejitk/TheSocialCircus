@@ -1,40 +1,39 @@
 import React from "react";
+import { FiLogOut } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { auth } from "../../firebase";
+import { Link, useNavigate } from "react-router-dom";
+import { brand } from "../../config/Constants";
 import { logout } from "../../redux/slice/authSlice";
 
 export const Header = () => {
   const dispatch = useDispatch();
-  const { token } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
   return (
-    <header className="col-span-3">
-      <div className="header  flex h-24 w-full flex-row items-center justify-between border-2 p-5 shadow-sm outline">
-        <div className="flex justify-center text-center align-middle">
-          <h1 className="text-3xl font-semibold ">The Social Circus</h1>
+    <header className="header w-screen md:w-[calc(100vw-11rem)] lg:w-[calc(100vw-18rem)] ">
+      <div className=" flex h-24  flex-row items-center justify-between border-2 p-5 shadow-sm">
+        <div className="flex items-center justify-center gap-6 text-center">
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-blue-600">
+            <img
+              src={brand}
+              className="w-10"
+              alt="Brand Logo of Social Circus"
+            />
+          </div>
+
+          <h1 className="text-3xl font-semibold ">
+            The <span className="font-bold text-blue-600">Social</span> Circus
+          </h1>
         </div>
         <div className="flex justify-evenly gap-1 align-middle">
-          {auth.currentUser?.uid === token ? (
-            <button
-              className="m-4 flex items-center justify-evenly gap-2 rounded-xl bg-transparent px-5 py-2 font-semibold  hover:bg-gray-100"
-              onClick={(e) => dispatch(logout())}
-            >
-              Logout
-            </button>
-          ) : (
-            <>
-              <Link to="/login">
-                <button className="m-4 flex items-center justify-evenly gap-2 rounded-xl bg-transparent px-5 py-2 font-semibold  hover:bg-gray-100">
-                  Sign in
-                </button>
-              </Link>
-              <Link to="/signup">
-                <button className=" m-4 flex items-center justify-evenly gap-2 rounded-xl bg-gray-100 px-5 py-2 font-semibold hover:brightness-90">
-                  Sign up
-                </button>
-              </Link>
-            </>
-          )}
+          <button
+            className="m-4 flex h-16 w-16 items-center justify-evenly gap-2 rounded-xl bg-transparent px-5 py-2 font-semibold  hover:bg-gray-100"
+            onClick={(e) => {
+              dispatch(logout());
+              navigate("login");
+            }}
+          >
+            <FiLogOut />
+          </button>
         </div>
       </div>
     </header>
