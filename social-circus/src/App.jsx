@@ -1,26 +1,27 @@
 import "./App.css";
 import { Header, Sidebar } from "./components";
 import { RouteConfig } from "./config/RouteConfig";
-import { Toaster } from "react-hot-toast";
-import { useDispatch } from "react-redux";
+import toast, { Toaster } from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getExplorePosts } from "./redux/actions/postActions";
 import { getAllUsers, getUserData } from "./redux/actions/authActions";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function App() {
   const dispatch = useDispatch();
   const token = localStorage.getItem("userID");
-
+  const { user } = useSelector((state) => state.auth);
   useEffect(() => {
     dispatch(getExplorePosts());
     dispatch(getUserData(token));
     dispatch(getAllUsers());
   }, [token]);
+
   const { pathname } = useLocation();
 
   return (
-    <div className="App grid grid-cols-3 gap-x-4">
+    <div className="App">
       {pathname === "/signup" ||
       pathname === "/login" ||
       pathname === "/update" ? null : (
