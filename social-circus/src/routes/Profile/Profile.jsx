@@ -142,8 +142,8 @@ export const Profile = () => {
                 "No Followers yet"
               ) : (
                 <div>
-                  {user?.followers?.map((post) => {
-                    return <PostCard key={post.id} post={post} />;
+                  {user?.followers?.map((id) => {
+                    return <ContactCard key={id} id={id} />;
                   })}
                 </div>
               )}
@@ -156,8 +156,8 @@ export const Profile = () => {
                 "Not Following anyone yet"
               ) : (
                 <div>
-                  {user?.following?.map((post) => {
-                    return <PostCard key={post.id} post={post} />;
+                  {user?.following?.map((id) => {
+                    return <ContactCard key={id} id={id} />;
                   })}
                 </div>
               )}

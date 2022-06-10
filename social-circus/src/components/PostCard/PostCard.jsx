@@ -14,7 +14,7 @@ import {
   FiTrash,
 } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   ArchivePost,
   BookmarkPost,
@@ -68,6 +68,8 @@ export const PostCard = ({ post }) => {
   const isBookmarked = user?.bookmarks?.some((bookmark) => bookmark?.id === id);
 
   const isArchived = user?.archive?.some((archive) => archive?.id === id);
+
+  const { pathname } = useLocation();
 
   const isAuthor = post?.uid === token;
   const isLiked = likes?.find((user) => user?.userID === token);
@@ -182,7 +184,7 @@ export const PostCard = ({ post }) => {
             <FiHeart />
           )}
         </button>
-        {isAuthor && (
+        {isAuthor && pathname !== "/saved" && (
           <button
             className="m-3 flex h-10 w-10 items-center justify-center rounded-full border-2 border-transparent  hover:bg-red-50 hover:text-red-500"
             onClick={(e) => dispatch(DeletePost(post?.id, dispatch))}

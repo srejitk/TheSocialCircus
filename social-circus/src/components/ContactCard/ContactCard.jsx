@@ -9,26 +9,24 @@ export const ContactCard = ({ id }) => {
   const dispatch = useDispatch();
 
   const otherUser = allUsers?.find((user) => user?.id === id);
-
-  const { data } = otherUser;
   const isFollowing = user?.following?.some((ID) => ID === id);
   return (
     <div className=" mb-4 flex justify-between border-b-2">
       <div className="m-3 h-16 w-16">
         <img
-          src={data?.avatar || defaultAvatar}
+          src={otherUser?.data?.avatar || defaultAvatar}
           alt="contact dp"
           className="rounded-full"
         />
       </div>
       <div className="flex flex-grow flex-col items-center justify-start pl-4">
         <p className="flex w-full flex-grow items-center text-left text-base font-semibold">
-          {data?.displayName}
+          {otherUser?.data?.displayName}
         </p>
         <p className="my-auto flex w-full flex-grow items-start text-left text-base font-semibold text-gray-500">
-          {data?.username === "username"
-            ? " @" + data?.firstname.toLowerCase()
-            : data?.username}
+          {otherUser?.data?.username === "username"
+            ? " @" + otherUser?.data?.firstname.toLowerCase()
+            : otherUser?.data?.username}
         </p>
       </div>
       <div className="w-fit pr-4">

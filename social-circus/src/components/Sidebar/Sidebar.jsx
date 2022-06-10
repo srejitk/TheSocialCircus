@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 export const Sidebar = () => {
   const { user } = useSelector((state) => state.auth);
   return (
-    <nav className="sidebar fixed bottom-0 z-30 flex h-fit w-full  flex-row justify-center gap-2 border-t-2 bg-white dark:bg-gray-900 md:fixed md:h-screen md:w-44 md:flex-col md:justify-start md:border-r-2 md:pt-28 lg:h-screen lg:w-72 lg:flex-col  ">
+    <nav className="sidebar fixed bottom-0 z-30 flex h-fit w-full  flex-row justify-center gap-2 border-t-2 bg-white md:fixed md:h-screen md:w-44 md:flex-col md:justify-start md:border-r-2 md:pt-28 lg:h-screen lg:w-72 lg:flex-col  ">
       <div className="flex h-20 w-full justify-evenly md:w-full md:flex-col md:px-4 md:pt-36">
         <div className="h-18 relative hidden flex-col rounded-3xl bg-blue-600 shadow-sm md:flex md:h-fit md:w-36 lg:w-full">
           <img
