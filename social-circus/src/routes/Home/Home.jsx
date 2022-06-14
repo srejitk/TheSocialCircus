@@ -68,7 +68,7 @@ export const Home = () => {
               <div>
                 <CreatePost />
                 {homeposts?.map((post) => {
-                  return <PostCard key={post.id} post={post} />;
+                  return <PostCard key={post?.id} post={post} />;
                 })}
               </div>
             </Tab.Panel>
@@ -79,7 +79,7 @@ export const Home = () => {
               <div>
                 <CreatePost />
                 {mediaposts?.map((post) => {
-                  return <PostCard key={post.id} post={post} />;
+                  return <PostCard key={post?.id} post={post} />;
                 })}
               </div>
             </Tab.Panel>
@@ -90,7 +90,7 @@ export const Home = () => {
               <div>
                 <CreatePost />
                 {textposts?.map((post) => {
-                  return <PostCard key={post.id} post={post} />;
+                  return <PostCard key={post?.id} post={post} />;
                 })}
               </div>
             </Tab.Panel>
