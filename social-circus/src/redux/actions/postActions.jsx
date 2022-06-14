@@ -25,6 +25,7 @@ export const AddPost = async (post, dispatch) => {
     const newPost = await addDoc(postRef, post);
     setDoc(doc(postRef, newPost?.id), { id: newPost?.id }, { merge: true });
     dispatch(setPost({ ...post, id: newPost?.id }));
+    dispatch(getExplorePosts());
     toast.success("Post Uploaded", { id: loading });
   } catch (error) {
     console.log(error);

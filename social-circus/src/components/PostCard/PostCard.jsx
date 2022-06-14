@@ -42,19 +42,10 @@ export const PostCard = ({ post }) => {
   const [openModal, setOpenModal] = useState(false);
   const [comment, setComment] = useState(defaultComment);
   const [showComments, setShowComments] = useState(false);
-  const { user } = useSelector((state) => state.auth);
+  const { user, allUsers } = useSelector((state) => state.auth);
   const token = localStorage.getItem("userID");
-  const {
-    avatar,
-    id,
-    username,
-    imageUrl,
-    content,
-    displayName,
-    date,
-    likes,
-    comments,
-  } = post;
+  const { id, uid, imageUrl, content, displayName, date, likes, comments } =
+    post;
   const handleComment = async (e) => {
     e.preventDefault();
     await PostComment(id, comment, dispatch);
@@ -81,7 +72,10 @@ export const PostCard = ({ post }) => {
         className="flex items-center justify-start"
       >
         <img
-          src={avatar || defaultAvatar}
+          src={
+            allUsers?.find((user) => user.id === uid)?.data?.avatar ||
+            defaultAvatar
+          }
           alt="dp"
           className="m-3 h-16 w-16 rounded-full"
         />
@@ -89,7 +83,9 @@ export const PostCard = ({ post }) => {
         <div className="flex flex-col items-start px-3 ">
           {" "}
           <h1 className="text-xl font-semibold">{displayName}</h1>
-          <h1>{username === "username" ? "@" + displayName : username}</h1>
+          <h1>
+            {allUsers?.find((user) => user.id === post?.uid)?.data?.username}
+          </h1>
         </div>
         <h1 className="ml-auto pr-4 font-semibold">{date}</h1>
       </Link>

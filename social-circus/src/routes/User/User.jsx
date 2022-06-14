@@ -23,7 +23,7 @@ export const User = () => {
   dispatch(setOtherUser(findUser));
   const data = otherUser?.data;
 
-  const userPosts = posts?.filter((post) => post?.data?.id === findUser?.id);
+  const userPosts = posts?.filter((post) => post?.uid === findUser?.id);
 
   const isFollowing = user?.following?.some((ID) => ID === findUser?.id);
   return (

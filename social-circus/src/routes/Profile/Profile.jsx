@@ -10,7 +10,7 @@ export const Profile = () => {
   const { user, isLoading } = useSelector((state) => state.auth);
   const { posts } = useSelector((state) => state.post);
   const token = localStorage.getItem("userID");
-  const defaultUsername = user?.email.split("@")[0];
+  const defaultUsername = user?.email?.split("@")[0];
 
   const userPosts = posts?.filter((post) => post?.uid === token);
   return (
