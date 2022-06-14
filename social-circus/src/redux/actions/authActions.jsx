@@ -35,7 +35,7 @@ export const registerUser = async (userData, navigate, dispatch, actions) => {
     dispatch(getUserData(uid));
     actions.resetForm();
     toast.success("You are part of the circus!");
-    navigate("/profile", { replace: true });
+    navigate("/", { replace: true });
   } catch (error) {
     const errorCode = error.code;
     switch (errorCode) {
@@ -82,6 +82,7 @@ export const getUserData = createAsyncThunk("auth/getUserData", async (uid) => {
       return docSnapshot.data();
     }
   } catch (error) {
+    console.log(error.response.data);
     console.log("Could not retrieve user data");
   }
 });
@@ -94,7 +95,6 @@ export const loginUser = async (userData, navigate, dispatch, login) => {
     const user = userCreds.user;
     const { uid } = user;
     localStorage.setItem("userID", uid);
-    dispatch(login(user));
     dispatch(getUserData(uid));
     navigate("/", { replace: true });
   } catch (error) {
@@ -132,6 +132,7 @@ export const updateDetails = async (profile, uid, dispatch, navigate) => {
       { merge: true }
     );
     dispatch(getUserData(uid));
+    dispatch(getAllUsers());
     toast.success("Your profile is updated!");
     navigate("/profile");
   } catch (error) {
