@@ -40,7 +40,7 @@ export const getExplorePosts = createAsyncThunk(
       const q = query(postRef, orderBy("date", "desc"));
       const postSnapshot = await getDocs(q);
       postSnapshot.forEach((doc) => {
-        posts.push(doc.data());
+        posts?.push(doc.data());
       });
       return posts;
     } catch (error) {

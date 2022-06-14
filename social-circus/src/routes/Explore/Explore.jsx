@@ -71,7 +71,7 @@ export const Explore = () => {
             >
               <div>
                 {posts?.map((post) => {
-                  return <PostCard key={post.id} post={post} />;
+                  return <PostCard key={post?.id} post={post} />;
                 })}
               </div>
             </Tab.Panel>
@@ -81,7 +81,7 @@ export const Explore = () => {
             >
               <div>
                 {trendingposts?.map((post) => {
-                  return <PostCard key={post.id} post={post} />;
+                  return <PostCard key={post?.id} post={post} />;
                 })}
               </div>
             </Tab.Panel>
@@ -91,7 +91,7 @@ export const Explore = () => {
             >
               <div>
                 {Oldestposts?.map((post) => {
-                  return <PostCard key={post.id} post={post} />;
+                  return <PostCard key={post?.id} post={post} />;
                 })}
               </div>
             </Tab.Panel>

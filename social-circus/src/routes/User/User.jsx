@@ -23,7 +23,7 @@ export const User = () => {
   dispatch(setOtherUser(findUser));
   const data = otherUser?.data;
 
-  const userPosts = posts.filter((post) => post?.data?.id === findUser?.id);
+  const userPosts = posts?.filter((post) => post?.data?.id === findUser?.id);
 
   const isFollowing = user?.following?.some((ID) => ID === findUser?.id);
   return (
@@ -171,7 +171,7 @@ export const User = () => {
               ) : (
                 <div>
                   {userPosts?.map((post) => {
-                    return <PostCard key={post.id} post={post} />;
+                    return <PostCard key={post?.id} post={post} />;
                   })}
                 </div>
               )}

@@ -48,7 +48,7 @@ export const PostModal = ({ openModal, setOpenModal, edit }) => {
     setForm({
       ...form,
       content: value,
-      displayName: auth.currentUser.displayName,
+      displayName: auth?.currentUser?.displayName,
       uid: token,
       imageUrl: imagePath,
       username: user?.username,

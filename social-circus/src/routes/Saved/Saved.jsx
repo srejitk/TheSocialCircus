@@ -9,7 +9,7 @@ export const Saved = () => {
   let homeposts = [];
 
   useEffect(() => {
-    homeposts = posts?.filter((post) => post.id === token);
+    homeposts = posts?.filter((post) => post?.id === token);
   }, [posts]);
 
   return (
@@ -52,7 +52,7 @@ export const Saved = () => {
               <div>
                 <CreatePost />
                 {user?.bookmarks?.map((post) => {
-                  return <PostCard key={post.id} post={post} />;
+                  return <PostCard key={post?.id} post={post} />;
                 })}
               </div>
             </Tab.Panel>
@@ -63,7 +63,7 @@ export const Saved = () => {
               <div>
                 <CreatePost />
                 {user?.archive?.map((post) => {
-                  return <PostCard key={post.id} post={post} />;
+                  return <PostCard key={post?.id} post={post} />;
                 })}
               </div>
             </Tab.Panel>

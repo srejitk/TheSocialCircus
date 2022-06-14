@@ -53,10 +53,10 @@ export const registerUser = async (userData, navigate, dispatch, actions) => {
 const createProfile = async (user, uid) => {
   try {
     await setDoc(doc(db, "users", uid), {
-      firstname: user.firstName,
-      lastname: user.lastName,
-      displayName: user.firstName + " " + user.lastName,
-      email: user.email,
+      firstname: user?.firstName,
+      lastname: user?.lastName,
+      displayName: user?.firstName + " " + user?.lastName,
+      email: user?.email,
       bio: "",
       website: "",
       followers: [],
