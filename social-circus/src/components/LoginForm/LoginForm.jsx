@@ -95,8 +95,8 @@ export const LoginForm = () => {
             <button
               type="button"
               onClick={(e) => {
-                formik.setFieldValue("email", "srejitk@gmail.com");
-                formik.setFieldValue("password", "sreejithk");
+                formik.setFieldValue("email", "srejitk@gmail.com", false);
+                formik.setFieldValue("password", "sreejithk", false);
               }}
               className="my-3 flex w-full items-center justify-center gap-3 rounded-lg border-2 border-blue-500 bg-white py-2 font-semibold text-blue-500 hover:bg-blue-50"
             >
