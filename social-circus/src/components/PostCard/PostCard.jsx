@@ -175,8 +175,8 @@ export const PostCard = ({ post }) => {
           hover:text-red-500`}
           onClick={(e) => {
             likes?.find((user) => user?.userID === token)
-              ? DislikePost(post?.id, token, user, dispatch)
-              : LikePost(post?.id, token, user, dispatch);
+              ? DislikePost(id, token, user, dispatch)
+              : LikePost(id, token, user, dispatch);
           }}
         >
           {likes?.find((user) => user?.userID === token) ? (
@@ -188,7 +188,7 @@ export const PostCard = ({ post }) => {
         {isAuthor && pathname !== "/saved" && (
           <button
             className="m-3 flex h-10 w-10 items-center justify-center rounded-full border-2 border-transparent  hover:bg-red-50 hover:text-red-500"
-            onClick={(e) => DeletePost(post?.id, dispatch)}
+            onClick={(e) => DeletePost(id, dispatch)}
           >
             <FiTrash />
           </button>
@@ -263,7 +263,7 @@ export const PostCard = ({ post }) => {
         >
           <div>
             <img
-              src={user?.avatar}
+              src={user?.avatar || defaultAvatar}
               alt=""
               className="m-3 h-10  w-10 rounded-full"
             />
@@ -279,7 +279,7 @@ export const PostCard = ({ post }) => {
                 content: e.target.value,
                 userID: token,
                 displayName: user?.displayName,
-                avatar: user?.avatar,
+                avatar: user?.avatar || defaultAvatar,
                 username: user?.username,
                 date: new Date().toLocaleString(),
               })

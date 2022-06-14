@@ -13,6 +13,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import toast from "react-hot-toast";
+import { defaultAvatar } from "../../config/Constants";
 import { db } from "../../firebase";
 import { postLoading, setPost } from "../slice/postSlice";
 import { getUserData } from "./authActions";
@@ -89,7 +90,7 @@ export const LikePost = async (postID, token, user, dispatch) => {
       likes: arrayUnion({
         userID: token,
         displayName: user?.displayName,
-        avatar: user?.avatar,
+        avatar: user?.avatar || defaultAvatar,
       }),
     });
     dispatch(getExplorePosts());
@@ -106,7 +107,7 @@ export const DislikePost = async (postID, token, user, dispatch) => {
       likes: arrayRemove({
         userID: token,
         displayName: user?.displayName,
-        avatar: user?.avatar,
+        avatar: user?.avatar || defaultAvatar,
       }),
     });
     dispatch(getExplorePosts());
