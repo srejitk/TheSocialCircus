@@ -23,7 +23,7 @@ export const AddPost = async (post, dispatch) => {
     const loading = toast.loading("Uploading Post...");
     const newPost = await addDoc(postRef, post);
     setDoc(doc(postRef, newPost?.id), { id: newPost?.id }, { merge: true });
-    dispatch(setPost(post));
+    dispatch(setPost({ ...post, id: newPost?.id }));
     toast.success("Post Uploaded", { id: loading });
   } catch (error) {
     console.log(error);
@@ -188,7 +188,6 @@ export const ArchivePost = async (post, token, dispatch) => {
   try {
     const userRef = doc(db, "users", token);
     const postRef = collection(db, "posts");
-    console.log(post?.id);
     await setDoc(
       userRef,
       {
@@ -216,7 +215,6 @@ export const RestorePost = async (post, token, dispatch) => {
       },
       { merge: true }
     );
-    console.log(post);
     await setDoc(doc(postRef, post?.id), post, { merge: true });
     dispatch(setPost(post));
     dispatch(getExplorePosts());
