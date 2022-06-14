@@ -9,6 +9,10 @@ import { defaultAvatar, defaultCover } from "../../config/Constants";
 export const Profile = () => {
   const { user, isLoading } = useSelector((state) => state.auth);
   const { posts } = useSelector((state) => state.post);
+  const token = localStorage.getItem("userID");
+  const defaultUsername = user?.email.split("@")[0];
+
+  const userPosts = posts?.filter((post) => post?.uid === token);
   return (
     <div className="content h-screen w-full lg:w-[calc(100vw-18rem)] ">
       <div className="relative h-60 w-full bg-gray-50">
@@ -37,13 +41,17 @@ export const Profile = () => {
           </Link>
 
           <h1 className="text-black-300 text-left text-2xl font-medium ">
-            {user?.displayName || "Joker"}
+            {user?.displayName}
           </h1>
           <h1 className="w-full pt-2 text-left text-lg font-medium text-gray-400 ">
-            {`@${user?.username || "joker"}`}
+            {`@${user?.username || defaultUsername}`}
           </h1>
-          <p className="mx-auto w-full pt-2 text-left text-xl font-semibold">
-            {user?.bio || "We're Hiring!"}
+          <p
+            className={`mx-auto w-full pt-2 text-left text-xl font-semibold ${
+              user?.bio ? "" : "text-slate-400"
+            }`}
+          >
+            {user?.bio || "Tell the world about yourself!"}
           </p>
           <div className="flex w-full">
             {" "}
@@ -70,7 +78,7 @@ export const Profile = () => {
               <p className="font-semibold text-gray-500">Followers</p>
             </div>
             <div>
-              <p className=" text-4xl font-black">{posts?.length}</p>
+              <p className=" text-4xl font-black">{userPosts?.length}</p>
               <p className="font-semibold text-gray-500">Posts</p>
             </div>
           </div>
@@ -124,11 +132,11 @@ export const Profile = () => {
               as="div"
               className="rounded-xl bg-gray-50 p-3 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
             >
-              {posts?.length === 0 ? (
+              {userPosts?.length === 0 ? (
                 "No Posts here"
               ) : (
                 <div>
-                  {posts?.map((post) => {
+                  {userPosts?.map((post) => {
                     return <PostCard key={post?.id} post={post} />;
                   })}
                 </div>
