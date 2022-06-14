@@ -77,7 +77,7 @@ export const PostModal = ({ openModal, setOpenModal, edit }) => {
     dispatch(getExplorePosts());
   };
 
-  const handleImage = async (file) => {
+  const handleImage = async (e, file) => {
     e.preventDefault();
     const loading = toast.loading("Uploading image...");
     const link = await UploadImage(`posts/${token}/post-cover.jpg`, file);
@@ -144,7 +144,7 @@ export const PostModal = ({ openModal, setOpenModal, edit }) => {
                 accept="image/*"
                 className="hidden"
                 onChange={(e) => {
-                  handleImage(e.target.files[0]);
+                  handleImage(e, e.target.files[0]);
                 }}
               />
               <FiImage className="group-hover:font-bold group-hover:text-blue-500 " />
