@@ -27,7 +27,7 @@ export const Sidebar = () => {
           </h2>
         </div>
 
-        <NavLink to="/feed" className="my-2 ">
+        <NavLink to="/" className="my-2 ">
           <div className="relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-lg hover:bg-slate-500/10 md:w-full md:justify-evenly  ">
             <FiHome className="z-10 flex h-6 w-6" />
             <p className="z-10 hidden font-semibold md:block md:text-transparent lg:block">

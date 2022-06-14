@@ -11,7 +11,7 @@ export const Error = () => {
           Yeh <span className="text-8xl text-blue-700">kahaan</span> aagaye
           hum?!?
         </h1>
-        <NavLink to="/feed" className="mt-5 px-5 py-4 font-bold">
+        <NavLink to="/" className="mt-5 px-5 py-4 font-bold">
           Go Home
         </NavLink>
       </div>

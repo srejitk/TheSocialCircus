@@ -96,7 +96,7 @@ export const loginUser = async (userData, navigate, dispatch, login) => {
     localStorage.setItem("userID", uid);
     dispatch(login(user));
     dispatch(getUserData(uid));
-    navigate("/feed", { replace: true });
+    navigate("/", { replace: true });
   } catch (error) {
     dispatch(setLoading(false));
     const errorCode = error.code;
