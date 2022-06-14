@@ -42,7 +42,8 @@ export const PostCard = ({ post }) => {
   const [openModal, setOpenModal] = useState(false);
   const [comment, setComment] = useState(defaultComment);
   const [showComments, setShowComments] = useState(false);
-  const { user, token } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
+  const token = localStorage.getItem("userID");
   const {
     avatar,
     id,
@@ -187,7 +188,7 @@ export const PostCard = ({ post }) => {
         {isAuthor && pathname !== "/saved" && (
           <button
             className="m-3 flex h-10 w-10 items-center justify-center rounded-full border-2 border-transparent  hover:bg-red-50 hover:text-red-500"
-            onClick={(e) => dispatch(DeletePost(post?.id, dispatch))}
+            onClick={(e) => DeletePost(post?.id, dispatch)}
           >
             <FiTrash />
           </button>
