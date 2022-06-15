@@ -11,7 +11,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 function App() {
   const dispatch = useDispatch();
   const token = localStorage.getItem("userID");
-  const { user } = useSelector((state) => state.auth);
   useEffect(() => {
     dispatch(getExplorePosts());
     dispatch(getUserData(token));

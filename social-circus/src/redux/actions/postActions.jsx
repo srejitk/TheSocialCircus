@@ -59,6 +59,7 @@ export const EditPost = async (form, dispatch, id) => {
       doc(db, "posts", id),
       {
         content: form?.content,
+        imageUrl: form?.imageUrl,
       },
       { merge: true }
     );

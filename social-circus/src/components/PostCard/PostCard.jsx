@@ -167,7 +167,7 @@ export const PostCard = ({ post }) => {
       </div>
       <div className="flex justify-around">
         <button
-          className={`} m-3 flex h-10 w-10 items-center justify-center rounded-full border-2  border-transparent hover:bg-red-50 
+          className={`m-3 flex h-10 w-10 items-center justify-center rounded-full border-2  border-transparent hover:bg-red-50 
           hover:text-red-500`}
           onClick={(e) => {
             likes?.find((user) => user?.userID === token)
@@ -193,8 +193,8 @@ export const PostCard = ({ post }) => {
           <button
             className="m-3 h-10 w-10 rounded-full px-3 hover:bg-blue-50"
             onClick={(e) => {
-              dispatch(setPost(post));
               setOpenModal((prev) => !prev);
+              dispatch(setPost(post));
             }}
           >
             <FiEdit />
