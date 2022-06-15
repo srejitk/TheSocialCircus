@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { FiImage, FiSmile, FiX, FiXCircle } from "react-icons/fi";
+import { FiImage, FiSmile, FiX } from "react-icons/fi";
 import Picker from "emoji-picker-react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  AddPost,
-  EditPost,
-  getExplorePosts,
-} from "../../redux/actions/postActions";
+import { EditPost, getExplorePosts } from "../../redux/actions/postActions";
 import { auth } from "../../firebase";
 import { Modal } from "../Modal/Modal";
 import { UploadImage } from "../../redux/actions/uploadImageActions";
@@ -14,25 +10,20 @@ import { defaultAvatar } from "../../config/Constants";
 import toast from "react-hot-toast";
 
 export const EditPostModal = ({ openModal, setOpenModal, edit }) => {
-  const initialValues = {
-    date: "",
-    content: "",
-    displayName: "",
-    imageUrl: "",
-    uid: "",
-    likes: [],
-    comments: [],
-    avatar: "",
-    username: "",
-  };
-
   const dispatch = useDispatch();
 
   const { user, token } = useSelector((state) => state.auth);
   const { post } = useSelector((state) => state.post);
+  const initialValues = {
+    date: "",
+    content: post?.content,
+    imageUrl: post?.imageUrl || "",
+    avatar: post?.avatar,
+  };
   const [selectedEmoji, setSelectedEmoji] = useState(null);
-  const [imagePath, setImagePath] = useState("");
+
   const [form, setForm] = useState(initialValues);
+  const [imagePath, setImagePath] = useState(form?.imageUrl);
   const [openEmoji, setOpenEmoji] = useState(false);
 
   const onEmojiClick = (event, emojiObject) => {
@@ -56,7 +47,7 @@ export const EditPostModal = ({ openModal, setOpenModal, edit }) => {
       displayName: auth?.currentUser?.displayName,
       uid: token,
       imageUrl: imagePath,
-      date: edit ? post?.data?.date : new Date().toLocaleString(),
+      date: new Date().toLocaleString(),
     });
     setSelectedEmoji(null);
   };
@@ -65,27 +56,26 @@ export const EditPostModal = ({ openModal, setOpenModal, edit }) => {
     e.preventDefault();
     setForm({
       ...form,
-      imageUrl: imagePath,
       username: user?.username,
       avatar: user?.avatar,
+      imageUrl: imagePath,
     });
     if (form.content !== "") {
-      edit
-        ? await EditPost(form, dispatch, post?.id)
-        : await AddPost(form, dispatch);
+      await EditPost(form, dispatch, post?.id);
     }
     setForm(initialValues);
     setOpenEmoji(false);
-    setImagePath("");
     dispatch(getExplorePosts());
     closeModal();
   };
 
-  const handleImage = async (file) => {
+  const handleEditImage = async (e) => {
+    const file = e.target.files[0];
     const loading = toast.loading("Uploading image...");
     const link = await UploadImage(`posts/${token}/post-cover.jpg`, file);
     toast.success("Uploaded image", { id: loading });
     setImagePath(link);
+    setForm({ ...form, imageUrl: link });
   };
 
   const emojiClickHandler = (e) => {
@@ -130,11 +120,11 @@ export const EditPostModal = ({ openModal, setOpenModal, edit }) => {
               className=" h-24 w-full resize-none flex-wrap whitespace-normal break-words rounded-xl border-2 border-transparent px-3 focus:bg-gray-50 focus:outline-none"
             />
           </div>
-          {imagePath && (
+          {form?.imageUrl && (
             <div className=" my-3 mx-3 flex w-1/2 justify-start ">
               <img
-                src={imagePath}
-                alt="profile of user"
+                src={form?.imageUrl}
+                alt="post cover"
                 className="mr-auto h-20 w-full rounded-md bg-white object-cover opacity-40"
               />
             </div>
@@ -148,7 +138,7 @@ export const EditPostModal = ({ openModal, setOpenModal, edit }) => {
                   accept="image/*"
                   className="hidden"
                   onChange={(e) => {
-                    handleImage(e.target.files[0]);
+                    handleEditImage(e);
                   }}
                 />
                 <FiImage className="group-hover:font-bold group-hover:text-blue-500 " />
