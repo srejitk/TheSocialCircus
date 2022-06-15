@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FiImage, FiSmile, FiX, FiXCircle } from "react-icons/fi";
+import { FiImage, FiSmile } from "react-icons/fi";
 import Picker from "emoji-picker-react";
 import { useDispatch, useSelector } from "react-redux";
 import { AddPost, getExplorePosts } from "../../redux/actions/postActions";
@@ -8,7 +8,7 @@ import { UploadImage } from "../../redux/actions/uploadImageActions";
 import toast from "react-hot-toast";
 import { defaultAvatar } from "../../config/Constants";
 
-export const PostModal = ({ openModal, setOpenModal, edit }) => {
+export const PostModal = () => {
   const initialValues = {
     date: "",
     content: "",
@@ -53,7 +53,7 @@ export const PostModal = ({ openModal, setOpenModal, edit }) => {
       imageUrl: imagePath,
       username: user?.username,
       avatar: user?.avatar,
-      date: edit ? post?.data?.date : new Date().toLocaleString(),
+      date: new Date().toLocaleString(),
     });
     setSelectedEmoji(null);
   };
@@ -67,9 +67,7 @@ export const PostModal = ({ openModal, setOpenModal, edit }) => {
       avatar: user?.avatar,
     });
     if (form.content !== "") {
-      edit
-        ? await EditPost(form, dispatch, post?.id)
-        : await AddPost(form, dispatch);
+      await AddPost(form, dispatch);
     }
     setForm(initialValues);
     setOpenEmoji(false);
@@ -77,8 +75,9 @@ export const PostModal = ({ openModal, setOpenModal, edit }) => {
     dispatch(getExplorePosts());
   };
 
-  const handleImage = async (e, file) => {
+  const handleImage = async (e) => {
     e.preventDefault();
+    const file = e.target.files[0];
     const loading = toast.loading("Uploading image...");
     const link = await UploadImage(`posts/${token}/post-cover.jpg`, file);
     toast.success("Uploaded image", { id: loading });
@@ -90,24 +89,12 @@ export const PostModal = ({ openModal, setOpenModal, edit }) => {
     setOpenEmoji((prev) => !prev);
   };
 
-  const closeModal = (e) => {
-    setOpenModal(false);
-  };
-
   return (
     <div className="relative mx-3 my-3 flex  h-fit min-h-[13rem] w-full flex-col items-start justify-between gap-4 rounded-lg border-2 border-gray-100 bg-white px-3 pt-6 shadow-md">
       <form
         onSubmit={(e) => handleSubmit(e)}
         className="relative flex h-full w-full flex-col items-start justify-between"
       >
-        {edit ? (
-          <button
-            onClick={(e) => closeModal(e)}
-            className="absolute right-1 top-1 rounded-full border-2 border-transparent bg-white p-3 hover:border-red-50 hover:bg-red-50"
-          >
-            <FiX />
-          </button>
-        ) : null}
         <div className="align-center flex w-full justify-between">
           <div className="w-14 pt-3">
             <img
@@ -144,7 +131,7 @@ export const PostModal = ({ openModal, setOpenModal, edit }) => {
                 accept="image/*"
                 className="hidden"
                 onChange={(e) => {
-                  handleImage(e, e.target.files[0]);
+                  handleImage(e);
                 }}
               />
               <FiImage className="group-hover:font-bold group-hover:text-blue-500 " />
@@ -173,7 +160,7 @@ export const PostModal = ({ openModal, setOpenModal, edit }) => {
             </div>
           )}
           <button className="m-left my-3 flex w-1/4 items-center justify-center gap-3 rounded-xl bg-blue-500  py-2 font-semibold text-white hover:bg-blue-600">
-            {edit ? "Update Post" : "Post"}
+            Post
           </button>
         </div>
       </form>
