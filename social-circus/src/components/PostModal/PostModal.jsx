@@ -25,8 +25,9 @@ export const PostModal = () => {
 
   const { user, token } = useSelector((state) => state.auth);
   const [selectedEmoji, setSelectedEmoji] = useState(null);
-  const [imagePath, setImagePath] = useState("");
+
   const [form, setForm] = useState(initialValues);
+  const [imagePath, setImagePath] = useState(form?.imageUrl);
   const [openEmoji, setOpenEmoji] = useState(false);
 
   const onEmojiClick = (event, emojiObject) => {
@@ -59,12 +60,6 @@ export const PostModal = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setForm({
-      ...form,
-      imageUrl: imagePath,
-      username: user?.username,
-      avatar: user?.avatar,
-    });
     if (form.content !== "") {
       await AddPost(form, dispatch);
     }
@@ -81,6 +76,7 @@ export const PostModal = () => {
     const link = await UploadImage(`posts/${token}/post-cover.jpg`, file);
     toast.success("Uploaded image", { id: loading });
     setImagePath(link);
+    setForm({ ...form, imageUrl: link });
   };
 
   const emojiClickHandler = (e) => {
@@ -89,7 +85,7 @@ export const PostModal = () => {
   };
 
   return (
-    <div className="relative mx-3 my-3 flex  h-fit min-h-[13rem] w-full flex-col items-start justify-between gap-4 rounded-lg border-2 border-gray-100 bg-white px-3 pt-6 shadow-md">
+    <div className="relative my-3 flex  h-fit min-h-[13rem] w-full flex-col items-start justify-between gap-4 rounded-lg border-2 border-gray-100 bg-white px-3 pt-6 shadow-md">
       <form
         onSubmit={(e) => handleSubmit(e)}
         className="relative flex h-full w-full flex-col items-start justify-between"
@@ -112,10 +108,10 @@ export const PostModal = () => {
             className=" h-24 w-full resize-none flex-wrap whitespace-normal break-words rounded-xl border-2 border-transparent px-3 focus:bg-gray-50 focus:outline-none"
           />
         </div>
-        {imagePath && (
+        {form?.imageUrl && (
           <div className=" my-3 mx-3 flex w-1/2 justify-start ">
             <img
-              src={imagePath}
+              src={form?.imageUrl}
               alt="profile of user"
               className="mr-auto h-20 w-full rounded-md bg-white object-cover opacity-40"
             />

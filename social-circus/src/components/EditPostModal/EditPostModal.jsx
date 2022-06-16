@@ -54,17 +54,12 @@ export const EditPostModal = ({ openModal, setOpenModal, edit }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setForm({
-      ...form,
-      username: user?.username,
-      avatar: user?.avatar,
-      imageUrl: imagePath,
-    });
     if (form.content !== "") {
       await EditPost(form, dispatch, post?.id);
     }
     setForm(initialValues);
     setOpenEmoji(false);
+    setImagePath("");
     dispatch(getExplorePosts());
     closeModal();
   };
