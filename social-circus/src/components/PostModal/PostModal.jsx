@@ -24,7 +24,6 @@ export const PostModal = () => {
   const dispatch = useDispatch();
 
   const { user, token } = useSelector((state) => state.auth);
-  const { post } = useSelector((state) => state.post);
   const [selectedEmoji, setSelectedEmoji] = useState(null);
   const [imagePath, setImagePath] = useState("");
   const [form, setForm] = useState(initialValues);

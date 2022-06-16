@@ -246,11 +246,7 @@ export const PostCard = ({ post }) => {
             )}
       </div>
       {openModal && (
-        <EditPostModal
-          openModal={openModal}
-          setOpenModal={setOpenModal}
-          edit={true}
-        />
+        <EditPostModal openModal={openModal} setOpenModal={setOpenModal} />
       )}
       {showComments && (
         <form
