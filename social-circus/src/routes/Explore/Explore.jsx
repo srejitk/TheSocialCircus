@@ -20,8 +20,8 @@ export const Explore = () => {
   );
 
   return (
-    <div className="flex md:col-span-3 md:ml-44 lg:ml-64">
-      <div className="w-full px-1 pb-16 pt-8 sm:px-0 md:px-2 md:pt-2 lg:px-16">
+    <div className="content flex w-screen md:w-[calc(100vw-11rem)] lg:w-[calc(100vw-18.5rem)]">
+      <div className="w-full px-1 pb-16 pt-8 sm:px-0  md:w-full md:px-5 md:pt-2 lg:w-3/5 lg:px-6">
         <Tab.Group>
           <Tab.List className="flex space-x-1 rounded-t-lg bg-blue-600 px-4 py-2">
             <Tab as={Fragment}>

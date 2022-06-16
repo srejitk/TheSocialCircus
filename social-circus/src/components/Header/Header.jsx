@@ -9,7 +9,7 @@ export const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   return (
-    <header className="header w-screen md:w-[calc(100vw-11rem)] lg:w-[calc(100vw-18rem)] ">
+    <header className="header w-screen md:w-[calc(100vw-11rem)] lg:w-[calc(100vw-18.5rem)] ">
       <div className=" flex h-24  flex-row items-center justify-between border-2 p-5 shadow-sm">
         <div className="flex items-center justify-center gap-6 text-center">
           <div className="flex h-16 w-16 items-center justify-center rounded-full bg-blue-600">
