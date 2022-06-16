@@ -4,13 +4,31 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Tab } from "@headlessui/react";
 import { ContactCard, PostCard, SuggestionBar } from "../../components";
-import { defaultAvatar, defaultCover } from "../../config/Constants";
+import {
+  defaultAvatar,
+  defaultBio,
+  defaultCover,
+  defaultPortfolio,
+} from "../../config/Constants";
+import { MdVerified } from "react-icons/md";
 
 export const Profile = () => {
   const { user, isLoading } = useSelector((state) => state.auth);
   const { posts } = useSelector((state) => state.post);
   const token = localStorage.getItem("userID");
   const defaultUsername = user?.email?.split("@")[0];
+
+  const { username, bio, portfolio, avatar, cover } = user;
+
+  const verificationCheck = () => {
+    return username !== defaultUsername ||
+      bio !== defaultBio ||
+      portfolio !== defaultPortfolio ||
+      avatar !== defaultAvatar ||
+      cover !== defaultCover
+      ? true
+      : false;
+  };
 
   const userPosts = posts?.filter((post) => post?.uid === token);
   return (
@@ -42,8 +60,11 @@ export const Profile = () => {
               <p>Edit Profile</p>
             </Link>
 
-            <h1 className="text-black-300 text-left text-2xl font-medium ">
+            <h1 className="text-black-300 flex items-center gap-2 text-left text-2xl font-medium ">
               {user?.displayName}
+              {verificationCheck() ? (
+                <MdVerified className="text-blue-600" />
+              ) : null}
             </h1>
             <h1 className="w-full pt-2 text-left text-lg font-medium text-gray-400 ">
               {`@${user?.username || defaultUsername}`}
@@ -53,16 +74,16 @@ export const Profile = () => {
                 user?.bio ? "" : "text-slate-400"
               }`}
             >
-              {user?.bio || "Tell the world about yourself!"}
+              {user?.bio || defaultBio}
             </p>
             <div className="flex w-full">
               {" "}
               <a
-                href={user?.website || "https://www.jointhecircus.com"}
+                href={user?.website || "https://www.thesocialcircus.vercel.app"}
                 target="_blank"
                 className="w-full py-1 text-left font-semibold text-blue-500"
               >
-                {user?.website || "https://www.jointhecircus.com"}
+                {user?.website || defaultPortfolio}
               </a>
             </div>
 
