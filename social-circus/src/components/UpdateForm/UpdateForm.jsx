@@ -14,7 +14,10 @@ import { updateDetails } from "../../redux/actions/authActions";
 import {
   avatarOptions,
   defaultAvatar,
+  defaultBio,
   defaultCover,
+  defaultPortfolio,
+  defaultUsername,
 } from "../../config/Constants";
 
 export const UpdateForm = () => {
@@ -180,7 +183,7 @@ export const UpdateForm = () => {
                 placeholder={
                   initialValues.username
                     ? `@${initialValues.username}`
-                    : "Enter username"
+                    : defaultUsername
                 }
                 className="relative flex w-[80%] rounded-lg border border-slate-300 bg-white px-2 py-2 placeholder-slate-400 shadow-sm required:border-pink-500 required:text-pink-600 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500
               focus:required:border-pink-500 focus:required:ring-pink-500 
@@ -195,9 +198,7 @@ export const UpdateForm = () => {
                 label="bio"
                 name="bio"
                 placeholder={
-                  initialValues.bio
-                    ? `${initialValues.bio}`
-                    : "Tell the world about yourself"
+                  initialValues.bio ? `${initialValues.bio}` : defaultBio
                 }
                 className="relative flex w-[80%] rounded-lg border border-slate-300 bg-white px-2 py-2 placeholder-slate-400 shadow-sm required:border-pink-500 required:text-pink-600 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500
               focus:required:border-pink-500 focus:required:ring-pink-500 
@@ -215,7 +216,7 @@ export const UpdateForm = () => {
                 placeholder={
                   initialValues.portfolio
                     ? `${initialValues.portfolio}`
-                    : "https://www.yourwebsite.com"
+                    : defaultPortfolio
                 }
                 className="relative flex w-[80%] rounded-lg border border-slate-300 bg-white px-2 py-2 placeholder-slate-400 shadow-sm required:border-pink-500 required:text-pink-600 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500
               focus:required:border-pink-500 focus:required:ring-pink-500 
