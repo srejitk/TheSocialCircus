@@ -100,7 +100,7 @@ export const LoginForm = () => {
               }}
               className="my-3 flex w-full items-center justify-center gap-3 rounded-lg border-2 border-blue-500 bg-white py-2 font-semibold text-blue-500 hover:bg-blue-50"
             >
-              Login with test creds
+              Use Test Credentials
             </button>
           </Form>
         );

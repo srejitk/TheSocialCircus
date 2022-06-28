@@ -14,7 +14,7 @@ export const Login = () => {
     });
   }, [pathname]);
   return (
-    <div className="content relative flex h-screen w-full">
+    <div className="sm:content relative flex h-screen w-full md:absolute md:bottom-1/2 md:right-1/2 md:translate-x-1/2 md:translate-y-1/2 lg:absolute lg:bottom-1/2 lg:right-1/2 lg:translate-x-1/2 lg:translate-y-1/2">
       <Link to="/">
         <button className="absolute m-4 flex items-center justify-evenly gap-2 rounded-3xl bg-gray-100 px-5 py-2 font-semibold hover:bg-gray-300">
           <FiChevronLeft /> Back to the Circus

@@ -54,7 +54,7 @@ export const Profile = () => {
           <div className="absolute -bottom-40 left-1/2 h-80 w-full -translate-x-1/2 translate-y-1/2 flex-col items-center justify-center  rounded-lg bg-gray-50 p-20 shadow-xl">
             <Link
               to="/update"
-              className="align-center group absolute top-8 right-8 my-3 flex justify-between  rounded-3xl border-2 border-transparent bg-blue-700 p-4 px-10 py-3 font-bold text-white hover:border-blue-700/90 hover:bg-blue-700/90 hover:outline-2"
+              className="align-center group absolute top-8 right-8 my-3 flex justify-between  rounded-3xl border-2 border-transparent border-black p-4 px-10 py-3 font-bold text-black hover:border-blue-700/50 hover:bg-blue-700/90 hover:outline-2"
             >
               <FiEdit className="relative mx-3 mt-1 h-full " />
               <p>Edit Profile</p>
@@ -109,14 +109,14 @@ export const Profile = () => {
         </div>
         <div className="relative mx-auto mt-80 w-full bg-gray-100 px-2 pb-16 sm:px-0">
           <Tab.Group>
-            <Tab.List className="flex space-x-1 rounded-xl bg-blue-600 px-4  py-2">
+            <Tab.List className="flex space-x-1 rounded-t-lg bg-gray-50 px-4 py-2">
               <Tab as={Fragment}>
                 {({ selected }) => (
                   <button
-                    className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 ${
+                    className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 focus:outline-none    ${
                       selected
                         ? "bg-white shadow"
-                        : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
+                        : "text-black hover:bg-gray-200/10 hover:text-black"
                     }`}
                   >
                     Feed
@@ -126,10 +126,10 @@ export const Profile = () => {
               <Tab as={Fragment}>
                 {({ selected }) => (
                   <button
-                    className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 ${
+                    className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 focus:outline-none    ${
                       selected
                         ? "bg-white shadow"
-                        : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
+                        : "text-black hover:bg-gray-200/10 hover:text-black"
                     }`}
                   >
                     Followers
@@ -139,10 +139,10 @@ export const Profile = () => {
               <Tab as={Fragment}>
                 {({ selected }) => (
                   <button
-                    className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 ${
+                    className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 focus:outline-none    ${
                       selected
                         ? "bg-white shadow"
-                        : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
+                        : "text-black hover:bg-gray-200/10 hover:text-black"
                     }`}
                   >
                     Following

@@ -23,14 +23,14 @@ export const Explore = () => {
     <div className="content flex w-screen md:w-[calc(100vw-11rem)] lg:w-[calc(100vw-18.5rem)]">
       <div className="w-full px-1 pb-16 pt-8 sm:px-0  md:w-full md:px-5 md:pt-2 lg:w-3/5 lg:px-6">
         <Tab.Group>
-          <Tab.List className="flex space-x-1 rounded-t-lg bg-blue-600 px-4 py-2">
+          <Tab.List className="flex space-x-1 rounded-t-lg bg-gray-50 px-4 py-2">
             <Tab as={Fragment}>
               {({ selected }) => (
                 <button
-                  className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 ${
+                  className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 focus:outline-none    ${
                     selected
                       ? "bg-white shadow"
-                      : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
+                      : "text-black hover:bg-gray-200/10 hover:text-black"
                   }`}
                 >
                   Explore
@@ -40,10 +40,10 @@ export const Explore = () => {
             <Tab as={Fragment}>
               {({ selected }) => (
                 <button
-                  className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 ${
+                  className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 focus:outline-none    ${
                     selected
                       ? "bg-white shadow"
-                      : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
+                      : "text-black hover:bg-gray-200/10 hover:text-black"
                   }`}
                 >
                   Trending
@@ -53,10 +53,10 @@ export const Explore = () => {
             <Tab as={Fragment}>
               {({ selected }) => (
                 <button
-                  className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 ${
+                  className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 focus:outline-none    ${
                     selected
                       ? "bg-white shadow"
-                      : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
+                      : "text-black hover:bg-gray-200/10 hover:text-black"
                   }`}
                 >
                   Oldest

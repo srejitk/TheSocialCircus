@@ -122,14 +122,14 @@ export const User = () => {
         </div>
         <div className="relative mx-auto mt-80 w-full bg-gray-100 px-2 pb-16 sm:px-0">
           <Tab.Group>
-            <Tab.List className="flex space-x-1 rounded-xl bg-blue-600 px-4  py-2">
+            <Tab.List className="flex space-x-1 rounded-t-lg bg-gray-50 px-4 py-2">
               <Tab as={Fragment}>
                 {({ selected }) => (
                   <button
-                    className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 ${
+                    className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 focus:outline-none    ${
                       selected
                         ? "bg-white shadow"
-                        : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
+                        : "text-black hover:bg-gray-200/10 hover:text-black"
                     }`}
                   >
                     Feed
@@ -139,10 +139,10 @@ export const User = () => {
               <Tab as={Fragment}>
                 {({ selected }) => (
                   <button
-                    className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 ${
+                    className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 focus:outline-none    ${
                       selected
                         ? "bg-white shadow"
-                        : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
+                        : "text-black hover:bg-gray-200/10 hover:text-black"
                     }`}
                   >
                     Followers
@@ -152,10 +152,10 @@ export const User = () => {
               <Tab as={Fragment}>
                 {({ selected }) => (
                   <button
-                    className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 ${
+                    className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 focus:outline-none    ${
                       selected
                         ? "bg-white shadow"
-                        : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
+                        : "text-black hover:bg-gray-200/10 hover:text-black"
                     }`}
                   >
                     Following
