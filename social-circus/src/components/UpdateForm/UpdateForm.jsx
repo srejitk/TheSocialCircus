@@ -151,8 +151,8 @@ export const UpdateForm = () => {
             <p className="mb-4 text-lg font-semibold text-zinc-700">
               Upload a cover image
             </p>
-            <div className="cover group relative mb-2 flex h-fit w-2/3 flex-col items-center justify-center overflow-hidden rounded-3xl border-2 border-gray-100 bg-white outline hover:border-2 hover:border-blue-300 hover:bg-blue-50 hover:outline-2">
-              <FiImage className="absolute top-0 left-0 h-10 w-10 translate-x-1/2 translate-y-1/2 p-2" />
+            <div className="cover group relative mb-2 flex h-fit min-h-[10rem] w-2/3 flex-col items-center justify-center overflow-hidden rounded-3xl border-2 border-gray-100 bg-blue-700/10 bg-white hover:border-2 hover:border-blue-300 hover:bg-blue-50 hover:outline-2">
+              <FiImage className="absolute top-1/2 left-1/2 h-10 w-10 -translate-x-1/2 -translate-y-1/2 p-2 text-blue-500" />
               <label htmlFor="cover">
                 <input
                   type="file"
@@ -165,9 +165,9 @@ export const UpdateForm = () => {
                   }}
                 />
                 <img
-                  src={initialValues.cover}
+                  src={initialValues.cover || defaultCover}
                   alt="user-avatar-preview"
-                  className=" relative w-full object-cover blur-sm group-hover:text-blue-500 group-hover:blur-md"
+                  className={` relative w-full object-cover group-hover:text-blue-500 group-hover:blur-md`}
                 />
               </label>
             </div>
