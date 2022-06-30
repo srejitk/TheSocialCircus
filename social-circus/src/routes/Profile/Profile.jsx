@@ -107,7 +107,7 @@ export const Profile = () => {
             </div>
           </div>
         </div>
-        <div className="relative mx-auto mt-80 w-full bg-gray-100 px-2 pb-16 sm:px-0">
+        <div className="relative mx-auto mt-80 w-full bg-gray-50 px-2 pb-16 sm:px-0">
           <Tab.Group>
             <Tab.List className="flex space-x-1 rounded-t-lg bg-gray-50 px-4 py-2">
               <Tab as={Fragment}>

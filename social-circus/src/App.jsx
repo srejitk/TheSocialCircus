@@ -28,6 +28,7 @@ function App() {
       )}
       {pathname === "/signup" ||
       pathname === "/login" ||
+      pathname === "/" ||
       pathname === "/update" ? null : (
         <Sidebar />
       )}
