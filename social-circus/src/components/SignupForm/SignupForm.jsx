@@ -27,12 +27,14 @@ export const SignupForm = () => {
     email: Yup.string()
       .email("Please enter a valid email address")
       .required("Please enter a valid email address"),
-    password: Yup.string().required("Can't be empty").min(8, 'Password is too short, minimum 8 characters required')
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
-      "Must have atleast one uppercase, one lowercase, One Number and one special character"
-    ),
-    ,
+    password: Yup.string()
+      .required("Can't be empty")
+      .min(8, "Password is too short, minimum 8 characters required")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
+        "Must have atleast one uppercase, one lowercase, One Number and one special character"
+      ),
+
     confirmPassword: Yup.string()
       .oneOf([Yup.ref("password"), ""], "Passwords must match")
       .required("Can't be empty"),
