@@ -140,7 +140,6 @@ export const PostModal = () => {
           >
             <FiSmile className="group-hover:font-bold group-hover:text-blue-500 " />
           </button>
-
           {openEmoji && (
             <div className="absolute left-16 -bottom-72">
               <Picker
@@ -154,7 +153,7 @@ export const PostModal = () => {
               />
             </div>
           )}
-          <button className="m-left my-3 flex w-1/4 items-center justify-center gap-3 rounded-xl bg-blue-500  py-2 font-semibold text-white hover:bg-blue-600">
+          <button className="m-left my-3 flex w-1/4 items-center justify-center gap-3 rounded-3xl bg-blue-600  py-3 px-4 font-semibold text-white hover:bg-blue-600">
             Post
           </button>
         </div>
