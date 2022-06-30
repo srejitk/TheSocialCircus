@@ -19,6 +19,7 @@ import { setLoading } from "../slice/authSlice";
 
 export const registerUser = async (userData, navigate, dispatch, actions) => {
   const { firstName, lastName, email, password } = userData;
+  const loading = toast.loading("Signing you up...");
   try {
     const userCreds = await createUserWithEmailAndPassword(
       auth,
@@ -34,8 +35,8 @@ export const registerUser = async (userData, navigate, dispatch, actions) => {
     createProfile(userData, uid);
     dispatch(getUserData(uid));
     actions.resetForm();
-    toast.success("You are part of the circus!");
-    navigate("/", { replace: true });
+    toast.success("Welcome to the circus!", { id: loading });
+    navigate("/home", { replace: true });
   } catch (error) {
     const errorCode = error.code;
     switch (errorCode) {
@@ -45,7 +46,9 @@ export const registerUser = async (userData, navigate, dispatch, actions) => {
         return toast.error("This email is already in use.");
       default:
         console.log(error);
-        return toast.error("Something went wrong. Try again later");
+        return toast.error("Something went wrong. Try again later", {
+          id: loading,
+        });
     }
   }
 };
@@ -89,6 +92,7 @@ export const getUserData = createAsyncThunk("auth/getUserData", async (uid) => {
 
 export const loginUser = async (userData, navigate, dispatch, login) => {
   const { email, password } = userData;
+  const loading = toast.loading("Logging you in...");
   try {
     dispatch(setLoading(true));
     const userCreds = await signInWithEmailAndPassword(auth, email, password);
@@ -96,20 +100,23 @@ export const loginUser = async (userData, navigate, dispatch, login) => {
     const { uid } = user;
     localStorage.setItem("userID", uid);
     dispatch(getUserData(uid));
-    navigate("/", { replace: true });
+    navigate("/home", { replace: true });
+    toast.success("You're logged in!.", { id: loading });
   } catch (error) {
     dispatch(setLoading(false));
     const errorCode = error.code;
     switch (errorCode) {
       case "auth/wrong-password":
-        return toast.error("Check your password again.");
+        return toast.error("Check your password again.", { id: loading });
       case "auth/invalid-email":
-        return toast.error("Check your Email ID again.");
+        return toast.error("Check your Email ID again.", { id: loading });
       case "auth/user-not-found":
-        return toast.error("You need to sign us first!");
+        return toast.error("You need to sign us first!", { id: loading });
       default:
         console.log(error);
-        return toast.error("Something went wrong. Try again later");
+        return toast.error("Something went wrong. Try again later", {
+          id: loading,
+        });
     }
   } finally {
     dispatch(setLoading(false));
