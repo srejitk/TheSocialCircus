@@ -6,13 +6,21 @@ export const Landing = () => {
   return (
     <div className="sm:content relative flex h-fit min-h-screen w-full flex-col justify-center bg-white py-[10rem] md:absolute  md:flex-col md:py-[10rem] lg:absolute lg:flex-row lg:items-center lg:py-0">
       <div className="flex h-full w-full flex-col items-center justify-center  lg:w-3/5">
-        <h2 className=" break-after-auto text-6xl font-black lg:px-4 ">
-          Get the best of both <span className="text-pink-600">Instagram</span>{" "}
-          and <span className="text-blue-500">Twitter</span> at one place.
+        <h2 className=" w-2/3 text-left text-6xl font-black lg:px-4 ">
+          Forget the social network, we've got the{" "}
+          <span className="mt-3 bg-gradient-to-r from-green-300        via-yellow-300 to-pink-300 bg-clip-text text-transparent">
+            {" "}
+            Social Circus
+          </span>
+          .{" "}
+        </h2>
+
+        <h2 className="mt-4 w-2/3 text-left text-2xl font-semibold lg:px-4 ">
+          We are the circus and your attention is our show.{" "}
         </h2>
         <Link
           to="/login"
-          className="align-center flex items-center gap-2 pt-6 text-6xl font-black text-blue-700 transition-[gap] hover:gap-8"
+          className="align-left items-left flex w-2/3 gap-2 pt-6 text-6xl font-black text-blue-700 transition-[gap] hover:gap-8"
         >
           Try for free <p>{">"}</p>
         </Link>
