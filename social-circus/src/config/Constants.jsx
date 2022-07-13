@@ -32,3 +32,9 @@ export const brand =
 
 export const errorCover =
   "https://res.cloudinary.com/dkqrmlxlg/image/upload/v1654830680/The%20Social%20Circus/Astronaut_helmet-cuate_1_dto1ov.png";
+
+export const defaultBio = "Enter your bio here";
+
+export const defaultPortfolio = "https://www.enterYourWebsiteHere.com";
+
+export const defaultUsername = "Nousername";

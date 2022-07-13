@@ -11,7 +11,7 @@
   display: grid;
   position: relative;
   grid-template-columns: 18rem 1fr;
-  grid-template-areas: "sidebar header " "sidebar content";
+  grid-template-areas: "header header " "sidebar content";
 }
 
 .sidebar {

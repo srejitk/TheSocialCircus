@@ -7,3 +7,4 @@ export { Home } from "./Home/Home";
 export { Profile } from "./Profile/Profile";
 export { User } from "./User/User";
 export { Explore } from "./Explore/Explore";
+export { Landing } from "./Landing/Landing";
