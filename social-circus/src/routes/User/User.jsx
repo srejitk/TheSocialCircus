@@ -1,5 +1,5 @@
-import React, { Fragment, useState } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import React, { Fragment } from "react";
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setOtherUser } from "../../redux/slice/authSlice";
 import { Tab } from "@headlessui/react";
@@ -16,7 +16,6 @@ export const User = () => {
   const { userID } = useParams();
   const { posts } = useSelector((state) => state.post);
   const dispatch = useDispatch();
-  const location = useLocation();
 
   const findUser = allUsers?.find((user) => user?.id === userID);
 
@@ -120,43 +119,61 @@ export const User = () => {
       </div>
       <div className="relative mx-auto mt-80 w-full bg-gray-100 px-2 pb-16 sm:px-0">
         <Tab.Group>
-          <Tab.List className="flex space-x-1 rounded-xl bg-blue-600 px-4  py-2">
+          <Tab.List className="flex bg-white">
             <Tab as={Fragment}>
               {({ selected }) => (
                 <button
-                  className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 ${
+                  className={`flex h-14 w-full   items-center justify-center text-sm font-medium leading-5 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 hover:bg-gray-400/20 focus:outline-none focus:ring-2 ${
                     selected
-                      ? "bg-white shadow"
-                      : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
+                      ? " bg-white font-bold text-black"
+                      : "font-semibold text-gray-600/70 "
                   }`}
                 >
-                  Feed
+                  <p
+                    className={`flex h-full w-fit flex-col justify-center border-b-4 ${
+                      selected ? "border-blue-600" : "border-transparent"
+                    }  px-4 text-center`}
+                  >
+                    Feed
+                  </p>
                 </button>
               )}
             </Tab>
             <Tab as={Fragment}>
               {({ selected }) => (
                 <button
-                  className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 ${
+                  className={`flex h-14 w-full   items-center justify-center text-sm font-medium leading-5 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 hover:bg-gray-400/20 focus:outline-none focus:ring-2 ${
                     selected
-                      ? "bg-white shadow"
-                      : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
+                      ? " bg-white font-bold text-black"
+                      : "font-semibold text-gray-600/70 "
                   }`}
                 >
-                  Followers
+                  <p
+                    className={`flex h-full w-fit flex-col justify-center border-b-4 ${
+                      selected ? "border-blue-600" : "border-transparent"
+                    }  px-4 text-center`}
+                  >
+                    Followers
+                  </p>
                 </button>
               )}
             </Tab>{" "}
             <Tab as={Fragment}>
               {({ selected }) => (
                 <button
-                  className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 ${
+                  className={`flex h-14 w-full   items-center justify-center text-sm font-medium leading-5 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 hover:bg-gray-400/20 focus:outline-none focus:ring-2 ${
                     selected
-                      ? "bg-white shadow"
-                      : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
+                      ? " bg-white font-bold text-black"
+                      : "font-semibold text-gray-600/70 "
                   }`}
                 >
-                  Following
+                  <p
+                    className={`flex h-full w-fit flex-col justify-center border-b-4 ${
+                      selected ? "border-blue-600" : "border-transparent"
+                    }  px-4 text-center`}
+                  >
+                    Following
+                  </p>
                 </button>
               )}
             </Tab>

@@ -95,7 +95,7 @@ export const PostModal = ({ openModal, setOpenModal, edit }) => {
   };
 
   return (
-    <div className="relative mx-3 my-3 flex  h-fit min-h-[13rem] w-full flex-col items-start justify-between gap-4 rounded-lg border-2 border-gray-100 bg-white px-3 pt-6 shadow-md">
+    <div className="relative flex  h-fit min-h-[13rem] w-full flex-col items-start justify-between gap-4 border-y-2 border-r-2 border-gray-200 bg-white px-3 pt-6">
       <form
         onSubmit={(e) => handleSubmit(e)}
         className="relative flex h-full w-full flex-col items-start justify-between"

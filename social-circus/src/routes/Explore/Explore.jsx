@@ -23,43 +23,61 @@ export const Explore = () => {
     <div className="flex md:col-span-3 md:ml-44 lg:ml-64">
       <div className="w-full px-1 pb-16 pt-8 sm:px-0 md:px-2 md:pt-2 lg:px-16">
         <Tab.Group>
-          <Tab.List className="flex space-x-1 rounded-t-lg bg-blue-600 px-4 py-2">
+          <Tab.List className="flex bg-white">
             <Tab as={Fragment}>
               {({ selected }) => (
                 <button
-                  className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 ${
+                  className={`flex h-14 w-full   items-center justify-center text-sm font-medium leading-5 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 hover:bg-gray-400/20 focus:outline-none focus:ring-2 ${
                     selected
-                      ? "bg-white shadow"
-                      : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
+                      ? " bg-white font-bold text-black"
+                      : "font-semibold text-gray-600/70 "
                   }`}
                 >
-                  Explore
+                  <p
+                    className={`flex h-full w-fit flex-col justify-center border-b-4 ${
+                      selected ? "border-blue-600" : "border-transparent"
+                    }  px-4 text-center`}
+                  >
+                    Explore
+                  </p>
                 </button>
               )}
             </Tab>
             <Tab as={Fragment}>
               {({ selected }) => (
                 <button
-                  className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 ${
+                  className={`flex h-14 w-full   items-center justify-center text-sm font-medium leading-5 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 hover:bg-gray-400/20 focus:outline-none focus:ring-2 ${
                     selected
-                      ? "bg-white shadow"
-                      : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
+                      ? " bg-white font-bold text-black"
+                      : "font-semibold text-gray-600/70 "
                   }`}
                 >
-                  Trending
+                  <p
+                    className={`flex h-full w-fit flex-col justify-center border-b-4 ${
+                      selected ? "border-blue-600" : "border-transparent"
+                    }  px-4 text-center`}
+                  >
+                    Trending
+                  </p>
                 </button>
               )}
             </Tab>{" "}
             <Tab as={Fragment}>
               {({ selected }) => (
                 <button
-                  className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 ${
+                  className={`flex h-14 w-full   items-center justify-center text-sm font-medium leading-5 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 hover:bg-gray-400/20 focus:outline-none focus:ring-2 ${
                     selected
-                      ? "bg-white shadow"
-                      : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
+                      ? " bg-white font-bold text-black"
+                      : "font-semibold text-gray-600/70 "
                   }`}
                 >
-                  Oldest
+                  <p
+                    className={`flex h-full w-fit flex-col justify-center border-b-4 ${
+                      selected ? "border-blue-600" : "border-transparent"
+                    }  px-4 text-center`}
+                  >
+                    Oldest
+                  </p>
                 </button>
               )}
             </Tab>

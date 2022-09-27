@@ -74,7 +74,7 @@ export const PostCard = ({ post }) => {
   const isAuthor = post?.uid === token;
   const isLiked = likes?.find((user) => user?.userID === token);
   return (
-    <div className="my-3 mx-auto flex h-fit w-full flex-col justify-around rounded-lg bg-white shadow-md">
+    <div className="my-3 mx-auto flex h-fit w-full flex-col justify-around rounded-lg border-2 border-gray-200 bg-white shadow-sm">
       <Link
         to={`/profile/${post?.uid}`}
         className="flex items-center justify-start"
@@ -82,10 +82,10 @@ export const PostCard = ({ post }) => {
         <img
           src={avatar || defaultAvatar}
           alt="dp"
-          className="m-3 h-16 w-16 rounded-full"
+          className="m-3 h-12 w-12 rounded-full"
         />
 
-        <div className="flex flex-col items-start px-3 ">
+        <div className="flex flex-col items-start px-1 ">
           {" "}
           <h1 className="text-xl font-semibold">{displayName}</h1>
           <h1>{username === "username" ? "@" + displayName : username}</h1>
@@ -100,7 +100,7 @@ export const PostCard = ({ post }) => {
             <img
               src={imageUrl}
               alt="post-cover"
-              className="h-full w-full rounded-lg"
+              className="mx-auto max-h-[450px] w-fit max-w-full rounded-lg object-contain"
             />
           </div>
         )}

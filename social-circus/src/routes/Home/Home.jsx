@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment } from "react";
 import { CreatePost, PostCard, SuggestionBar } from "../../components";
 import { Tab } from "@headlessui/react";
 import { useSelector } from "react-redux";
@@ -16,46 +16,64 @@ export const Home = () => {
   const textposts = [...homeposts].filter((post) => post?.imageUrl === "");
 
   return (
-    <div className="content flex w-screen  md:w-[calc(100vw-11rem)] lg:w-[calc(100vw-18rem)]">
-      <div className="w-full pb-16 pt-8 sm:px-0  md:w-full  lg:w-3/5 lg:pt-0">
+    <div className="content flex w-screen  md:w-[calc(100vw-11rem)] lg:ml-auto lg:w-[calc(100vw-365px)] lg:border-2 lg:pt-0">
+      <div className="w-full  pb-16  pt-8  sm:px-0 md:w-full lg:w-3/5 lg:max-w-[600px]  lg:pt-0">
         <Tab.Group>
-          <Tab.List className="flex  bg-gray-200/50 py-1 px-1">
+          <Tab.List className="flex  bg-white">
             <Tab as={Fragment}>
               {({ selected }) => (
                 <button
-                  className={`w-full rounded-full py-2.5 text-sm font-medium leading-5 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 ${
+                  className={`flex h-14 w-full   items-center justify-center text-sm font-medium leading-5 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 hover:bg-gray-400/20 focus:outline-none focus:ring-2 ${
                     selected
-                      ? " bg-blue-600/90 text-white shadow"
-                      : "text-gray-600/70 hover:bg-white/[0.12] hover:text-gray-700"
+                      ? " bg-white font-bold text-black"
+                      : "font-semibold text-gray-600/70 "
                   }`}
                 >
-                  Feed
+                  <p
+                    className={`flex h-full w-fit flex-col justify-center border-b-4 ${
+                      selected ? "border-blue-600" : "border-transparent"
+                    }  px-4 text-center`}
+                  >
+                    Feed
+                  </p>
                 </button>
               )}
             </Tab>
             <Tab as={Fragment}>
               {({ selected }) => (
                 <button
-                  className={`w-full rounded-full py-2.5 text-sm font-medium leading-5 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 ${
+                  className={`flex h-14 w-full   items-center justify-center text-sm font-medium leading-5 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 hover:bg-gray-400/20 focus:outline-none focus:ring-2 ${
                     selected
-                      ? " bg-blue-600/90 text-white shadow"
-                      : "text-gray-600/70 hover:bg-white/[0.12] hover:text-gray-700"
+                      ? " bg-white font-bold text-black"
+                      : "font-normal text-gray-600/70 "
                   }`}
                 >
-                  Media Only
+                  <p
+                    className={`flex h-full w-fit flex-col justify-center border-b-4 ${
+                      selected ? "border-blue-600" : "border-transparent"
+                    }  px-4 text-center`}
+                  >
+                    Insta
+                  </p>
                 </button>
               )}
             </Tab>
             <Tab as={Fragment}>
               {({ selected }) => (
                 <button
-                  className={`w-full rounded-full py-2.5 text-sm font-medium leading-5 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 ${
+                  className={`flex h-14 w-full   items-center justify-center text-sm font-medium leading-5 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 hover:bg-gray-400/20 focus:outline-none focus:ring-2 ${
                     selected
-                      ? " bg-blue-600/90 text-white shadow"
-                      : "text-gray-600/70 hover:bg-white/[0.12] hover:text-gray-700"
+                      ? " bg-white font-bold text-black"
+                      : "font-normal text-gray-600/70 "
                   }`}
                 >
-                  Text Only
+                  <p
+                    className={`flex h-full w-fit flex-col justify-center  border-b-[6px] ${
+                      selected ? "border-blue-600" : "border-transparent"
+                    }  px-4 text-center`}
+                  >
+                    Text Only
+                  </p>
                 </button>
               )}
             </Tab>{" "}
@@ -63,7 +81,7 @@ export const Home = () => {
           <Tab.Panels className="mt-2">
             <Tab.Panel
               as="div"
-              className="rounded-xl bg-white p-3 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
+              className="rounded-xl bg-white p-3  ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
             >
               <div>
                 <CreatePost />
