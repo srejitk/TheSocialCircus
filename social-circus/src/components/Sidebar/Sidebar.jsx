@@ -30,9 +30,7 @@ export const Sidebar = () => {
         <NavLink to="/feed" className="my-2 ">
           <div className="relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-lg hover:bg-slate-500/10 md:w-full md:justify-evenly  ">
             <FiHome className="z-10 flex h-6 w-6" />
-            <p className="z-10 hidden font-semibold md:block md:text-transparent lg:block">
-              Home
-            </p>
+            <p className="z-10 hidden font-semibold md:block  lg:block">Home</p>
             <h2 className="absolute -top-1 hidden px-1 pt-0 text-center text-6xl font-black text-transparent lg:block">
               Home
             </h2>
@@ -42,7 +40,7 @@ export const Sidebar = () => {
         <NavLink to="/explore" className="my-2">
           <div className="relative flex h-16 w-16 items-center justify-center rounded-lg hover:bg-slate-500/10 md:w-full md:justify-evenly  ">
             <MdExplore className="z-10 flex h-6 w-6" />
-            <p className="z-10 hidden font-semibold md:block md:text-transparent lg:block">
+            <p className="z-10 hidden font-semibold md:block  lg:block">
               Explore
             </p>
             <h2 className="absolute -top-1 hidden px-1 pt-0 text-center text-6xl font-black text-transparent lg:block">
@@ -53,7 +51,7 @@ export const Sidebar = () => {
         <NavLink to="/saved" className="my-2">
           <div className="relative flex h-16 w-16 items-center justify-center rounded-lg hover:bg-slate-500/10 md:w-full md:justify-evenly  ">
             <FiInbox className="z-10 flex h-6 w-6" />
-            <p className="z-10 hidden font-semibold md:block md:text-transparent lg:block">
+            <p className="z-10 hidden font-semibold md:block  lg:block">
               Saved
             </p>
             <h2 className="absolute -top-1 hidden px-1 pt-0 text-center text-6xl font-black text-transparent lg:block">
@@ -64,7 +62,7 @@ export const Sidebar = () => {
         <NavLink to="/profile" className="my-2">
           <div className="relative flex h-16 w-16 items-center justify-center rounded-lg hover:bg-slate-500/10 md:w-full md:justify-evenly  ">
             <FiUser className="z-10 flex h-6 w-6" />
-            <p className="z-10 hidden font-semibold md:block md:text-transparent lg:block">
+            <p className="z-10 hidden font-semibold md:block  lg:block">
               Profile
             </p>
             <h2 className="absolute -top-1 hidden px-1 pt-0 text-center text-6xl font-black text-transparent lg:block">
@@ -73,7 +71,11 @@ export const Sidebar = () => {
           </div>
         </NavLink>
       </div>
-      <div className="hidden md:static lg:static">Dark Mode</div>
+      <div className="mt-auto hidden w-full font-semibold text-gray-700 lg:block">
+        <p>
+          &#169; Made by <span className=" text-gray-400">Sreejith K</span>
+        </p>
+      </div>
     </nav>
   );
 };
