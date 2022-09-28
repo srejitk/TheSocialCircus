@@ -20,6 +20,7 @@ export const Explore = () => {
   );
 
   return (
+
     <div className="content flex w-screen  md:ml-24 md:w-[calc(100vw-7rem)]  lg:w-[calc(100vw-365px)] lg:border-2 lg:pt-0">
       <div className="w-full px-1  pb-16  pt-8  sm:px-0 md:w-full lg:w-3/5 lg:max-w-[600px]  lg:pt-0">
         <Tab.Group>
@@ -46,10 +47,12 @@ export const Explore = () => {
             <Tab as={Fragment}>
               {({ selected }) => (
                 <button
+
                   className={`flex h-14 w-full   items-center justify-center text-sm font-medium leading-5 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 hover:bg-gray-400/20 focus:outline-none focus:ring-2 ${
                     selected
                       ? " bg-white font-bold text-black"
                       : "font-semibold text-gray-600/70 "
+
                   }`}
                 >
                   <p
@@ -65,6 +68,7 @@ export const Explore = () => {
             <Tab as={Fragment}>
               {({ selected }) => (
                 <button
+
                   className={`flex h-14 w-full   items-center justify-center text-sm font-medium leading-5 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 hover:bg-gray-400/20 focus:outline-none focus:ring-2 ${
                     selected
                       ? " bg-white font-bold text-black"
@@ -89,7 +93,7 @@ export const Explore = () => {
             >
               <div>
                 {posts?.map((post) => {
-                  return <PostCard key={post.id} post={post} />;
+                  return <PostCard key={post?.id} post={post} />;
                 })}
               </div>
             </Tab.Panel>
@@ -99,7 +103,7 @@ export const Explore = () => {
             >
               <div>
                 {trendingposts?.map((post) => {
-                  return <PostCard key={post.id} post={post} />;
+                  return <PostCard key={post?.id} post={post} />;
                 })}
               </div>
             </Tab.Panel>
@@ -109,7 +113,7 @@ export const Explore = () => {
             >
               <div>
                 {Oldestposts?.map((post) => {
-                  return <PostCard key={post.id} post={post} />;
+                  return <PostCard key={post?.id} post={post} />;
                 })}
               </div>
             </Tab.Panel>

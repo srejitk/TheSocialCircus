@@ -1,6 +1,7 @@
 import React from "react";
 import { FiUserCheck, FiUserPlus } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { defaultAvatar } from "../../config/Constants";
 import { followUser, unfollowUser } from "../../redux/actions/followActions";
 
@@ -12,8 +13,12 @@ export const ContactCard = ({ id }) => {
   const isFollowing = user?.following?.some((ID) => ID === id);
 
   return (
-    <div className=" mb-2 flex justify-between border-b-2">
-      <div className="m-3 h-12 w-12">
+
+    <Link
+      to={`/profile/${otherUser?.id}`}
+      className=" mb-4 flex justify-between border-b-2"
+    >
+      <div className="m-3 h-16 w-16">
         <img
           src={otherUser?.data?.avatar || defaultAvatar}
           alt="contact dp"
@@ -57,6 +62,6 @@ export const ContactCard = ({ id }) => {
           </button>
         )}
       </div>
-    </div>
+    </Link>
   );
 };

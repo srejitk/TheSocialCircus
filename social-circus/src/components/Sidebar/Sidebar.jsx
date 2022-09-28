@@ -9,31 +9,42 @@ import { brand2 } from "../../config/Constants";
 export const Sidebar = () => {
   const { user } = useSelector((state) => state.auth);
   return (
-    <nav className="sidebar fixed bottom-0 z-30 flex h-fit w-full flex-row  justify-center gap-2 border-t-2 bg-white md:fixed md:h-screen md:w-28 md:flex-col md:justify-start md:border-r-2 md:pt-4 lg:h-screen lg:w-[23rem] lg:flex-col lg:pt-4">
-      <div className="flex h-20 w-full justify-evenly md:h-screen md:w-full md:flex-col md:items-center md:justify-start md:pt-2 lg:ml-auto lg:mb-auto lg:h-full lg:w-3/4 lg:justify-start lg:pt-4">
-        <NavLink to="/feed" className="mb-6 hidden md:block   ">
-          <div className="relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-full bg-white   md:justify-evenly lg:h-12 lg:w-12 lg:justify-start  ">
-            <img src={brand2} className="z-10 flex h-full w-full" />
-          </div>
-        </NavLink>
 
-        <NavLink to="/feed" className="my-2 ">
-          <div className="relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-full hover:bg-slate-500/10   md:justify-evenly md:py-3 md:px-3 lg:h-12 lg:w-fit lg:justify-start lg:gap-4 lg:px-6  ">
-            <FiHome className="z-10 flex h-6 w-6 " />
-            <p className="z-10 hidden font-semibold lg:block">Home</p>
+    <nav className="sidebar fixed bottom-0 z-30 flex h-fit w-full  flex-row justify-center gap-2 border-t-2 bg-white md:fixed md:h-full md:w-44 md:flex-col md:justify-start md:border-r-2 md:pt-28 lg:h-full lg:w-72 lg:flex-col  ">
+      <div className="flex h-20 w-full justify-evenly md:w-full md:flex-col md:px-4 md:pt-36">
+        <NavLink to="/home" className="my-2 ">
+          <div
+            className="relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-lg hover:bg-slate-500/10 md:w-full md:justify-evenly
+            "
+          >
+            <FiHome className="z-10 flex h-6 w-6" />
+            <p
+              className="z-10 hidden font-semibold md:block md:text-black lg:block
+            lg:w-20"
+            >
+              Home
+            </p>
+            <h2 className="absolute -top-1 hidden px-1 pt-0 text-center text-6xl font-black text-transparent lg:block">
+              Home
+            </h2>
+
           </div>
         </NavLink>
 
         <NavLink to="/explore" className="my-2">
           <div className="relative flex h-16 w-16 items-center justify-center rounded-full hover:bg-slate-500/10  md:justify-evenly lg:h-12 lg:w-fit lg:justify-start lg:gap-4 lg:px-6   ">
             <MdExplore className="z-10 flex h-6 w-6" />
+
             <p className="z-10 hidden font-semibold   lg:block">Explore</p>
+
           </div>
         </NavLink>
         <NavLink to="/saved" className="my-2">
           <div className="relative flex h-16 w-16 items-center justify-center rounded-full hover:bg-slate-500/10  md:justify-evenly lg:h-12 lg:w-fit lg:justify-start lg:gap-4 lg:px-6   ">
             <FiInbox className="z-10 flex h-6 w-6" />
+
             <p className="z-10 hidden font-semibold   lg:block">Saved</p>
+
           </div>
         </NavLink>
         <NavLink to="/profile" className="my-2 mb-auto">
@@ -57,6 +68,7 @@ export const Sidebar = () => {
             </h2>
             <h2 className="z-10 hidden px-2 text-center text-base font-semibold text-gray-700 lg:block">
               @{user?.username}
+
             </h2>
           </div>
         </NavLink>
