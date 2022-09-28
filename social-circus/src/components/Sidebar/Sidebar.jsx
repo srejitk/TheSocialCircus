@@ -11,11 +11,11 @@ export const Sidebar = () => {
   return (
     <nav className="sidebar fixed bottom-0 z-30 flex h-fit w-full flex-row  justify-center gap-2 border-t-2 bg-white md:fixed md:h-screen md:w-28 md:flex-col md:justify-start md:border-r-2 md:pt-4 lg:h-screen lg:w-[23rem] lg:flex-col lg:pt-4">
       <div className="flex h-20 w-full justify-evenly md:h-screen md:w-full md:flex-col md:items-center md:justify-start md:pt-2 lg:ml-auto lg:mb-auto lg:h-full lg:w-3/4 lg:justify-start lg:pt-4">
-        <NavLink to="/feed" className="mb-6 mr-6 mt-8 hidden md:block ">
+        <div className="mb-6 mr-6 mt-8 hidden md:block ">
           <div className="relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-full bg-white   md:justify-evenly lg:h-12 lg:w-12 lg:justify-start  ">
             <img src={brand2} className="z-10 flex h-full w-full" />
           </div>
-        </NavLink>
+        </div>
 
         <NavLink to="/feed" className="my-2 ">
           <div className="relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-full hover:bg-slate-500/10   md:justify-evenly md:py-3 md:px-3 lg:h-12 lg:w-fit lg:justify-start lg:gap-4 lg:px-6  ">
