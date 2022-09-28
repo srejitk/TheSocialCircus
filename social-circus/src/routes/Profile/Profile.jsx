@@ -15,10 +15,20 @@ import { MdVerified } from "react-icons/md";
 export const Profile = () => {
   const { user, isLoading } = useSelector((state) => state.auth);
   const { posts } = useSelector((state) => state.post);
+
   const token = localStorage.getItem("userID");
   const defaultUsername = user?.email?.split("@")[0];
-
   const { username, bio, portfolio, avatar, cover } = user;
+  return (
+    <div className="content h-screen w-full md:ml-24 md:w-[calc(100vw-7rem)]  lg:w-[calc(100vw-24rem)] ">
+      <div className="relative h-60 w-full bg-gray-50">
+        <img
+          src={user?.cover || defaultCover}
+          alt="cover"
+          className={` ${
+            isLoading ? "animate-pulse" : ""
+          } absolute top-0 h-fit max-h-80 w-full object-cover`}
+        />
 
   const verificationCheck = () => {
     return username !== defaultUsername ||
@@ -198,6 +208,113 @@ export const Profile = () => {
         </div>
       </div>
       <SuggestionBar />
+      <div className="relative mx-auto mt-80 w-full bg-gray-100 px-2 pb-16 sm:px-0">
+        <Tab.Group>
+          <Tab.List className="flex bg-white">
+            <Tab as={Fragment}>
+              {({ selected }) => (
+                <button
+                  className={`flex h-14 w-full   items-center justify-center text-sm font-medium leading-5 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 hover:bg-gray-400/20 focus:outline-none focus:ring-2 ${
+                    selected
+                      ? " bg-white font-bold text-black"
+                      : "font-semibold text-gray-600/70 "
+                  }`}
+                >
+                  <p
+                    className={`flex h-full w-fit flex-col justify-center border-b-4 ${
+                      selected ? "border-blue-600" : "border-transparent"
+                    }  px-4 text-center`}
+                  >
+                    Feed
+                  </p>
+                </button>
+              )}
+            </Tab>
+            <Tab as={Fragment}>
+              {({ selected }) => (
+                <button
+                  className={`flex h-14 w-full   items-center justify-center text-sm font-medium leading-5 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 hover:bg-gray-400/20 focus:outline-none focus:ring-2 ${
+                    selected
+                      ? " bg-white font-bold text-black"
+                      : "font-semibold text-gray-600/70 "
+                  }`}
+                >
+                  <p
+                    className={`flex h-full w-fit flex-col justify-center border-b-4 ${
+                      selected ? "border-blue-600" : "border-transparent"
+                    }  px-4 text-center`}
+                  >
+                    Followers
+                  </p>
+                </button>
+              )}
+            </Tab>{" "}
+            <Tab as={Fragment}>
+              {({ selected }) => (
+                <button
+                  className={`flex h-14 w-full   items-center justify-center text-sm font-medium leading-5 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 hover:bg-gray-400/20 focus:outline-none focus:ring-2 ${
+                    selected
+                      ? " bg-white font-bold text-black"
+                      : "font-semibold text-gray-600/70 "
+                  }`}
+                >
+                  <p
+                    className={`flex h-full w-fit flex-col justify-center border-b-4 ${
+                      selected ? "border-blue-600" : "border-transparent"
+                    }  px-4 text-center`}
+                  >
+                    Following
+                  </p>
+                </button>
+              )}
+            </Tab>
+          </Tab.List>
+          <Tab.Panels className="mt-2 bg-gray-100">
+            <Tab.Panel
+              as="div"
+              className="rounded-xl bg-gray-50 p-3 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
+            >
+              {posts?.length === 0 ? (
+                "No Posts here"
+              ) : (
+                <div>
+                  {posts?.map((post) => {
+                    return <PostCard key={post.id} post={post} />;
+                  })}
+                </div>
+              )}
+            </Tab.Panel>
+            <Tab.Panel
+              as="div"
+              className="rounded-xl bg-white p-3 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
+            >
+              {user?.followers?.length === 0 ? (
+                "No Followers yet"
+              ) : (
+                <div>
+                  {user?.followers?.map((id) => {
+                    return <ContactCard key={id} id={id} />;
+                  })}
+                </div>
+              )}
+            </Tab.Panel>
+            <Tab.Panel
+              as="div"
+              className="rounded-xl bg-white p-3 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
+            >
+              {user?.following?.length === 0 ? (
+                "Not Following anyone yet"
+              ) : (
+                <div>
+                  {user?.following?.map((id) => {
+                    return <ContactCard key={id} id={id} />;
+                  })}
+                </div>
+              )}
+            </Tab.Panel>
+          </Tab.Panels>
+        </Tab.Group>
+      </div>
     </div>
   );
 };

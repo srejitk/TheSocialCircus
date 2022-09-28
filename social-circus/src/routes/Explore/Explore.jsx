@@ -20,46 +20,68 @@ export const Explore = () => {
   );
 
   return (
-    <div className="content flex w-screen md:w-[calc(100vw-11rem)] lg:w-[calc(100vw-18.5rem)]">
-      <div className="w-full px-1 pb-16 pt-8 sm:px-0  md:w-full md:px-5 md:pt-2 lg:w-3/5 lg:px-6">
+
+    <div className="content flex w-screen  md:ml-24 md:w-[calc(100vw-7rem)]  lg:w-[calc(100vw-365px)] lg:border-2 lg:pt-0">
+      <div className="w-full px-1  pb-16  pt-8  sm:px-0 md:w-full lg:w-3/5 lg:max-w-[600px]  lg:pt-0">
         <Tab.Group>
-          <Tab.List className="flex space-x-1 rounded-t-lg bg-gray-50 px-4 py-2">
+          <Tab.List className="flex bg-white">
             <Tab as={Fragment}>
               {({ selected }) => (
                 <button
-                  className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 focus:outline-none    ${
+                  className={`flex h-14 w-full   items-center justify-center text-sm font-medium leading-5 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 hover:bg-gray-400/20 focus:outline-none focus:ring-2 ${
                     selected
-                      ? "bg-white shadow"
-                      : "text-black hover:bg-gray-200/10 hover:text-black"
+                      ? " bg-white font-bold text-black"
+                      : "font-semibold text-gray-600/70 "
                   }`}
                 >
-                  Explore
+                  <p
+                    className={`flex h-full w-fit flex-col justify-center border-b-4 ${
+                      selected ? "border-blue-600" : "border-transparent"
+                    }  px-4 text-center`}
+                  >
+                    Explore
+                  </p>
                 </button>
               )}
             </Tab>
             <Tab as={Fragment}>
               {({ selected }) => (
                 <button
-                  className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 focus:outline-none    ${
+
+                  className={`flex h-14 w-full   items-center justify-center text-sm font-medium leading-5 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 hover:bg-gray-400/20 focus:outline-none focus:ring-2 ${
                     selected
-                      ? "bg-white shadow"
-                      : "text-black hover:bg-gray-200/10 hover:text-black"
+                      ? " bg-white font-bold text-black"
+                      : "font-semibold text-gray-600/70 "
+
                   }`}
                 >
-                  Trending
+                  <p
+                    className={`flex h-full w-fit flex-col justify-center border-b-4 ${
+                      selected ? "border-blue-600" : "border-transparent"
+                    }  px-4 text-center`}
+                  >
+                    Trending
+                  </p>
                 </button>
               )}
             </Tab>{" "}
             <Tab as={Fragment}>
               {({ selected }) => (
                 <button
-                  className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 focus:outline-none    ${
+
+                  className={`flex h-14 w-full   items-center justify-center text-sm font-medium leading-5 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 hover:bg-gray-400/20 focus:outline-none focus:ring-2 ${
                     selected
-                      ? "bg-white shadow"
-                      : "text-black hover:bg-gray-200/10 hover:text-black"
+                      ? " bg-white font-bold text-black"
+                      : "font-semibold text-gray-600/70 "
                   }`}
                 >
-                  Oldest
+                  <p
+                    className={`flex h-full w-fit flex-col justify-center border-b-4 ${
+                      selected ? "border-blue-600" : "border-transparent"
+                    }  px-4 text-center`}
+                  >
+                    Oldest
+                  </p>
                 </button>
               )}
             </Tab>

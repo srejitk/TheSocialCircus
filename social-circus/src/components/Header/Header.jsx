@@ -1,26 +1,18 @@
 import React from "react";
 import { FiLogOut } from "react-icons/fi";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { brand } from "../../config/Constants";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { logout } from "../../redux/slice/authSlice";
 
 export const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   return (
-    <header className="header fixed z-40  w-screen bg-white md:w-screen lg:w-screen ">
-      <div className=" flex h-24  flex-row items-center justify-between border-2 p-5 pl-10 shadow-sm">
-        <div className="flex items-center justify-center gap-6 text-center">
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-blue-600">
-            <img
-              src={brand}
-              className="w-10"
-              alt="Brand Logo of Social Circus"
-            />
-          </div>
 
-          <h1 className="text-3xl font-semibold ">
+    <header className="header w-screen md:ml-24 md:w-[calc(100vw-7rem)] md:pl-4 lg:ml-0 lg:w-[calc(100vw-24rem)] lg:pl-0 ">
+      <div className=" flex h-24  flex-row items-center justify-between lg:pl-24 ">
+        <div className="flex items-center justify-center gap-6 text-center">
+          <h1 className="pl-4 text-3xl font-semibold lg:pl-2 ">
             The <span className="font-bold text-blue-600">Social</span> Circus
           </h1>
         </div>

@@ -8,9 +8,9 @@ export const SuggestionBar = () => {
   const otherUsers = allUsers?.filter((eachUser) => eachUser.id !== token);
 
   return (
-    <div className="lg:top-22 hidden h-80 shadow-md md:hidden lg:fixed lg:right-0 lg:mr-10 lg:mt-2 lg:block lg:h-[calc(100vh-9rem)] lg:w-[24rem] lg:max-w-[30rem] lg:overflow-y-scroll lg:rounded-lg">
-      <h2 className=" text-md rounded-t-lg border-b-2 bg-slate-50 px-3 py-4 text-left font-semibold text-black">
-        Suggestions
+    <div className=" hidden h-80 shadow-sm md:hidden lg:ml-6 lg:mt-4 lg:mr-auto lg:block lg:h-80 lg:w-[350px] lg:max-w-[30rem] lg:overflow-y-scroll">
+      <h2 className=" text-md rounded-t-lg border-2  border-b-2 border-gray-200 bg-gray-50 px-3 py-4 text-left text-2xl font-bold text-black">
+        Who to follow
       </h2>
       <div className=" overflow-y-scroll">
         {" "}

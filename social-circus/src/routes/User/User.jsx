@@ -1,5 +1,5 @@
-import React, { Fragment, useState } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import React, { Fragment } from "react";
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setOtherUser } from "../../redux/slice/authSlice";
 import { Tab } from "@headlessui/react";
@@ -16,25 +16,25 @@ export const User = () => {
   const { userID } = useParams();
   const { posts } = useSelector((state) => state.post);
   const dispatch = useDispatch();
-  const location = useLocation();
 
   const findUser = allUsers?.find((user) => user?.id === userID);
 
   dispatch(setOtherUser(findUser));
   const data = otherUser?.data;
 
-  const userPosts = posts?.filter((post) => post?.uid === findUser?.id);
 
+  const userPosts = posts.filter((post) => post?.uid === findUser?.id);
+  console.log(data);
   const isFollowing = user?.following?.some((ID) => ID === findUser?.id);
   return (
-    <div className="content flex w-screen md:w-[calc(100vw-11rem)] lg:w-[calc(100vw-18.5rem)]">
-      <div className="w-full px-1 pb-16 pt-8 sm:px-0  md:w-full md:px-5 md:pt-2 lg:w-3/5 lg:px-6">
-        {" "}
-        <div className="relative h-60 w-full bg-gray-50">
-          <img
-            src={data?.cover || defaultCover}
-            alt="cover"
-            className={` 
+    <div className="content h-screen w-full md:ml-24  md:w-[calc(100vw-7rem)]">
+        //<div className="content flex w-screen md:w-[calc(100vw-11rem)] lg:w-[calc(100vw-18.5rem)]">
+      //<div className="w-full px-1 pb-16 pt-8 sm:px-0  md:w-full md:px-5 md:pt-2 lg:w-3/5 lg:px-6">
+      <div className="relative h-60 w-full bg-gray-50">
+        <img
+          src={data?.cover || defaultCover}
+          alt="cover"
+          className={` 
            absolute top-0 h-fit max-h-80 w-full object-cover`}
           />
 
@@ -210,7 +210,114 @@ export const User = () => {
           </Tab.Group>
         </div>
       </div>
-      <SuggestionBar />
+
+      <div className="relative mx-auto mt-80 w-full  px-2 pb-16 sm:px-0">
+        <Tab.Group>
+          <Tab.List className="flex bg-white">
+            <Tab as={Fragment}>
+              {({ selected }) => (
+                <button
+                  className={`flex h-14 w-full   items-center justify-center text-sm font-medium leading-5 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 hover:bg-gray-400/20 focus:outline-none focus:ring-2 ${
+                    selected
+                      ? " bg-white font-bold text-black"
+                      : "font-semibold text-gray-600/70 "
+                  }`}
+                >
+                  <p
+                    className={`flex h-full w-fit flex-col justify-center border-b-4 ${
+                      selected ? "border-blue-600" : "border-transparent"
+                    }  px-4 text-center`}
+                  >
+                    Feed
+                  </p>
+                </button>
+              )}
+            </Tab>
+            <Tab as={Fragment}>
+              {({ selected }) => (
+                <button
+                  className={`flex h-14 w-full   items-center justify-center text-sm font-medium leading-5 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 hover:bg-gray-400/20 focus:outline-none focus:ring-2 ${
+                    selected
+                      ? " bg-white font-bold text-black"
+                      : "font-semibold text-gray-600/70 "
+                  }`}
+                >
+                  <p
+                    className={`flex h-full w-fit flex-col justify-center border-b-4 ${
+                      selected ? "border-blue-600" : "border-transparent"
+                    }  px-4 text-center`}
+                  >
+                    Followers
+                  </p>
+                </button>
+              )}
+            </Tab>{" "}
+            <Tab as={Fragment}>
+              {({ selected }) => (
+                <button
+                  className={`flex h-14 w-full   items-center justify-center text-sm font-medium leading-5 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 hover:bg-gray-400/20 focus:outline-none focus:ring-2 ${
+                    selected
+                      ? " bg-white font-bold text-black"
+                      : "font-semibold text-gray-600/70 "
+                  }`}
+                >
+                  <p
+                    className={`flex h-full w-fit flex-col justify-center border-b-4 ${
+                      selected ? "border-blue-600" : "border-transparent"
+                    }  px-4 text-center`}
+                  >
+                    Following
+                  </p>
+                </button>
+              )}
+            </Tab>
+          </Tab.List>
+          <Tab.Panels className="mt-2 h-full bg-gray-100">
+            <Tab.Panel
+              as="div"
+              className="h-full rounded-xl bg-gray-50 p-3 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
+            >
+              {userPosts?.length === 0 ? (
+                <p className="mt-6 text-xl">No Posts here</p>
+              ) : (
+                <div>
+                  {userPosts?.map((post) => {
+                    return <PostCard key={post.id} post={post} />;
+                  })}
+                </div>
+              )}
+            </Tab.Panel>
+            <Tab.Panel
+              as="div"
+              className="rounded-xl bg-white p-3 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
+            >
+              {data?.followers?.length === 0 ? (
+                <p className="mt-6 text-xl">No Followers yet</p>
+              ) : (
+                <div>
+                  {data?.followers?.map((id) => {
+                    return <ContactCard key={id} id={id} />;
+                  })}
+                </div>
+              )}
+            </Tab.Panel>
+            <Tab.Panel
+              as="div"
+              className="rounded-xl bg-white p-3 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
+            >
+              {data?.following?.length === 0 ? (
+                <p className="mt-6 text-xl">Not Following anyone yet</p>
+              ) : (
+                <div>
+                  {data?.following?.map((id) => {
+                    return <ContactCard key={id} id={id} />;
+                  })}
+                </div>
+              )}
+            </Tab.Panel>
+          </Tab.Panels>
+        </Tab.Group>
+      </div>
     </div>
   );
 };

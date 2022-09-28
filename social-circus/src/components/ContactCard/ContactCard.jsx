@@ -1,5 +1,5 @@
 import React from "react";
-import { FiUserCheck, FiUserPlus, FiUserX } from "react-icons/fi";
+import { FiUserCheck, FiUserPlus } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { defaultAvatar } from "../../config/Constants";
@@ -11,7 +11,9 @@ export const ContactCard = ({ id }) => {
 
   const otherUser = allUsers?.find((user) => user?.id === id);
   const isFollowing = user?.following?.some((ID) => ID === id);
+
   return (
+
     <Link
       to={`/profile/${otherUser?.id}`}
       className=" mb-4 flex justify-between border-b-2"
@@ -23,13 +25,13 @@ export const ContactCard = ({ id }) => {
           className="rounded-full"
         />
       </div>
-      <div className="flex flex-grow flex-col items-center justify-start pl-4">
+      <div className="flex flex-grow flex-col items-center justify-start">
         <p className="flex w-full flex-grow items-center text-left text-base font-semibold">
           {otherUser?.data?.displayName}
         </p>
-        <p className="my-auto flex w-full flex-grow items-start text-left text-base font-semibold text-gray-500">
+        <p className="my-auto flex w-full flex-grow items-start text-left text-base font-medium text-gray-500">
           {otherUser?.data?.username === "username"
-            ? " @" + otherUser?.data?.firstname.toLowerCase()
+            ? " @" + otherUser?.data?.toLowerCase()
             : otherUser?.data?.username}
         </p>
       </div>
@@ -45,7 +47,7 @@ export const ContactCard = ({ id }) => {
                 dispatch
               )
             }
-            className="my-3 ml-auto rounded-full border-2 border-blue-600 bg-blue-50 py-3 px-10  font-semibold text-blue-600 hover:bg-blue-600/50"
+            className="my-3 ml-auto rounded-full border-2 border-blue-600 bg-blue-50 py-3 px-3  font-semibold text-blue-600 hover:bg-blue-600/50"
           >
             <FiUserCheck className="text-blue-600" />
           </button>
@@ -54,7 +56,7 @@ export const ContactCard = ({ id }) => {
             onClick={(e) =>
               followUser(user, otherUser?.data, otherUser?.id, token, dispatch)
             }
-            className="my-3 ml-auto rounded-3xl bg-blue-500 py-3 px-10  font-semibold text-white hover:bg-blue-600"
+            className="my-3 ml-auto rounded-3xl bg-blue-500 py-3 px-3  font-semibold text-white hover:bg-blue-600"
           >
             <FiUserPlus className="text-white" />
           </button>
