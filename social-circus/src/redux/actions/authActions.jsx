@@ -86,7 +86,6 @@ export const getUserData = createAsyncThunk("auth/getUserData", async (uid) => {
     }
   } catch (error) {
     console.log(error.response.data);
-    console.log("Could not retrieve user data");
   }
 });
 
