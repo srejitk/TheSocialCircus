@@ -10,6 +10,7 @@
   "dependencies": {
     "@headlessui/react": "^1.6.4",
     "@reduxjs/toolkit": "^1.8.2",
+    "dayjs": "^1.11.5",
     "dotenv": "^16.0.1",
     "emoji-picker-react": "^3.5.1",
     "firebase": "^9.8.2",
