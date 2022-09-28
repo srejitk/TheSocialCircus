@@ -16,7 +16,6 @@ export const Home = () => {
   const textposts = [...homeposts].filter((post) => post?.imageUrl === "");
 
   return (
-
     <div className="content flex w-screen  md:ml-24 md:w-[calc(100vw-7rem)]  lg:w-[calc(100vw-365px)] lg:border-2 lg:pt-0">
       <div className="w-full px-1  pb-16 pt-0 sm:px-0 md:w-full  lg:w-3/5  lg:max-w-[600px]">
         <Tab.Group>
@@ -43,7 +42,6 @@ export const Home = () => {
             <Tab as={Fragment}>
               {({ selected }) => (
                 <button
-
                   className={`flex h-14 w-full   items-center justify-center text-sm font-medium leading-5 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 hover:bg-gray-400/20 focus:outline-none focus:ring-2 ${
                     selected
                       ? " bg-white font-bold text-black"
@@ -63,7 +61,6 @@ export const Home = () => {
             <Tab as={Fragment}>
               {({ selected }) => (
                 <button
-
                   className={`flex h-14 w-full   items-center justify-center text-sm font-medium leading-5 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 hover:bg-gray-400/20 focus:outline-none focus:ring-2 ${
                     selected
                       ? " bg-white font-bold text-black"
@@ -89,7 +86,7 @@ export const Home = () => {
               <div>
                 <CreatePost />
                 {homeposts?.map((post) => {
-                  return <PostCard key={post?.id} post={post} />;
+                  return <PostCard key={post.id} post={post} />;
                 })}
               </div>
             </Tab.Panel>
@@ -100,7 +97,7 @@ export const Home = () => {
               <div>
                 <CreatePost />
                 {mediaposts?.map((post) => {
-                  return <PostCard key={post?.id} post={post} />;
+                  return <PostCard key={post.id} post={post} />;
                 })}
               </div>
             </Tab.Panel>
@@ -111,7 +108,7 @@ export const Home = () => {
               <div>
                 <CreatePost />
                 {textposts?.map((post) => {
-                  return <PostCard key={post?.id} post={post} />;
+                  return <PostCard key={post.id} post={post} />;
                 })}
               </div>
             </Tab.Panel>

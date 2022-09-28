@@ -13,12 +13,11 @@ export const ContactCard = ({ id }) => {
   const isFollowing = user?.following?.some((ID) => ID === id);
 
   return (
-
     <Link
       to={`/profile/${otherUser?.id}`}
       className=" mb-4 flex justify-between border-b-2"
     >
-      <div className="m-3 h-16 w-16">
+      <div className="m-3 h-12 w-12">
         <img
           src={otherUser?.data?.avatar || defaultAvatar}
           alt="contact dp"

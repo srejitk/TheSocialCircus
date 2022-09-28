@@ -24,8 +24,7 @@ export const RouteConfig = () => {
         <Route path="/update" element={<Update />} />
         <Route path="/saved" element={<Saved />} />
         <Route path="/explore" element={<Explore />} />
-        <Route path="/home" element={<Home />} />
-
+        <Route path="/feed" element={<Home />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile/:userID" element={<User />} />
         <Route path="*" element={<Error />} />

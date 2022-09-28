@@ -1,17 +1,12 @@
 import React, { useState } from "react";
 import { FaHeart } from "react-icons/fa";
-import { Menu, Transition } from "@headlessui/react";
-import { Fragment } from "react";
 import {
   MdBookmarkBorder,
   MdBookmark,
   MdArchive,
   MdOutlineArchive,
-  MdArrowDropDown,
 } from "react-icons/md";
 import {
-  FiChevronDown,
-  FiChevronUp,
   FiCornerDownLeft,
   FiEdit,
   FiHeart,
@@ -26,6 +21,7 @@ import {
   DeleteComment,
   DeletePost,
   DislikePost,
+  getExplorePosts,
   LikePost,
   PostComment,
   RestorePost,
@@ -46,17 +42,22 @@ export const PostCard = ({ post }) => {
   const [openModal, setOpenModal] = useState(false);
   const [comment, setComment] = useState(defaultComment);
   const [showComments, setShowComments] = useState(false);
-  const [showCommentEditor, setShowCommentEditor] = useState(false);
-  const { user, allUsers } = useSelector((state) => state.auth);
-  const token = localStorage.getItem("userID");
-  const { id, uid, imageUrl, content, displayName, date, likes, comments } =
-    post;
+  const { user, token } = useSelector((state) => state.auth);
+  const {
+    avatar,
+    id,
+    username,
+    imageUrl,
+    content,
+    displayName,
+    date,
+    likes,
+    comments,
+  } = post;
   const handleComment = async (e) => {
     e.preventDefault();
     await PostComment(id, comment, dispatch);
     setComment(defaultComment);
-    setShowComments(true);
-    setShowCommentEditor(false);
   };
 
   const deleteCommentHandler = async (e, comment) => {
@@ -73,17 +74,13 @@ export const PostCard = ({ post }) => {
   const isAuthor = post?.uid === token;
   const isLiked = likes?.find((user) => user?.userID === token);
   return (
-
     <div className="my-3 mx-auto flex h-fit w-full flex-col justify-around rounded-lg border-2 border-gray-200 bg-white shadow-sm">
       <Link
         to={`/profile/${post?.uid}`}
         className="flex items-center justify-start"
       >
         <img
-          src={
-            allUsers?.find((user) => user.id === uid)?.data?.avatar ||
-            defaultAvatar
-          }
+          src={avatar || defaultAvatar}
           alt="dp"
           className="m-3 h-12 w-12 rounded-full"
         />
@@ -91,111 +88,15 @@ export const PostCard = ({ post }) => {
         <div className="flex flex-col items-start px-1 ">
           {" "}
           <h1 className="text-xl font-semibold">{displayName}</h1>
-          <h1 className="ml-auto pr-4 font-medium text-slate-400">{date}</h1>
+          <h1>{username === "username" ? "@" + displayName : username}</h1>
         </div>
+        <h1 className="ml-auto pr-4 font-semibold">{date}</h1>
       </Link>
-
-      {isAuthor && (
-        <div className="absolute top-4 right-4 ml-auto flex flex-col items-end">
-          <Menu as="div" className="relative inline-block text-left">
-            <div>
-              <Menu.Button className="flex h-10 w-10 justify-center rounded-md  border-2 bg-white bg-opacity-20 text-sm font-medium text-slate-700 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                <MdArrowDropDown
-                  className=" h-full w-full p-2 text-slate-700 hover:text-slate-100"
-                  aria-hidden="true"
-                />
-              </Menu.Button>
-            </div>
-            <Transition
-              as={Fragment}
-              enter="transition ease-out duration-100"
-              enterFrom="transform opacity-0 scale-95"
-              enterTo="transform opacity-100 scale-100"
-              leave="transition ease-in duration-75"
-              leaveFrom="transform opacity-100 scale-100"
-              leaveTo="transform opacity-0 scale-95"
-            >
-              <Menu.Items className="absolute right-0 mt-2 w-36 origin-top-right divide-y divide-gray-50 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                <div className="px-1 py-1 ">
-                  {isAuthor && pathname !== "/saved" && (
-                    <Menu.Item>
-                      {({ active }) => (
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setOpenModal((prev) => !prev);
-                            dispatch(setPost(post));
-                          }}
-                          className={`${
-                            active ? "bg-blue-500 text-white" : "text-gray-900"
-                          } group flex w-full items-center justify-start gap-6 rounded-md px-2 py-2 text-sm`}
-                        >
-                          <FiEdit />
-                          Edit
-                        </button>
-                      )}
-                    </Menu.Item>
-                  )}
-                  {isAuthor && pathname !== "/saved" && (
-                    <Menu.Item>
-                      {({ active }) => (
-                        <button
-                          onClick={(e) => DeletePost(id, dispatch)}
-                          className={`${
-                            active ? "bg-blue-500 text-white" : "text-gray-900"
-                          } group flex w-full items-center justify-start gap-6 rounded-md px-2 py-2 text-sm`}
-                        >
-                          <FiTrash />
-                          Delete
-                        </button>
-                      )}
-                    </Menu.Item>
-                  )}
-                </div>
-                <div className="px-1 py-1">
-                  {post?.uid === token && isArchived && isAuthor && (
-                    <Menu.Item>
-                      {({ active }) => (
-                        <button
-                          onClick={(e) => RestorePost(post, token, dispatch)}
-                          className={`${
-                            active ? "bg-blue-500 text-white" : "text-gray-900"
-                          } group flex w-full items-center justify-start gap-6 rounded-md px-2 py-2 text-sm`}
-                        >
-                          <MdArchive />
-                          Restore
-                        </button>
-                      )}
-                    </Menu.Item>
-                  )}
-                  {post?.uid === token && !isArchived && isAuthor && (
-                    <Menu.Item>
-                      {({ active }) => (
-                        <button
-                          onClick={(e) => {
-                            ArchivePost(post, token, dispatch);
-                          }}
-                          className={`${
-                            active ? "bg-blue-500 text-white" : "text-gray-900"
-                          } group flex w-full items-center justify-start gap-6 rounded-md px-2 py-2 text-sm`}
-                        >
-                          <MdOutlineArchive />
-                          Archive
-                        </button>
-                      )}
-                    </Menu.Item>
-                  )}
-                </div>
-              </Menu.Items>
-            </Transition>
-          </Menu>
-        </div>
-      )}
       <div className="flex flex-col">
         <h1 className="break-all px-3 text-left text-2xl">{content}</h1>
 
         {imageUrl !== "" && (
-          <div className="h-72 rounded-md  p-4">
+          <div className="rounded-md  p-4">
             <img
               src={imageUrl}
               alt="post-cover"
@@ -252,7 +153,7 @@ export const PostCard = ({ post }) => {
             </div>
           ) : null}
 
-          <p className="px-3 font-medium text-slate-700">
+          <p className="px-3 font-semibold text-gray-500">
             {isLiked
               ? likes?.length > 1
                 ? `You and ${likes?.length - 1} others liked this`
@@ -267,38 +168,50 @@ export const PostCard = ({ post }) => {
           </p>
         </div>
       </div>
-      <div className="flex items-center justify-center gap-10 md:justify-start lg:justify-start">
-        <div className="flex items-center">
-          {" "}
-          <button
-            className={`m-3 flex h-10 w-10 items-center justify-center rounded-full border-2  border-transparent hover:bg-red-50 
+      <div className="flex justify-around">
+        <button
+          className={`} m-3 flex h-10 w-10 items-center justify-center rounded-full border-2  border-transparent hover:bg-red-50 
           hover:text-red-500`}
-            onClick={(e) => {
-              likes?.find((user) => user?.userID === token)
-                ? DislikePost(id, token, user, dispatch)
-                : LikePost(id, token, user, dispatch);
-            }}
+          onClick={(e) => {
+            likes?.find((user) => user?.userID === token)
+              ? DislikePost(post?.id, token, user, dispatch)
+              : LikePost(post?.id, token, user, dispatch);
+          }}
+        >
+          {likes?.find((user) => user?.userID === token) ? (
+            <FaHeart className="text-red-500" />
+          ) : (
+            <FiHeart />
+          )}
+        </button>
+        {isAuthor && pathname !== "/saved" && (
+          <button
+            className="m-3 flex h-10 w-10 items-center justify-center rounded-full border-2 border-transparent  hover:bg-red-50 hover:text-red-500"
+            onClick={(e) => dispatch(DeletePost(post?.id, dispatch))}
           >
-            {likes?.find((user) => user?.userID === token) ? (
-              <FaHeart className="text-red-500" />
-            ) : (
-              <FiHeart />
-            )}
+            <FiTrash />
           </button>
-          <p>{comments?.length >= 1 ? likes?.length : ""}</p>
-        </div>
-        <div className="flex items-center">
+        )}
+        {isAuthor && (
           <button
             className="m-3 h-10 w-10 rounded-full px-3 hover:bg-blue-50"
             onClick={(e) => {
-              setShowCommentEditor((prev) => !prev);
+              dispatch(setPost(post));
+              setOpenModal((prev) => !prev);
             }}
           >
-            <FiMessageSquare />
+            <FiEdit />
           </button>
-          <p>{likes?.length >= 1 ? likes?.length : ""}</p>
-        </div>
-
+        )}
+        <button
+          className="m-3 h-10 w-10 rounded-full px-3 hover:bg-blue-50"
+          onClick={(e) => {
+            dispatch(setPost(post));
+            setShowComments((prev) => !prev);
+          }}
+        >
+          <FiMessageSquare />
+        </button>
         {isBookmarked ? (
           <button
             className="m-3 h-10 w-10 rounded-full px-3 hover:bg-blue-50"
@@ -314,28 +227,42 @@ export const PostCard = ({ post }) => {
             <MdBookmarkBorder />
           </button>
         )}
-        {comments.length > 0 && (
-          <button
-            className="m-3 h-10 w-10 rounded-full px-3 hover:bg-blue-50"
-            onClick={(e) => {
-              setShowComments((prev) => !prev);
-            }}
-          >
-            {showComments ? <FiChevronUp /> : <FiChevronDown />}
-          </button>
-        )}
+        {post?.uid === token && isArchived
+          ? isAuthor && (
+              <button
+                className="m-3 h-10 w-10 rounded-full px-3 hover:bg-blue-50"
+                onClick={(e) => RestorePost(post, token, dispatch)}
+              >
+                <MdArchive />
+              </button>
+            )
+          : isAuthor && (
+              <button
+                className="m-3 h-10 w-10 rounded-full px-3 hover:bg-blue-50"
+                onClick={(e) => {
+                  ArchivePost(post, token, dispatch);
+                  dispatch(getExplorePosts());
+                }}
+              >
+                <MdOutlineArchive />
+              </button>
+            )}
       </div>
       {openModal && (
-        <EditPostModal openModal={openModal} setOpenModal={setOpenModal} />
+        <EditPostModal
+          openModal={openModal}
+          setOpenModal={setOpenModal}
+          edit={true}
+        />
       )}
-      {showCommentEditor && (
+      {showComments && (
         <form
           onSubmit={(e) => handleComment(e)}
           className="flex h-36 items-center justify-between border-t-2 border-gray-200 "
         >
           <div>
             <img
-              src={user?.avatar || defaultAvatar}
+              src={user?.avatar}
               alt=""
               className="m-3 h-10  w-10 rounded-full"
             />
@@ -345,17 +272,17 @@ export const PostCard = ({ post }) => {
             name="newPost"
             rows="5"
             value={comment.content}
-            onChange={(e) => {
+            onChange={(e) =>
               setComment({
                 ...comment,
                 content: e.target.value,
                 userID: token,
                 displayName: user?.displayName,
-                avatar: user?.avatar || defaultAvatar,
+                avatar: user?.avatar,
                 username: user?.username,
                 date: new Date().toLocaleString(),
-              });
-            }}
+              })
+            }
             placeholder="Have any thoughts on this?"
             className=" mx-6 w-full resize-none whitespace-normal break-words  rounded-sm border-2 border-gray-50 bg-gray-50 px-3 focus:bg-gray-50 focus:outline-none"
           />
@@ -367,59 +294,51 @@ export const PostCard = ({ post }) => {
           </button>
         </form>
       )}
-      {showComments && (
-        <div className="h-fit max-h-[20rem] w-full overflow-y-scroll">
-          {comments?.map((comment) => (
-            <div
-              className="relative mx-auto flex w-[95%] flex-col items-start"
-              key={comment.date}
-            >
-              <div className="my-2 flex h-fit min-h-[7rem] w-full items-center justify-start rounded-md border-2 border-slate-200 pb-3">
-                <Link to={`/profile/${comment.userID}`}>
-                  <img
-                    src={comment?.avatar}
-                    alt="Commenter Avatar"
-                    className="m-3 h-10 w-10 flex-grow rounded-full"
-                  />
-                </Link>
-                <div className="mx-6 flex flex-grow flex-col items-start justify-center">
-                  <Link to={`/profile/${comment.username}`}>
-                    {" "}
-                    <div className="mb-4">
-                      {" "}
-                      <p
-                        className=" mx-1 flex h-fit w-full items-center rounded-sm px-3  text-left
-        font-medium text-gray-500   "
-                      >
-                        {comment?.displayName}
-                      </p>
-                      <p className="item-start flex h-full px-4 font-medium text-slate-400">
-                        {comment.date}
-                      </p>
-                    </div>
-                  </Link>
+
+      {showComments &&
+        comments?.map((comment) => (
+          <div className="flex w-full flex-col items-start" key={comment.date}>
+            <div className="flex h-fit min-h-[7rem] w-full items-center justify-start border-b-2 border-t-2 border-slate-200 pb-3">
+              <Link to={`/profile/${comment.userID}`}>
+                <img
+                  src={comment?.avatar}
+                  alt="Commenter Avatar"
+                  className="m-3 h-10 w-10 flex-grow rounded-full"
+                />
+              </Link>
+              <div className="mx-6 flex flex-grow flex-col items-start justify-center">
+                <Link to={`/profile/${comment.username}`}>
+                  {" "}
                   <p
-                    className=" min-h-10 mx-1 flex h-fit w-[70%] flex-wrap items-center 
-        text-ellipsis break-all rounded-sm px-3 pb-6 text-left text-xl font-normal "
+                    className=" mx-1 flex h-8 w-full  flex-wrap items-center rounded-sm  px-3
+        text-left font-medium text-gray-500  "
                   >
-                    {comment?.content}
+                    {comment?.displayName}
                   </p>
-                </div>
+                </Link>
+                <p
+                  className=" min-h-8 mx-1 flex h-fit w-[70%] flex-wrap items-center 
+        text-ellipsis break-all rounded-sm px-3 text-left font-semibold "
+                >
+                  {comment?.content}
+                </p>
               </div>
-              <div className="absolute top-4 right-4">
-                {token === comment.userID ? (
-                  <button
-                    onClick={(e) => deleteCommentHandler(e, comment)}
-                    className=" flex h-10 w-10 items-center justify-center rounded-md outline outline-transparent hover:bg-red-50 hover:text-red-500 hover:outline-red-200"
-                  >
-                    <FiTrash />
-                  </button>
-                ) : null}
-              </div>
+              <p className="item-start flex h-full py-6 px-6 font-semibold text-gray-400">
+                {comment.date}
+              </p>
             </div>
-          ))}
-        </div>
-      )}
+            <div>
+              {token === comment.userID ? (
+                <button
+                  onClick={(e) => deleteCommentHandler(e, comment)}
+                  className="m-3 flex h-10 w-32 items-center justify-center rounded-sm outline outline-transparent hover:bg-red-50 hover:text-red-500 hover:outline-red-200"
+                >
+                  <FiTrash />
+                </button>
+              ) : null}
+            </div>
+          </div>
+        ))}
     </div>
   );
 };

@@ -36,7 +36,7 @@ export const registerUser = async (userData, navigate, dispatch, actions) => {
     dispatch(getUserData(uid));
     actions.resetForm();
     toast.success("Welcome to the circus!", { id: loading });
-    navigate("/home", { replace: true });
+    navigate("/feed", { replace: true });
   } catch (error) {
     const errorCode = error.code;
     switch (errorCode) {
@@ -100,7 +100,7 @@ export const loginUser = async (userData, navigate, dispatch, login) => {
     const { uid } = user;
     localStorage.setItem("userID", uid);
     dispatch(getUserData(uid));
-    navigate("/home", { replace: true });
+    navigate("/feed", { replace: true });
     toast.success("You're logged in!.", { id: loading });
   } catch (error) {
     dispatch(setLoading(false));
