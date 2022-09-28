@@ -16,8 +16,8 @@ export const Home = () => {
   const textposts = [...homeposts].filter((post) => post?.imageUrl === "");
 
   return (
-    <div className="content flex w-screen  md:w-[calc(100vw-11rem)] lg:ml-auto lg:w-[calc(100vw-365px)] lg:border-2 lg:pt-0">
-      <div className="w-full  pb-16  pt-8  sm:px-0 md:w-full lg:w-3/5 lg:max-w-[600px]  lg:pt-0">
+    <div className="content flex w-screen  md:ml-24 md:w-[calc(100vw-7rem)]  lg:w-[calc(100vw-365px)] lg:border-2 lg:pt-0">
+      <div className="w-full px-1  pb-16 pt-0 sm:px-0 md:w-full  lg:w-3/5  lg:max-w-[600px]">
         <Tab.Group>
           <Tab.List className="flex  bg-white">
             <Tab as={Fragment}>

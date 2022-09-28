@@ -23,10 +23,10 @@ export const User = () => {
   const data = otherUser?.data;
 
   const userPosts = posts.filter((post) => post?.data?.id === findUser?.id);
-
+  console.log(data);
   const isFollowing = user?.following?.some((ID) => ID === findUser?.id);
   return (
-    <div className="content h-screen w-full">
+    <div className="content h-screen w-full md:ml-24  md:w-[calc(100vw-7rem)]">
       <div className="relative h-60 w-full bg-gray-50">
         <img
           src={data?.cover || defaultCover}
@@ -117,7 +117,7 @@ export const User = () => {
           </div>
         </div>
       </div>
-      <div className="relative mx-auto mt-80 w-full bg-gray-100 px-2 pb-16 sm:px-0">
+      <div className="relative mx-auto mt-80 w-full  px-2 pb-16 sm:px-0">
         <Tab.Group>
           <Tab.List className="flex bg-white">
             <Tab as={Fragment}>
@@ -184,7 +184,7 @@ export const User = () => {
               className="h-full rounded-xl bg-gray-50 p-3 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
             >
               {userPosts?.length === 0 ? (
-                "No Posts here"
+                <p className="mt-6 text-xl">No Posts here</p>
               ) : (
                 <div>
                   {userPosts?.map((post) => {
@@ -198,7 +198,7 @@ export const User = () => {
               className="rounded-xl bg-white p-3 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
             >
               {data?.followers?.length === 0 ? (
-                "No Followers yet"
+                <p className="mt-6 text-xl">No Followers yet</p>
               ) : (
                 <div>
                   {data?.followers?.map((id) => {
@@ -212,7 +212,7 @@ export const User = () => {
               className="rounded-xl bg-white p-3 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
             >
               {data?.following?.length === 0 ? (
-                "Not Following anyone yet"
+                <p className="mt-6 text-xl">Not Following anyone yet</p>
               ) : (
                 <div>
                   {data?.following?.map((id) => {
