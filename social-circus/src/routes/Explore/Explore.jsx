@@ -20,7 +20,7 @@ export const Explore = () => {
   );
 
   return (
-    <div className="content flex w-screen  md:ml-24 md:w-[calc(100vw-7rem)] lg:ml-auto lg:w-[calc(100vw-365px)] lg:border-2 lg:pt-0">
+    <div className="content flex w-screen  md:ml-24 md:w-[calc(100vw-7rem)]  lg:w-[calc(100vw-365px)] lg:border-2 lg:pt-0">
       <div className="w-full px-1  pb-16  pt-8  sm:px-0 md:w-full lg:w-3/5 lg:max-w-[600px]  lg:pt-0">
         <Tab.Group>
           <Tab.List className="flex bg-white">

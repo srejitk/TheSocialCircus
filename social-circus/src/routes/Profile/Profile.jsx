@@ -10,7 +10,7 @@ export const Profile = () => {
   const { user, isLoading } = useSelector((state) => state.auth);
   const { posts } = useSelector((state) => state.post);
   return (
-    <div className="content h-screen w-full md:ml-24 md:w-[calc(100vw-7rem)] lg:w-[calc(100vw-18rem)] ">
+    <div className="content h-screen w-full md:ml-24 md:w-[calc(100vw-7rem)]  lg:w-[calc(100vw-24rem)] ">
       <div className="relative h-60 w-full bg-gray-50">
         <img
           src={user?.cover || defaultCover}
